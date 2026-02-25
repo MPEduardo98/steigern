@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+:root {
+  --brand: #E02020;
+  --brand-dark: #c41a1a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Dark mode via media query — works automatically */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* Utility: font-body and font-display classes */
+.font-body {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
