@@ -16,7 +16,7 @@ const barlow = Barlow({
 
 export const metadata: Metadata = {
   title: "STEIGERN — We Enjoy Making Machines",
-  description: "Precision engineering and industrial automation solutions. Built for performance. Designed to last.",
+  description: "Soluciones de ingeniería de precisión y automatización industrial. Construido para rendir. Diseñado para durar.",
 };
 
 export default function RootLayout({
@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${barlowCondensed.variable} ${barlow.variable} font-body antialiased`}>
+    <html lang="es" suppressHydrationWarning>
+      <body className={`${barlowCondensed.variable} ${barlow.variable} font-body antialiased bg-white text-zinc-900`}>
         {children}
       </body>
     </html>

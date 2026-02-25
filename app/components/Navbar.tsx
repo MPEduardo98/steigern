@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Solutions", href: "#solutions" },
-  { label: "Industries", href: "#industries" },
-  { label: "About", href: "#about" },
-  { label: "Metrics", href: "#metrics" },
-  { label: "Contact", href: "#contact" },
+  { label: "Soluciones", href: "#solutions" },
+  { label: "Industrias", href: "#industries" },
+  { label: "Nosotros", href: "#about" },
+  { label: "Métricas", href: "#metrics" },
+  { label: "Contacto", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -28,14 +28,22 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800"
+          ? "bg-white/95 backdrop-blur-md border-b border-zinc-200 shadow-sm"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
-          <span className="text-[#E02020] font-black text-2xl tracking-[0.15em] uppercase leading-none">
+          <span
+            className="text-[#E02020] text-2xl leading-none font-bankgothic"
+            style={{
+              fontFamily: "'BankGothic', 'BankGothic Md BT', 'Bank Gothic', 'Helvetica Neue', Arial, sans-serif",
+              fontWeight: 700,
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+            }}
+          >
             STEIGERN
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#E02020] mb-0.5 group-hover:scale-150 transition-transform duration-300" />
@@ -47,7 +55,7 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="text-xs font-semibold tracking-[0.12em] uppercase text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors duration-200"
+              className="text-xs font-semibold tracking-[0.12em] uppercase text-zinc-500 hover:text-zinc-900 transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -60,7 +68,7 @@ export default function Navbar() {
             href="#contact"
             className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
           >
-            Get Started
+            Comenzar
           </a>
         </div>
 
@@ -68,19 +76,19 @@ export default function Navbar() {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden flex flex-col gap-1.5 p-1"
-          aria-label="Toggle menu"
+          aria-label="Abrir menú"
         >
           <motion.span
             animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-zinc-900 dark:bg-white transition-colors"
+            className="block w-6 h-0.5 bg-zinc-900 transition-colors"
           />
           <motion.span
             animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-6 h-0.5 bg-zinc-900 dark:bg-white transition-colors"
+            className="block w-6 h-0.5 bg-zinc-900 transition-colors"
           />
           <motion.span
             animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-zinc-900 dark:bg-white transition-colors"
+            className="block w-6 h-0.5 bg-zinc-900 transition-colors"
           />
         </button>
       </div>
@@ -93,7 +101,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800"
+            className="md:hidden overflow-hidden bg-white border-t border-zinc-100"
           >
             <nav className="flex flex-col px-6 py-4 gap-4">
               {navLinks.map((link) => (
@@ -101,7 +109,7 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-sm font-semibold tracking-[0.1em] uppercase text-zinc-600 dark:text-zinc-300 hover:text-[#E02020] dark:hover:text-[#E02020] transition-colors"
+                  className="text-sm font-semibold tracking-[0.1em] uppercase text-zinc-600 hover:text-[#E02020] transition-colors"
                 >
                   {link.label}
                 </a>
@@ -110,7 +118,7 @@ export default function Navbar() {
                 href="#contact"
                 className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white text-center mt-2"
               >
-                Get Started
+                Comenzar
               </a>
             </nav>
           </motion.div>

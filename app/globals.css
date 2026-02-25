@@ -12,20 +12,33 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
 }
 
 body {
   font-family: var(--font-body), system-ui, sans-serif;
+  background-color: #ffffff;
+  color: #111111;
 }
 
-/* Dark mode via media query — works automatically */
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Bank Gothic for STEIGERN brand name */
+@font-face {
+    font-family: 'Bank Gothic';
+    src: local('Bank Gothic Light'), local('Bank-Gothic-Light'),
+        url('/fonts/BankGothicBT-Light.woff2') format('woff2'),
+        url('/fonts/BankGothicBT-Light.woff') format('woff'),
+        url('BankGothicBT-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
   }
+
+.font-bankgothic {
+  font-family: 'BankGothic', 'BankGothic Md BT', 'Bank Gothic', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
-/* Utility: font-body and font-display classes */
 .font-body {
   font-family: var(--font-body), system-ui, sans-serif;
 }

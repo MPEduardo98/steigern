@@ -19,10 +19,10 @@ function Counter({ from = 0, to, suffix = "" }: { from?: number; to: number; suf
 }
 
 const metrics = [
-  { value: 1200, suffix: "+", label: "Machines Deployed", sublabel: "across 60+ countries" },
-  { value: 98, suffix: "%", label: "Uptime Guarantee", sublabel: "contractual SLA standard" },
-  { value: 340, suffix: "+", label: "Engineers on Staff", sublabel: "mechanical, electrical, SW" },
-  { value: 40, suffix: " yrs", label: "Industry Experience", sublabel: "founded 1984, Munich" },
+  { value: 1200, suffix: "+", label: "Máquinas Instaladas", sublabel: "en más de 60 países" },
+  { value: 98, suffix: "%", label: "Garantía de Disponibilidad", sublabel: "estándar SLA contractual" },
+  { value: 340, suffix: "+", label: "Ingenieros en Plantilla", sublabel: "mecánica, eléctrica y SW" },
+  { value: 40, suffix: " años", label: "Experiencia en la Industria", sublabel: "fundada en 1984, Múnich" },
 ];
 
 export default function Metrics() {
