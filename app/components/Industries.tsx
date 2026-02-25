@@ -53,14 +53,7 @@ export default function Industries() {
       id="industries"
       className="relative w-full py-28 bg-white overflow-hidden"
     >
-      {/* grid texture - light */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
+
 
       <div ref={ref} className="relative max-w-[1440px] mx-auto px-8 lg:px-20">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
@@ -81,7 +74,7 @@ export default function Industries() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-zinc-900 font-black text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase"
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Industrias
               <br />
@@ -108,7 +101,7 @@ export default function Industries() {
                   className={`font-black uppercase tracking-[-0.01em] text-lg transition-colors duration-200 ${
                     active === ind.id ? "text-zinc-900" : "text-zinc-400 group-hover:text-zinc-700"
                   }`}
-                  style={{ fontFamily: "var(--font-display)" }}
+                  style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
                 >
                   {ind.label}
                 </span>
@@ -132,7 +125,7 @@ export default function Industries() {
             <div className="w-12 h-1 bg-[#E02020] mb-8" />
             <h3
               className="text-zinc-900 font-black text-3xl uppercase tracking-[-0.02em] mb-6"
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               {activeData.label}
             </h3>

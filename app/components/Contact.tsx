@@ -19,14 +19,7 @@ export default function Contact() {
       ref={ref}
       className="relative w-full py-28 bg-white overflow-hidden"
     >
-      {/* Grid - light */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
+
 
       <div className="relative max-w-[1440px] mx-auto px-8 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
@@ -49,7 +42,7 @@ export default function Contact() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-zinc-900 font-black text-[clamp(2.2rem,4vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase mb-8"
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Inicia Tu
               <br />
@@ -97,7 +90,7 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-zinc-900 font-black text-2xl uppercase tracking-[-0.02em] mb-3" style={{ fontFamily: "var(--font-display)" }}>
+                <h3 className="text-zinc-900 font-black text-2xl uppercase tracking-[-0.02em] mb-3" style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>
                   Consulta Enviada
                 </h3>
                 <p className="text-zinc-500 text-sm max-w-xs">

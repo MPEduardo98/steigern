@@ -45,7 +45,7 @@ export default function Metrics() {
               transition={{ duration: 0.7, delay: i * 0.1 }}
               className="px-8 py-4 first:pl-0 last:pr-0"
             >
-              <div className="text-white font-black text-4xl lg:text-5xl tracking-[-0.04em] mb-1" style={{ fontFamily: "var(--font-display)" }}>
+              <div className="text-white font-black text-4xl lg:text-5xl tracking-[-0.04em] mb-1" style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>
                 <Counter to={m.value} suffix={m.suffix} />
               </div>
               <div className="text-white/80 font-bold text-sm uppercase tracking-[0.1em] mb-1">

@@ -76,7 +76,7 @@ export default function Solutions() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-zinc-900 font-black text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase"
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Soluciones de
               <br />
@@ -114,7 +114,7 @@ export default function Solutions() {
               </div>
               <h3
                 className="text-zinc-900 font-black text-2xl uppercase tracking-[-0.02em] mb-4"
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
               >
                 {s.title}
               </h3>

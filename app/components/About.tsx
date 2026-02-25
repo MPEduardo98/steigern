@@ -43,7 +43,7 @@ export default function About() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-zinc-900 font-black text-[clamp(2.2rem,4vw,4rem)] leading-[1.0] tracking-[-0.03em] uppercase mb-8"
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Forjados en la
               <br />
@@ -86,7 +86,7 @@ export default function About() {
                   <div>
                     <div
                       className="text-zinc-900 font-black text-sm uppercase tracking-[0.05em] mb-1"
-                      style={{ fontFamily: "var(--font-display)" }}
+                      style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
                     >
                       {v.title}
                     </div>
@@ -108,14 +108,14 @@ export default function About() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <span
                   className="text-[12vw] lg:text-[8vw] font-black text-zinc-200 uppercase tracking-[-0.05em] select-none"
-                  style={{ fontFamily: "var(--font-display)" }}
+                  style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
                 >
                   1984
                 </span>
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-zinc-100 to-transparent" />
               <div className="absolute bottom-8 left-8 right-8">
-                <div className="text-zinc-900 font-black text-5xl tracking-[-0.04em]" style={{ fontFamily: "var(--font-display)" }}>40</div>
+                <div className="text-zinc-900 font-black text-5xl tracking-[-0.04em]" style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>40</div>
                 <div className="text-zinc-500 text-xs tracking-[0.2em] uppercase">Años de excelencia en ingeniería</div>
               </div>
             </div>

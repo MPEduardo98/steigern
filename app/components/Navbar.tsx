@@ -25,7 +25,7 @@ export default function Navbar() {
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
           ? "bg-white/95 backdrop-blur-md border-b border-zinc-200 shadow-sm"
@@ -36,10 +36,10 @@ export default function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
           <span
-            className="text-[#E02020] text-2xl leading-none font-bankgothic"
+            className="text-[#E02020] text-2xl leading-none"
             style={{
-              fontFamily: "'BankGothic', 'BankGothic Md BT', 'Bank Gothic', 'Helvetica Neue', Arial, sans-serif",
-              fontWeight: 700,
+              fontFamily: "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
+              fontWeight: 300,
               letterSpacing: "0.15em",
               textTransform: "uppercase",
             }}

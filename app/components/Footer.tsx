@@ -8,8 +8,8 @@ export default function Footer() {
               <span
                 className="text-[#E02020] text-xl"
                 style={{
-                  fontFamily: "'BankGothic', 'BankGothic Md BT', 'Bank Gothic', 'Helvetica Neue', Arial, sans-serif",
-                  fontWeight: 700,
+                  fontFamily: "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
+                  fontWeight: 300,
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
                 }}

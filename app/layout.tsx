@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Barlow } from "next/font/google";
+import { Open_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const barlowCondensed = Barlow_Condensed({
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
-  variable: "--font-display",
-});
-
-const barlow = Barlow({
+const openSans = Open_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-body",
+});
+
+const bankGothic = localFont({
+  src: "../public/fonts/BankGothicBT-Light.woff2",
+  variable: "--font-bankgothic",
+  weight: "300",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className={`${barlowCondensed.variable} ${barlow.variable} font-body antialiased bg-white text-zinc-900`}>
+      <body className={`${openSans.variable} ${bankGothic.variable} font-body antialiased bg-white text-zinc-900`}>
         {children}
       </body>
     </html>

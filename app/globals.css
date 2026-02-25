@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: var(--font-display);
+  --font-display: var(--font-bankgothic);
   --font-body: var(--font-body);
 }
 
@@ -16,33 +16,24 @@ html {
 }
 
 body {
-  font-family: var(--font-body), system-ui, sans-serif;
+  font-family: var(--font-body), 'Open Sans', system-ui, sans-serif;
   background-color: #ffffff;
   color: #111111;
 }
 
-/* Bank Gothic for STEIGERN brand name */
-@font-face {
-    font-family: 'Bank Gothic';
-    src: local('Bank Gothic Light'), local('Bank-Gothic-Light'),
-        url('/fonts/BankGothicBT-Light.woff2') format('woff2'),
-        url('/fonts/BankGothicBT-Light.woff') format('woff'),
-        url('BankGothicBT-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-  }
-
+/* Bank Gothic — cargada via next/font/local en layout.tsx */
 .font-bankgothic {
-  font-family: 'BankGothic', 'BankGothic Md BT', 'Bank Gothic', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 700;
+  font-family: var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .font-body {
-  font-family: var(--font-body), system-ui, sans-serif;
+  font-family: var(--font-body), 'Open Sans', system-ui, sans-serif;
 }
 
 .font-display {
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
 }

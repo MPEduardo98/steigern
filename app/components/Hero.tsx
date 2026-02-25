@@ -3,10 +3,16 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+const bankGothicStyle = {
+  fontFamily: "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
+  fontWeight: 300,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase" as const,
+};
+
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
@@ -14,50 +20,14 @@ export default function Hero() {
       ref={ref}
       className="relative w-full min-h-screen flex items-center overflow-hidden bg-white"
     >
-      {/* Industrial grid background - light */}
-      <div
-        className="absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #000 1px, transparent 1px),
-            linear-gradient(to bottom, #000 1px, transparent 1px)
-          `,
-          backgroundSize: "80px 80px",
-        }}
-      />
-
       {/* Red accent bar — left */}
       <motion.div
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.3 }}
         style={{ originY: 0 }}
         className="absolute left-0 top-0 w-1 h-full bg-[#E02020]"
       />
-
-      {/* Large background text */}
-      <motion.div
-        style={{ y, opacity }}
-        className="absolute right-0 bottom-8 pointer-events-none select-none overflow-hidden"
-      >
-        <span
-          className="text-[22vw] font-black tracking-[-0.05em] leading-none text-zinc-900/[0.04] uppercase"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          STEIGERN
-        </span>
-      </motion.div>
-
-      {/* Diagonal accent decoration */}
-      <div className="absolute top-0 right-0 w-[40%] h-full overflow-hidden pointer-events-none">
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-          className="absolute inset-0 bg-[#E02020]/[0.04]"
-          style={{ clipPath: "polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
-        />
-      </div>
 
       {/* Content */}
       <motion.div
@@ -77,14 +47,14 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Headline — slogan stays in English per brand guidelines */}
-        <div className="overflow-hidden mb-4">
+        {/* Headline — slogan en Bank Gothic, solo esto va en inglés */}
+        <div className="overflow-hidden mb-2">
           <motion.h1
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
-            className="text-zinc-900 font-black text-[clamp(3.5rem,8vw,8rem)] leading-[0.95] tracking-[-0.03em] uppercase"
-            style={{ fontFamily: "var(--font-display)" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.6 }}
+            className="text-zinc-900 text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
+            style={bankGothicStyle}
           >
             We Enjoy
           </motion.h1>
@@ -93,9 +63,9 @@ export default function Hero() {
           <motion.h1
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.75 }}
-            className="text-[#E02020] font-black text-[clamp(3.5rem,8vw,8rem)] leading-[0.95] tracking-[-0.03em] uppercase"
-            style={{ fontFamily: "var(--font-display)" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.75 }}
+            className="text-[#E02020] text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
+            style={bankGothicStyle}
           >
             Making Machines
           </motion.h1>
@@ -142,7 +112,7 @@ export default function Hero() {
             { value: "60+", label: "Países Atendidos" },
           ].map(({ value, label }) => (
             <div key={label}>
-              <div className="text-3xl font-black text-zinc-900 tracking-[-0.03em]">{value}</div>
+              <div className="text-3xl font-bold text-zinc-900">{value}</div>
               <div className="text-xs text-zinc-400 tracking-[0.12em] uppercase mt-1">{label}</div>
             </div>
           ))}
