@@ -15,13 +15,23 @@ html {
   color-scheme: light;
 }
 
+html.dark {
+  color-scheme: dark;
+}
+
 body {
   font-family: var(--font-body), 'Open Sans', system-ui, sans-serif;
   background-color: #ffffff;
   color: #111111;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Bank Gothic — cargada via next/font/local en layout.tsx */
+html.dark body {
+  background-color: #0a0a0a;
+  color: #f4f4f5;
+}
+
+/* Bank Gothic */
 .font-bankgothic {
   font-family: var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;

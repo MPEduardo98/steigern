@@ -51,10 +51,8 @@ export default function Industries() {
   return (
     <section
       id="industries"
-      className="relative w-full py-28 bg-white overflow-hidden"
+      className="relative w-full py-28 bg-white dark:bg-zinc-950 overflow-hidden transition-colors duration-300"
     >
-
-
       <div ref={ref} className="relative max-w-[1440px] mx-auto px-8 lg:px-20">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
           <div>
@@ -73,7 +71,7 @@ export default function Industries() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-zinc-900 font-black text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase"
+              className="text-zinc-900 dark:text-zinc-100 font-black text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase"
               style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Industrias
@@ -85,7 +83,7 @@ export default function Industries() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left: selector */}
-          <div className="flex flex-col gap-0 border-t border-zinc-200">
+          <div className="flex flex-col gap-0 border-t border-zinc-200 dark:border-zinc-800">
             {industries.map((ind, i) => (
               <motion.button
                 key={ind.id}
@@ -93,23 +91,25 @@ export default function Industries() {
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
                 onClick={() => setActive(ind.id)}
-                className={`flex items-center justify-between py-5 border-b border-zinc-200 text-left transition-all duration-200 group ${
+                className={`flex items-center justify-between py-5 border-b border-zinc-200 dark:border-zinc-800 text-left transition-all duration-200 group ${
                   active === ind.id ? "pl-4 border-l-2 border-l-[#E02020]" : "pl-0"
                 }`}
               >
                 <span
                   className={`font-black uppercase tracking-[-0.01em] text-lg transition-colors duration-200 ${
-                    active === ind.id ? "text-zinc-900" : "text-zinc-400 group-hover:text-zinc-700"
+                    active === ind.id
+                      ? "text-zinc-900 dark:text-zinc-100"
+                      : "text-zinc-400 dark:text-zinc-600 group-hover:text-zinc-700 dark:group-hover:text-zinc-300"
                   }`}
                   style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
                 >
                   {ind.label}
                 </span>
-                {active === ind.id && (
-                  <span className="text-[#E02020] text-xs font-bold tracking-[0.15em]">
-                    {ind.stat}
-                  </span>
-                )}
+                <span className={`text-xs font-bold tracking-[0.15em] uppercase transition-colors duration-200 ${
+                  active === ind.id ? "text-[#E02020]" : "text-zinc-300 dark:text-zinc-700"
+                }`}>
+                  {ind.stat}
+                </span>
               </motion.button>
             ))}
           </div>
@@ -119,18 +119,21 @@ export default function Industries() {
             key={active}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
             className="flex flex-col justify-center"
           >
             <div className="w-12 h-1 bg-[#E02020] mb-8" />
             <h3
-              className="text-zinc-900 font-black text-3xl uppercase tracking-[-0.02em] mb-6"
+              className="text-zinc-900 dark:text-zinc-100 font-black text-3xl uppercase tracking-[-0.02em] mb-6"
               style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               {activeData.label}
             </h3>
-            <p className="text-zinc-500 text-base leading-relaxed mb-8">{activeData.desc}</p>
+            <p className="text-zinc-500 dark:text-zinc-400 text-base leading-relaxed mb-8">
+              {activeData.desc}
+            </p>
             <div className="flex items-center gap-3">
+              <span className="w-6 h-px bg-[#E02020]" />
               <span className="text-[#E02020] text-xs font-bold tracking-[0.2em] uppercase">
                 {activeData.stat}
               </span>

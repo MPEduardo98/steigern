@@ -18,7 +18,7 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative w-full min-h-screen flex items-center overflow-hidden bg-white"
+      className="relative w-full min-h-screen flex items-center overflow-hidden bg-white dark:bg-zinc-950 transition-colors duration-300"
     >
       {/* Red accent bar — left */}
       <motion.div
@@ -27,6 +27,14 @@ export default function Hero() {
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.3 }}
         style={{ originY: 0 }}
         className="absolute left-0 top-0 w-1 h-full bg-[#E02020]"
+      />
+
+      {/* Subtle grid pattern dark mode */}
+      <div className="absolute inset-0 opacity-0 dark:opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
       />
 
       {/* Content */}
@@ -47,13 +55,13 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Headline — slogan en Bank Gothic, solo esto va en inglés */}
+        {/* Headline */}
         <div className="overflow-hidden mb-2">
           <motion.h1
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.6 }}
-            className="text-zinc-900 text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
+            className="text-zinc-900 dark:text-zinc-100 text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
             style={bankGothicStyle}
           >
             We Enjoy
@@ -78,8 +86,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1.0 }}
           className="flex flex-col sm:flex-row sm:items-end gap-8 max-w-2xl"
         >
-          <p className="text-zinc-500 text-lg leading-relaxed flex-1">
-            Soluciones de ingeniería de precisión y automatización industrial que transforman 
+          <p className="text-zinc-500 dark:text-zinc-400 text-lg leading-relaxed flex-1">
+            Soluciones de ingeniería de precisión y automatización industrial que transforman
             las operaciones de manufactura. Construido para rendir. Diseñado para durar.
           </p>
           <div className="flex gap-3 shrink-0">
@@ -91,7 +99,7 @@ export default function Hero() {
             </a>
             <a
               href="#about"
-              className="text-xs font-bold tracking-[0.12em] uppercase px-6 py-3.5 border border-zinc-300 text-zinc-600 hover:border-zinc-900 hover:text-zinc-900 transition-colors duration-200"
+              className="text-xs font-bold tracking-[0.12em] uppercase px-6 py-3.5 border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-zinc-900 dark:hover:border-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
             >
               Nuestra Historia
             </a>
@@ -103,7 +111,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.3 }}
-          className="flex flex-wrap gap-12 mt-20 pt-10 border-t border-zinc-200"
+          className="flex flex-wrap gap-12 mt-20 pt-10 border-t border-zinc-200 dark:border-zinc-800"
         >
           {[
             { value: "40+", label: "Años de Ingeniería" },
@@ -112,8 +120,8 @@ export default function Hero() {
             { value: "60+", label: "Países Atendidos" },
           ].map(({ value, label }) => (
             <div key={label}>
-              <div className="text-3xl font-bold text-zinc-900">{value}</div>
-              <div className="text-xs text-zinc-400 tracking-[0.12em] uppercase mt-1">{label}</div>
+              <div className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">{value}</div>
+              <div className="text-xs text-zinc-400 dark:text-zinc-500 tracking-[0.12em] uppercase mt-1">{label}</div>
             </div>
           ))}
         </motion.div>
@@ -126,11 +134,11 @@ export default function Hero() {
         transition={{ delay: 1.8 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-zinc-400 text-[10px] tracking-[0.2em] uppercase">Scroll</span>
+        <span className="text-zinc-400 dark:text-zinc-600 text-[10px] tracking-[0.2em] uppercase">Scroll</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-px h-8 bg-gradient-to-b from-zinc-400 to-transparent"
+          className="w-px h-8 bg-gradient-to-b from-zinc-400 dark:from-zinc-600 to-transparent"
         />
       </motion.div>
     </section>

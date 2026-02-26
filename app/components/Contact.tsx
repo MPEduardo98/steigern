@@ -17,10 +17,8 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative w-full py-28 bg-white overflow-hidden"
+      className="relative w-full py-28 bg-white dark:bg-zinc-950 overflow-hidden transition-colors duration-300"
     >
-
-
       <div className="relative max-w-[1440px] mx-auto px-8 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left */}
@@ -41,7 +39,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-zinc-900 font-black text-[clamp(2.2rem,4vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase mb-8"
+              className="text-zinc-900 dark:text-zinc-100 font-black text-[clamp(2.2rem,4vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase mb-8"
               style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Inicia Tu
@@ -53,7 +51,7 @@ export default function Contact() {
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-zinc-500 text-base leading-relaxed mb-12"
+              className="text-zinc-500 dark:text-zinc-400 text-base leading-relaxed mb-12"
             >
               Cuéntanos sobre tu desafío de manufactura. Nuestros ingenieros evaluarán tus requerimientos y entregarán una propuesta en 5 días hábiles.
             </motion.p>
@@ -71,7 +69,7 @@ export default function Contact() {
               ].map((c) => (
                 <div key={c.label}>
                   <div className="text-[10px] text-zinc-400 tracking-[0.2em] uppercase mb-1">{c.label}</div>
-                  <div className="text-zinc-700 text-sm font-medium">{c.value}</div>
+                  <div className="text-zinc-700 dark:text-zinc-300 text-sm font-medium">{c.value}</div>
                 </div>
               ))}
             </motion.div>
@@ -90,10 +88,13 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-zinc-900 font-black text-2xl uppercase tracking-[-0.02em] mb-3" style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>
+                <h3
+                  className="text-zinc-900 dark:text-zinc-100 font-black text-2xl uppercase tracking-[-0.02em] mb-3"
+                  style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+                >
                   Consulta Enviada
                 </h3>
-                <p className="text-zinc-500 text-sm max-w-xs">
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-xs">
                   Nos pondremos en contacto en un plazo de 5 días hábiles con una evaluación detallada de tu proyecto.
                 </p>
               </div>
@@ -102,24 +103,24 @@ export default function Contact() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Nombre</label>
-                    <input required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors" placeholder="Hans" />
+                    <input required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Hans" />
                   </div>
                   <div>
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Apellido</label>
-                    <input required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors" placeholder="Müller" />
+                    <input required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Müller" />
                   </div>
                 </div>
                 <div>
                   <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Empresa</label>
-                  <input required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors" placeholder="Acme Manufacturing GmbH" />
+                  <input required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Acme Manufacturing GmbH" />
                 </div>
                 <div>
                   <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Correo Electrónico</label>
-                  <input type="email" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors" placeholder="hans@acme.de" />
+                  <input type="email" required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="hans@acme.de" />
                 </div>
                 <div>
                   <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Industria</label>
-                  <select className="w-full bg-zinc-50 border border-zinc-200 text-zinc-700 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors">
+                  <select className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors">
                     <option>Automotriz</option>
                     <option>Aeroespacial</option>
                     <option>Farma y Alimentos</option>
@@ -131,7 +132,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Descripción del Proyecto</label>
-                  <textarea required rows={4} className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors resize-none" placeholder="Describe tu desafío de producción, volumen, restricciones..." />
+                  <textarea required rows={4} className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Describe tu desafío de producción, volumen, restricciones..." />
                 </div>
                 <button
                   type="submit"

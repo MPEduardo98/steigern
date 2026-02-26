@@ -28,7 +28,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-zinc-200 shadow-sm"
+          ? "bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -55,7 +55,7 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="text-xs font-semibold tracking-[0.12em] uppercase text-zinc-500 hover:text-zinc-900 transition-colors duration-200"
+              className="text-xs font-semibold tracking-[0.12em] uppercase text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -80,15 +80,15 @@ export default function Navbar() {
         >
           <motion.span
             animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-zinc-900 transition-colors"
+            className="block w-6 h-0.5 bg-zinc-900 dark:bg-zinc-100 transition-colors"
           />
           <motion.span
             animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-6 h-0.5 bg-zinc-900 transition-colors"
+            className="block w-6 h-0.5 bg-zinc-900 dark:bg-zinc-100 transition-colors"
           />
           <motion.span
             animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-zinc-900 transition-colors"
+            className="block w-6 h-0.5 bg-zinc-900 dark:bg-zinc-100 transition-colors"
           />
         </button>
       </div>
@@ -101,7 +101,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden bg-white border-t border-zinc-100"
+            className="md:hidden overflow-hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800"
           >
             <nav className="flex flex-col px-6 py-4 gap-4">
               {navLinks.map((link) => (
@@ -109,7 +109,7 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-sm font-semibold tracking-[0.1em] uppercase text-zinc-600 hover:text-[#E02020] transition-colors"
+                  className="text-sm font-semibold tracking-[0.1em] uppercase text-zinc-600 dark:text-zinc-300 hover:text-[#E02020] dark:hover:text-[#E02020] transition-colors"
                 >
                   {link.label}
                 </a>

@@ -32,9 +32,7 @@ const solutions = [
 
 const container = {
   hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12 },
-  },
+  show: { transition: { staggerChildren: 0.12 } },
 };
 
 const item = {
@@ -49,10 +47,9 @@ export default function Solutions() {
   return (
     <section
       id="solutions"
-      className="relative w-full py-28 bg-zinc-50 overflow-hidden"
+      className="relative w-full py-28 bg-zinc-50 dark:bg-zinc-900 overflow-hidden transition-colors duration-300"
     >
-      {/* Accent stripe */}
-      <div className="absolute top-0 left-0 w-full h-px bg-zinc-200" />
+      <div className="absolute top-0 left-0 w-full h-px bg-zinc-200 dark:bg-zinc-800" />
 
       <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
         {/* Header */}
@@ -75,7 +72,7 @@ export default function Solutions() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-zinc-900 font-black text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase"
+              className="text-zinc-900 dark:text-zinc-100 font-black text-[clamp(2.2rem,4.5vw,4.5rem)] leading-[1.0] tracking-[-0.03em] uppercase"
               style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Soluciones de
@@ -88,7 +85,7 @@ export default function Solutions() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="text-zinc-500 max-w-sm text-base leading-relaxed"
+            className="text-zinc-500 dark:text-zinc-400 max-w-sm text-base leading-relaxed"
           >
             Cada desafío exige una respuesta precisa. Nuestros equipos de ingeniería diseñan sistemas que rinden, día tras día.
           </motion.p>
@@ -100,30 +97,30 @@ export default function Solutions() {
           variants={container}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-200"
+          className="grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-200 dark:bg-zinc-800"
         >
           {solutions.map((s) => (
             <motion.div
               key={s.num}
               variants={item}
-              className="bg-white p-10 group hover:bg-zinc-50 transition-colors duration-300"
+              className="bg-white dark:bg-zinc-900 p-10 group hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors duration-300"
             >
               <div className="flex items-start justify-between mb-6">
                 <span className="text-[#E02020] text-xs font-bold tracking-[0.2em]">{s.num}</span>
-                <div className="w-6 h-px bg-zinc-200 group-hover:bg-[#E02020] transition-colors duration-300 mt-2" />
+                <div className="w-6 h-px bg-zinc-200 dark:bg-zinc-700 group-hover:bg-[#E02020] transition-colors duration-300 mt-2" />
               </div>
               <h3
-                className="text-zinc-900 font-black text-2xl uppercase tracking-[-0.02em] mb-4"
+                className="text-zinc-900 dark:text-zinc-100 font-black text-2xl uppercase tracking-[-0.02em] mb-4"
                 style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
               >
                 {s.title}
               </h3>
-              <p className="text-zinc-500 text-sm leading-relaxed mb-6">{s.desc}</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed mb-6">{s.desc}</p>
               <div className="flex flex-wrap gap-2">
                 {s.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] font-bold tracking-[0.15em] uppercase px-3 py-1 border border-zinc-200 text-zinc-400"
+                    className="text-[10px] font-bold tracking-[0.15em] uppercase px-3 py-1 border border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500"
                   >
                     {tag}
                   </span>
