@@ -4,12 +4,12 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const brands = [
-  { name: "Siemens", src: "/marcas/simens.webp" },
-  { name: "RK Rose+Krieger", src: "/marcas/rkrose.webp" },
-  { name: "Minitec", src: "/marcas/minitec.webp" },
-  { name: "Festo", src: "/marcas/festo.webp" },
-  { name: "Cognex", src: "/marcas/cognex.webp" },
-  { name: "Bosch Rexroth", src: "/marcas/bosch_rexroth.webp" },
+  { name: "Siemens",         src: "/marcas/simens.svg" },
+  { name: "RK Rose+Krieger", src: "/marcas/rkrose.svg" },
+  { name: "Minitec",         src: "/marcas/minitec.svg" },
+  { name: "Festo",           src: "/marcas/festo.svg" },
+  { name: "Cognex",          src: "/marcas/cognex.svg" },
+  { name: "Bosch Rexroth",   src: "/marcas/bosch_rexroth.svg" },
 ];
 
 const brandsDup = [...brands, ...brands];
@@ -22,6 +22,7 @@ export default function Brands() {
     <section ref={ref} className="relative w-full py-28 bg-white dark:bg-zinc-950 overflow-hidden transition-colors duration-300">
       <div className="absolute top-0 left-0 w-full h-px bg-zinc-200 dark:bg-zinc-800" />
 
+      {/* Header */}
       <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mb-16 items-end">
           <div>
@@ -61,47 +62,69 @@ export default function Brands() {
         </div>
       </div>
 
-      {/* Infinite scroll carousel */}
+      {/* Carousel — constrained to 1440px */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="relative w-full overflow-hidden border-y border-zinc-100 dark:border-zinc-800"
-        style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}
+        className="max-w-[1440px] mx-auto px-8 lg:px-20"
       >
         <div
-          className="flex gap-0"
-          style={{ animation: "brands-scroll 28s linear infinite", width: "max-content" }}
+          className="relative overflow-hidden border-y border-zinc-100 dark:border-zinc-800"
+          style={{ maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)" }}
         >
-          {brandsDup.map((brand, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-center px-14 py-10 border-r border-zinc-100 dark:border-zinc-800 shrink-0"
-              style={{ minWidth: "200px" }}
-            >
-              <img
-                src={brand.src}
-                alt={brand.name}
-                loading="lazy"
-                className="h-10 w-auto object-contain grayscale opacity-40 dark:opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-              />
-            </div>
-          ))}
+          <div
+            className="flex"
+            style={{ animation: "brands-scroll 28s linear infinite", width: "max-content" }}
+          >
+            {brandsDup.map((brand, i) => (
+              <div
+                key={i}
+                className="brands-slide flex items-center justify-center px-12 py-10 border-r border-zinc-100 dark:border-zinc-800 shrink-0 group"
+                style={{ minWidth: "200px" }}
+              >
+                <img
+                  src={brand.src}
+                  alt={brand.name}
+                  loading="lazy"
+                  className="brands-logo h-10 w-auto object-contain transition-all duration-300"
+                />
+              </div>
+            ))}
+          </div>
         </div>
-        <style>{`
-          @keyframes brands-scroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-        `}</style>
       </motion.div>
 
+      {/* Disclaimer */}
       <div className="max-w-[1440px] mx-auto px-8 lg:px-20 mt-6">
         <p className="text-[11px] text-zinc-400 dark:text-zinc-600 text-center leading-relaxed">
           *Todas las marcas y logotipos mostrados son propiedad de sus respectivos titulares.
           Usados únicamente con fines informativos para mostrar compatibilidad y experiencia tecnológica.
         </p>
       </div>
+
+      <style>{`
+        @keyframes brands-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+
+        /* Light mode: logos oscuros y tenues, hover en color original */
+        .brands-logo {
+          filter: brightness(0) saturate(100%) opacity(0.25);
+        }
+        .brands-slide:hover .brands-logo {
+          filter: brightness(0) saturate(100%) opacity(0.75);
+        }
+
+        /* Dark mode: logos blancos y tenues, hover más brillantes */
+        html.dark .brands-logo {
+          filter: brightness(0) invert(1) opacity(0.25);
+        }
+        html.dark .brands-slide:hover .brands-logo {
+          filter: brightness(0) invert(1) opacity(0.8);
+        }
+      `}</style>
     </section>
   );
 }
