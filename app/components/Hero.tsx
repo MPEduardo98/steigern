@@ -3,10 +3,10 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-const bankGothicStyle = {
-  fontFamily: "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
-  fontWeight: 300,
-  letterSpacing: "0.08em",
+const headingStyle = {
+  fontFamily: "var(--font-body), 'Open Sans', sans-serif",
+  fontWeight: 900,
+  letterSpacing: "-0.03em",
   textTransform: "uppercase" as const,
 };
 
@@ -14,6 +14,7 @@ export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
   return (
     <section
@@ -26,104 +27,142 @@ export default function Hero() {
         animate={{ scaleY: 1 }}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.3 }}
         style={{ originY: 0 }}
-        className="absolute left-0 top-0 w-1 h-full bg-[#E02020]"
+        className="absolute left-0 top-0 w-1 h-full bg-[#E02020] z-10"
       />
 
       {/* Subtle grid pattern dark mode */}
-      <div className="absolute inset-0 opacity-0 dark:opacity-[0.03] pointer-events-none"
+      <div
+        className="absolute inset-0 opacity-0 dark:opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+          backgroundImage:
+            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
 
-      {/* Content */}
+      {/* ── LAYOUT: two-column on large screens ── */}
       <motion.div
         style={{ opacity }}
-        className="relative z-10 max-w-[1440px] mx-auto w-full px-8 lg:px-20 pt-24 pb-16"
+        className="relative z-10 max-w-[1440px] mx-auto w-full px-8 lg:px-20 pt-24 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center"
       >
-        {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="flex items-center gap-3 mb-10"
-        >
-          <span className="w-8 h-px bg-[#E02020]" />
-          <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">
-            Excelencia Industrial
-          </span>
-        </motion.div>
-
-        {/* Headline */}
-        <div className="overflow-hidden mb-2">
-          <motion.h1
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.6 }}
-            className="text-zinc-900 dark:text-zinc-100 text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
-            style={bankGothicStyle}
+        {/* ── LEFT: Text content ── */}
+        <div>
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="flex items-center gap-3 mb-10"
           >
-            We Enjoy
-          </motion.h1>
-        </div>
-        <div className="overflow-hidden mb-10">
-          <motion.h1
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.75 }}
-            className="text-[#E02020] text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
-            style={bankGothicStyle}
-          >
-            Making Machines
-          </motion.h1>
-        </div>
+            <span className="w-8 h-px bg-[#E02020]" />
+            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">
+              Excelencia Industrial
+            </span>
+          </motion.div>
 
-        {/* Sub + CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
-          className="flex flex-col sm:flex-row sm:items-end gap-8 max-w-2xl"
-        >
-          <p className="text-zinc-500 dark:text-zinc-400 text-lg leading-relaxed flex-1">
-            Soluciones de ingeniería de precisión y automatización industrial que transforman
-            las operaciones de manufactura. Construido para rendir. Diseñado para durar.
-          </p>
-          <div className="flex gap-3 shrink-0">
-            <a
-              href="#solutions"
-              className="text-xs font-bold tracking-[0.12em] uppercase px-6 py-3.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
+          {/* Headline */}
+          <div className="overflow-hidden mb-2">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.6 }}
+              className="text-zinc-900 dark:text-zinc-100 text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
+              style={headingStyle}
             >
-              Ver Soluciones
-            </a>
-            <a
-              href="#about"
-              className="text-xs font-bold tracking-[0.12em] uppercase px-6 py-3.5 border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-zinc-900 dark:hover:border-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
-            >
-              Nuestra Historia
-            </a>
+              Ingeniería que
+            </motion.h1>
           </div>
-        </motion.div>
+          <div className="overflow-hidden mb-10">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.75 }}
+              className="text-[#E02020] text-[clamp(1.8rem,3.5vw,3.5rem)] leading-tight"
+              style={headingStyle}
+            >
+              Transforma el Futuro
+            </motion.h1>
+          </div>
 
-        {/* Stats row */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="flex flex-wrap gap-12 mt-20 pt-10 border-t border-zinc-200 dark:border-zinc-800"
-        >
-          {[
-            { value: "40+", label: "Años de Ingeniería" },
-            { value: "1,200+", label: "Máquinas Instaladas" },
-            { value: "98%", label: "Garantía de Disponibilidad" },
-            { value: "60+", label: "Países Atendidos" },
-          ].map(({ value, label }) => (
-            <div key={label}>
-              <div className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">{value}</div>
-              <div className="text-xs text-zinc-400 dark:text-zinc-500 tracking-[0.12em] uppercase mt-1">{label}</div>
+          {/* Sub + CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+            className="flex flex-col gap-8 max-w-lg"
+          >
+            <p className="text-zinc-500 dark:text-zinc-400 text-lg leading-relaxed">
+              Soluciones de ingeniería de precisión y automatización industrial que transforman
+              las operaciones de manufactura. Construido para rendir. Diseñado para durar.
+            </p>
+            <div className="flex gap-3">
+              <a
+                href="#solutions"
+                className="text-xs font-bold tracking-[0.12em] uppercase px-6 py-3.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
+              >
+                Ver Soluciones
+              </a>
+              <a
+                href="#about"
+                className="text-xs font-bold tracking-[0.12em] uppercase px-6 py-3.5 border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:border-zinc-900 dark:hover:border-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-200"
+              >
+                Nuestra Historia
+              </a>
             </div>
-          ))}
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.3 }}
+            className="flex flex-wrap gap-10 mt-16 pt-10 border-t border-zinc-200 dark:border-zinc-800"
+          >
+            {[
+              { value: "40+", label: "Años de Ingeniería" },
+              { value: "1,200+", label: "Máquinas Instaladas" },
+              { value: "98%", label: "Garantía de Disponibilidad" },
+              { value: "60+", label: "Países Atendidos" },
+            ].map(({ value, label }) => (
+              <div key={label}>
+                <div className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">{value}</div>
+                <div className="text-xs text-zinc-400 dark:text-zinc-500 tracking-[0.12em] uppercase mt-1">{label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* ── RIGHT: Machine image ── */}
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.7 }}
+          className="relative flex items-center justify-center lg:justify-end"
+          style={{ y: imageY }}
+        >
+          {/* Decorative red corner accent */}
+          <div className="absolute top-4 right-4 w-16 h-16 border-t-2 border-r-2 border-[#E02020] opacity-60 pointer-events-none z-10" />
+          <div className="absolute bottom-4 left-4 w-16 h-16 border-b-2 border-l-2 border-[#E02020] opacity-60 pointer-events-none z-10" />
+
+          {/* Glow / shadow behind machine — adapts to theme */}
+          <div className="absolute inset-0 rounded-full bg-zinc-100 dark:bg-zinc-800 opacity-30 blur-3xl scale-75 pointer-events-none" />
+
+          <motion.img
+            src="/JIG_Glass_Assembly_No_Fondo.png"
+            alt="JIG Glass Assembly — STEIGERN"
+            loading="eager"
+            initial={{ scale: 0.92 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.8 }}
+            /* In light mode the image has a black bg from the render — mix-blend-mode darkens
+               only the black pixels so it disappears on white; on dark bg it looks native. */
+            className="relative w-full max-w-[580px] lg:max-w-[640px] h-auto object-contain
+                       drop-shadow-2xl
+                       dark:drop-shadow-[0_32px_64px_rgba(224,32,32,0.12)]
+                       mix-blend-multiply dark:mix-blend-normal
+                       select-none pointer-events-none"
+            draggable={false}
+          />
         </motion.div>
       </motion.div>
 
@@ -132,7 +171,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
       >
         <span className="text-zinc-400 dark:text-zinc-600 text-[10px] tracking-[0.2em] uppercase">Scroll</span>
         <motion.div

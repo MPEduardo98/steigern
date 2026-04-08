@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar";
+import Navbar from "./global/header/Header";
 import Hero from "./components/Hero";
 import Solutions from "./components/Solutions";
 import Industries from "./components/Industries";
@@ -7,7 +7,7 @@ import Metrics from "./components/Metrics";
 import Brands from "./components/Brands";
 import GlobalPresence from "./components/Globalpresence";
 import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import Footer from "./global/footer/Footer";
 
 export default function Home() {
   return (
