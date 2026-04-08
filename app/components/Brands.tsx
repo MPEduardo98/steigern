@@ -62,7 +62,7 @@ export default function Brands() {
         </div>
       </div>
 
-      {/* Carousel — constrained to 1440px */}
+      {/* Carousel */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
@@ -80,14 +80,14 @@ export default function Brands() {
             {brandsDup.map((brand, i) => (
               <div
                 key={i}
-                className="brands-slide flex items-center justify-center px-12 py-10 border-r border-zinc-100 dark:border-zinc-800 shrink-0 group"
-                style={{ minWidth: "200px" }}
+                className="brands-slide flex items-center justify-center px-14 py-12 border-r border-zinc-100 dark:border-zinc-800 shrink-0 group"
+                style={{ minWidth: "240px" }}
               >
                 <img
                   src={brand.src}
                   alt={brand.name}
                   loading="lazy"
-                  className="brands-logo h-10 w-auto object-contain transition-all duration-300"
+                  className="brands-logo h-14 w-auto object-contain transition-all duration-300"
                 />
               </div>
             ))}
@@ -109,7 +109,6 @@ export default function Brands() {
           100% { transform: translateX(-50%); }
         }
 
-        /* Light mode: logos oscuros y tenues, hover en color original */
         .brands-logo {
           filter: brightness(0) saturate(100%) opacity(0.25);
         }
@@ -117,7 +116,6 @@ export default function Brands() {
           filter: brightness(0) saturate(100%) opacity(0.75);
         }
 
-        /* Dark mode: logos blancos y tenues, hover más brillantes */
         html.dark .brands-logo {
           filter: brightness(0) invert(1) opacity(0.25);
         }

@@ -6,33 +6,57 @@ import { useRef } from "react";
 const solutions = [
   {
     num: "01",
-    title: "Automatización Industrial",
-    desc: "Sistemas de automatización de extremo a extremo que optimizan el rendimiento, reducen el tiempo de inactividad y se integran perfectamente con la infraestructura existente.",
-    tags: ["Sistemas PLC", "SCADA", "Integración MES"],
+    title: "Perfil Estructural de Aluminio",
+    desc: "Los perfiles estructurales de aluminio para aplicaciones en entornos de trabajo son más eficientes cuando se adaptan individualmente a su propósito específico.",
+    tags: ["Modular", "Ligero", "Adaptable"],
+    href: "/soluciones/perfil-de-aluminio",
+    img: "/assets/images/soluciones/perfil.png",
   },
   {
     num: "02",
-    title: "Robótica de Precisión",
-    desc: "Celdas robóticas diseñadas a medida para ensamblaje, soldadura y manejo de materiales con precisión submilimétrica.",
-    tags: ["Robots Colaborativos", "Sistemas de Visión", "Detección de Fuerza"],
+    title: "Sistemas de Transporte",
+    desc: "Desde el desarrollo temprano del concepto hasta el estudio detallado de factibilidad, incluidos proyectos para la manipulación de materiales que consideran la logística de forma integral.",
+    tags: ["Conveyors", "Manejo de Materiales", "Logística"],
+    href: "/soluciones/conveyors",
+    img: "/assets/images/soluciones/conveyors.JPG",
   },
   {
     num: "03",
-    title: "Ingeniería de Máquinas",
-    desc: "Desde el concepto hasta la puesta en marcha: maquinaria personalizada diseñada en torno a sus necesidades de producción y restricciones de planta.",
-    tags: ["Fabricación a Medida", "Modernización", "Balanceo de Línea"],
+    title: "Estaciones de Trabajo",
+    desc: "Diseño ergonómico óptimo que adapta el lugar de trabajo considerando la iluminación, el entorno y las capacidades del operario. Protección y seguridad avanzada.",
+    tags: ["Ergonomía", "Seguridad", "Productividad"],
+    href: "/soluciones/estaciones-de-trabajo",
+    img: "/assets/images/soluciones/estaciones.png",
   },
   {
     num: "04",
-    title: "Gemelo Digital e IIoT",
-    desc: "Monitoreo en tiempo real, mantenimiento predictivo y simulación digital de todo su ecosistema de producción.",
-    tags: ["OPC-UA", "Cómputo en el Borde", "Analítica"],
+    title: "Dispositivos Asistidos por Co-Bots",
+    desc: "Integración de robots colaborativos para asistir y potenciar las capacidades del operario en líneas de ensamble, reduciendo errores y mejorando tiempos de ciclo.",
+    tags: ["Cobots", "Ensamble", "Automatización"],
+    href: "/soluciones/dispositivos-asistidos-por-cobots",
+    img: "/assets/images/soluciones/cobots.png",
+  },
+  {
+    num: "05",
+    title: "Elevación y Guías Lineales",
+    desc: "Sistemas de elevación y guías lineales de precisión para el movimiento controlado de componentes y subconjuntos dentro de líneas de manufactura y ensamblaje.",
+    tags: ["Guías Lineales", "Elevadores", "Precisión"],
+    href: "/soluciones/elevacion-y-guias-lineales",
+    img: "/assets/images/soluciones/elevacion.webp",
+  },
+  {
+    num: "06",
+    title: "Soluciones Lean",
+    desc: "Estructuras básicas industriales y soluciones orientadas a la manufactura esbelta, eliminando desperdicios y optimizando cada etapa del proceso productivo.",
+    tags: ["Lean Manufacturing", "Mejora Continua", "Eficiencia"],
+    href: "/soluciones/soluciones-lean",
+    img: "/assets/images/soluciones/estructuras.png",
   },
 ];
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.1 } },
 };
 
 const item = {
@@ -87,7 +111,7 @@ export default function Solutions() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="text-zinc-500 dark:text-zinc-400 max-w-sm text-base leading-relaxed"
           >
-            Cada desafío exige una respuesta precisa. Nuestros equipos de ingeniería diseñan sistemas que rinden, día tras día.
+            Diseñamos e integramos dispositivos para el ensamble de componentes industriales, automatizando procesos manuales y líneas de manufactura en todos los niveles.
           </motion.p>
         </div>
 
@@ -97,36 +121,50 @@ export default function Solutions() {
           variants={container}
           initial="hidden"
           animate={inView ? "show" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-200 dark:bg-zinc-800"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-zinc-200 dark:bg-zinc-800"
         >
           {solutions.map((s) => (
-            <motion.div
+            <motion.a
               key={s.num}
+              href={s.href}
               variants={item}
-              className="bg-white dark:bg-zinc-900 p-10 group hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors duration-300"
+              className="bg-white dark:bg-zinc-900 group hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors duration-300 flex flex-col"
             >
-              <div className="flex items-start justify-between mb-6">
-                <span className="text-[#E02020] text-xs font-bold tracking-[0.2em]">{s.num}</span>
-                <div className="w-6 h-px bg-zinc-200 dark:bg-zinc-700 group-hover:bg-[#E02020] transition-colors duration-300 mt-2" />
+              {/* Image */}
+              <div className="overflow-hidden bg-zinc-100 dark:bg-zinc-800 aspect-[4/3]">
+                <img
+                  src={s.img}
+                  alt={s.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
-              <h3
-                className="text-zinc-900 dark:text-zinc-100 font-black text-2xl uppercase tracking-[-0.02em] mb-4"
-                style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
-              >
-                {s.title}
-              </h3>
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed mb-6">{s.desc}</p>
-              <div className="flex flex-wrap gap-2">
-                {s.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] font-bold tracking-[0.15em] uppercase px-3 py-1 border border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500"
-                  >
-                    {tag}
-                  </span>
-                ))}
+
+              {/* Content */}
+              <div className="p-8 flex flex-col flex-1">
+                <div className="flex items-start justify-between mb-4">
+                  <span className="text-[#E02020] text-xs font-bold tracking-[0.2em]">{s.num}</span>
+                  <div className="w-6 h-px bg-zinc-200 dark:bg-zinc-700 group-hover:bg-[#E02020] transition-colors duration-300 mt-2" />
+                </div>
+                <h3
+                  className="text-zinc-900 dark:text-zinc-100 font-black text-lg uppercase tracking-[-0.02em] mb-3"
+                  style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+                >
+                  {s.title}
+                </h3>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed mb-5 flex-1">{s.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {s.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-bold tracking-[0.15em] uppercase px-3 py-1 border border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </motion.div>
       </div>

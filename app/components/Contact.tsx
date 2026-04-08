@@ -21,6 +21,7 @@ export default function Contact() {
     >
       <div className="relative max-w-[1440px] mx-auto px-8 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+
           {/* Left */}
           <div>
             <motion.div
@@ -53,7 +54,7 @@ export default function Contact() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="text-zinc-500 dark:text-zinc-400 text-base leading-relaxed mb-12"
             >
-              Cuéntanos sobre tu desafío de manufactura. Nuestros ingenieros evaluarán tus requerimientos y entregarán una propuesta en 5 días hábiles.
+              El primer contacto es sumamente importante para nosotros. Si estás interesado en unirnos a tu equipo de trabajo, nuestros asesores te guiarán desde el diseño hasta la construcción de tu proyecto.
             </motion.p>
 
             <motion.div
@@ -63,9 +64,9 @@ export default function Contact() {
               className="flex flex-col gap-5"
             >
               {[
-                { label: "Sede Central", value: "Parkring 10, 85748 Garching bei München, Alemania" },
-                { label: "Correo Electrónico", value: "engineering@steigern.de" },
-                { label: "Teléfono", value: "+49 89 320 4500" },
+                { label: "Teléfono", value: "+52 (222) 5 82 92 54" },
+                { label: "Correo Electrónico", value: "customerservice@steigern.com.mx" },
+                { label: "Horarios de Atención", value: "Lun – Vie: 8am – 6pm  ·  Sáb: 9am – 2pm" },
               ].map((c) => (
                 <div key={c.label}>
                   <div className="text-[10px] text-zinc-400 tracking-[0.2em] uppercase mb-1">{c.label}</div>
@@ -92,53 +93,117 @@ export default function Contact() {
                   className="text-zinc-900 dark:text-zinc-100 font-black text-2xl uppercase tracking-[-0.02em] mb-3"
                   style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
                 >
-                  Consulta Enviada
+                  Mensaje Enviado
                 </h3>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-xs">
-                  Nos pondremos en contacto en un plazo de 5 días hábiles con una evaluación detallada de tu proyecto.
+                  Uno de nuestros asesores se acercará pronto para conocer tus necesidades y ofrecerte la mejor solución.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                {/* Nombre completo */}
+                <div>
+                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
+                    Nombre Completo <span className="text-[#E02020]">*</span>
+                  </label>
+                  <input
+                    required
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                    placeholder="Tu nombre completo"
+                  />
+                </div>
+
+                {/* Empresa */}
+                <div>
+                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
+                    Empresa <span className="text-[#E02020]">*</span>
+                  </label>
+                  <input
+                    required
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                    placeholder="Nombre de tu empresa"
+                  />
+                </div>
+
+                {/* Email + Teléfono */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Nombre</label>
-                    <input required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Hans" />
+                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
+                      Correo Electrónico <span className="text-[#E02020]">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                      placeholder="tu@empresa.com"
+                    />
                   </div>
                   <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Apellido</label>
-                    <input required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Müller" />
+                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
+                      Teléfono
+                    </label>
+                    <input
+                      type="tel"
+                      className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                      placeholder="+52 222 000 0000"
+                    />
                   </div>
                 </div>
+
+                {/* Función Laboral */}
                 <div>
-                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Empresa</label>
-                  <input required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Acme Manufacturing GmbH" />
-                </div>
-                <div>
-                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Correo Electrónico</label>
-                  <input type="email" required className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="hans@acme.de" />
-                </div>
-                <div>
-                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Industria</label>
-                  <select className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors">
-                    <option>Automotriz</option>
-                    <option>Aeroespacial</option>
-                    <option>Farma y Alimentos</option>
-                    <option>Energía e Industria Pesada</option>
-                    <option>Electrónica</option>
-                    <option>Intrologística</option>
-                    <option>Otra</option>
+                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
+                    Función Laboral <span className="text-[#E02020]">*</span>
+                  </label>
+                  <select
+                    required
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors"
+                  >
+                    <option value="">Selecciona una opción</option>
+                    <option>Gerente / Dirección</option>
+                    <option>Ingeniería / Técnico</option>
+                    <option>Compras / Adquisiciones</option>
+                    <option>Mantenimiento</option>
+                    <option>Otro</option>
                   </select>
                 </div>
+
+                {/* Grado de Interés */}
                 <div>
-                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Descripción del Proyecto</label>
-                  <textarea required rows={4} className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Describe tu desafío de producción, volumen, restricciones..." />
+                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
+                    Grado de Interés <span className="text-[#E02020]">*</span>
+                  </label>
+                  <select
+                    required
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors"
+                  >
+                    <option value="">Selecciona una opción</option>
+                    <option>Agendar una llamada con un asesor</option>
+                    <option>Solicitar una cotización</option>
+                    <option>Requiere una visita técnica</option>
+                    <option>Solo desea información general</option>
+                    <option>Otro</option>
+                  </select>
                 </div>
+
+                {/* Mensaje */}
+                <div>
+                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
+                    Mensaje <span className="text-[#E02020]">*</span>
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                    placeholder="Cuéntanos sobre tu proyecto o necesidad..."
+                  />
+                </div>
+
                 <button
                   type="submit"
                   className="w-full bg-[#E02020] text-white text-xs font-bold tracking-[0.15em] uppercase py-4 hover:bg-[#c41a1a] transition-colors duration-200 mt-2"
                 >
-                  Enviar Consulta
+                  Enviar Mensaje
                 </button>
               </form>
             )}

@@ -50,41 +50,6 @@ export default function Footer() {
   return (
     <footer className="w-full bg-zinc-950">
 
-      {/* CTA Banner */}
-      <div className="border-b border-zinc-800">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-20 py-20">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
-            <div className="max-w-xl">
-              <div className="flex items-center gap-3 mb-5">
-                <span className="w-6 h-px bg-[#E02020]" />
-                <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">
-                  Contáctanos
-                </span>
-              </div>
-              <h2
-                className="text-white font-black text-[clamp(2rem,4vw,3.5rem)] leading-[1.0] tracking-[-0.03em] uppercase mb-6"
-                style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
-              >
-                ¿Interesado?
-                <br />
-                <span className="text-[#E02020]">Contáctanos</span>
-              </h2>
-              <p className="text-zinc-400 text-base leading-relaxed">
-                No importa qué tan complejo sea tu proyecto, en STEIGERN nos apasiona
-                encontrar la solución perfecta para ti. Escríbenos y comencemos a
-                diseñar juntos el futuro de tu industria.
-              </p>
-            </div>
-            <a
-              href="#contact"
-              className="shrink-0 text-xs font-bold tracking-[0.15em] uppercase px-10 py-4 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200 self-start lg:self-center"
-            >
-              Comenzar
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* Main footer columns */}
       <div className="max-w-[1440px] mx-auto px-8 lg:px-20 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
