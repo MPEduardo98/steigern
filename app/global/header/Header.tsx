@@ -5,9 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Soluciones", href: "#solutions" },
-  { label: "Industrias", href: "#industries" },
   { label: "Nosotros", href: "#about" },
-  { label: "Contacto", href: "#contact" },
 ];
 
 const languages = [
@@ -82,7 +80,7 @@ export default function Navbar() {
             href="#contact"
             className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
           >
-            Comenzar
+            Contacto
           </a>
 
           {/* User dropdown */}
@@ -259,7 +257,7 @@ export default function Navbar() {
                 href="#contact"
                 className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white text-center mt-2"
               >
-                Comenzar
+                Contacto
               </a>
             </nav>
           </motion.div>
