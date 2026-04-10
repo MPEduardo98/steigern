@@ -1,12 +1,9 @@
+// app/global/header/Header.tsx
+
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-  { label: "Soluciones", href: "#solutions" },
-  { label: "Nosotros", href: "#about" },
-];
 
 const languages = [
   { code: "es", label: "Español", flag: "🇲🇽" },
@@ -15,17 +12,10 @@ const languages = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState("es");
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -46,8 +36,9 @@ export default function Navbar() {
       className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 shadow-sm"
     >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
+
+        {/* Logo → inicio */}
+        <a href="/" className="flex items-center gap-2 group">
           <span
             className="text-[#E02020] text-3xl leading-none"
             style={{
@@ -61,26 +52,13 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-semibold tracking-[0.08em] uppercase text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors duration-200"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
         {/* Right side: CTA + User */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="#contact"
+            href="/contacto"
             className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
           >
-            Contacto
+            Comenzar
           </a>
 
           {/* User dropdown */}
@@ -94,7 +72,6 @@ export default function Navbar() {
                   : "border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 hover:border-zinc-400 dark:hover:border-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-200"
               }`}
             >
-              {/* User icon */}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
@@ -213,17 +190,6 @@ export default function Navbar() {
             className="md:hidden overflow-hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800"
           >
             <nav className="flex flex-col px-6 py-4 gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-sm font-semibold tracking-[0.08em] uppercase text-zinc-600 dark:text-zinc-300 hover:text-[#E02020] dark:hover:text-[#E02020] transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-
               <div className="border-t border-zinc-100 dark:border-zinc-800 pt-4 flex flex-col gap-3">
                 <a
                   href="/portal-proveedores"
@@ -254,10 +220,11 @@ export default function Navbar() {
               </div>
 
               <a
-                href="#contact"
+                href="/contacto"
                 className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white text-center mt-2"
+                onClick={() => setMenuOpen(false)}
               >
-                Contacto
+                Comenzar
               </a>
             </nav>
           </motion.div>
