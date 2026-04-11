@@ -53,31 +53,24 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex">
+    <div className="min-h-screen flex">
 
-      {/* ── LEFT PANEL: Brand ── */}
-      <div className="hidden lg:flex lg:w-[45%] relative flex-col justify-between p-16 overflow-hidden">
-        {/* Background texture */}
+      {/* ── LEFT PANEL: negro ── */}
+      <div className="hidden lg:flex lg:w-[42%] relative flex-col justify-between p-16 overflow-hidden bg-black">
         <div
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(224,32,32,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(224,32,32,0.03) 1px, transparent 1px)",
+              "linear-gradient(rgba(224,32,32,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(224,32,32,0.04) 1px, transparent 1px)",
             backgroundSize: "40px 40px",
           }}
         />
-        {/* Red left accent */}
         <div className="absolute left-0 top-0 w-1 h-full bg-[#E02020]" />
-        {/* Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E02020] opacity-[0.04] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#E02020] opacity-[0.05] rounded-full blur-[100px] pointer-events-none" />
 
         {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <a href="/" className="block w-fit">
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
+          <a href="/">
             <span
               className="text-white text-4xl leading-none"
               style={{
@@ -92,7 +85,7 @@ export default function LoginPage() {
           </a>
         </motion.div>
 
-        {/* Center text */}
+        {/* Center */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,7 +97,7 @@ export default function LoginPage() {
             <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Portal Interno</span>
           </div>
           <h2
-            className="text-white font-black text-[clamp(2.5rem,4vw,4rem)] leading-[0.95] tracking-[-0.03em] uppercase mb-6"
+            className="text-white font-black text-[clamp(2.2rem,3.5vw,3.8rem)] leading-[0.95] tracking-[-0.03em] uppercase mb-6"
             style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
           >
             Acceso
@@ -116,12 +109,12 @@ export default function LoginPage() {
           </p>
         </motion.div>
 
-        {/* Bottom stats */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex flex-col gap-4 border-t border-zinc-800 pt-8"
+          className="flex flex-col gap-4 border-t border-zinc-800 pt-8 relative z-10"
         >
           {[
             { value: "256-bit", label: "Cifrado SSL" },
@@ -136,14 +129,14 @@ export default function LoginPage() {
         </motion.div>
       </div>
 
-      {/* ── RIGHT PANEL: Form ── */}
-      <div className="flex-1 flex flex-col justify-center px-8 sm:px-16 lg:px-20 py-16 bg-zinc-950 relative">
+      {/* ── RIGHT PANEL: blanco ── */}
+      <div className="flex-1 flex flex-col justify-center px-8 sm:px-16 lg:px-20 py-16 bg-white">
 
         {/* Mobile logo */}
         <div className="lg:hidden mb-12">
           <a href="/">
             <span
-              className="text-white text-3xl leading-none"
+              className="text-[#E02020] text-3xl leading-none"
               style={{
                 fontFamily: "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
                 fontWeight: 300,
@@ -159,13 +152,13 @@ export default function LoginPage() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
           className="w-full max-w-[420px] mx-auto lg:mx-0"
         >
           {/* Header */}
           <div className="mb-10">
             <h1
-              className="text-white font-black text-3xl uppercase tracking-[-0.02em] mb-2"
+              className="text-zinc-900 font-black text-3xl uppercase tracking-[-0.02em] mb-2"
               style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
             >
               Iniciar Sesión
@@ -175,7 +168,7 @@ export default function LoginPage() {
 
           {/* Role selector */}
           <div className="mb-8">
-            <p className="text-zinc-500 text-[10px] font-bold tracking-[0.18em] uppercase mb-3">Tipo de acceso</p>
+            <p className="text-zinc-400 text-[10px] font-bold tracking-[0.18em] uppercase mb-3">Tipo de acceso</p>
             <div className="grid grid-cols-3 gap-2">
               {roles.map((r) => (
                 <button
@@ -184,8 +177,8 @@ export default function LoginPage() {
                   onClick={() => setSelectedRole(r.id)}
                   className={`flex flex-col items-center gap-2 p-4 border transition-all duration-200 text-center ${
                     selectedRole === r.id
-                      ? "border-[#E02020] bg-[#E02020]/5 text-white"
-                      : "border-zinc-800 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300"
+                      ? "border-[#E02020] bg-red-50 text-zinc-900"
+                      : "border-zinc-200 text-zinc-400 hover:border-zinc-400 hover:text-zinc-600"
                   }`}
                 >
                   <span className={`transition-colors duration-200 ${selectedRole === r.id ? "text-[#E02020]" : ""}`}>
@@ -202,7 +195,7 @@ export default function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 4 }}
                 transition={{ duration: 0.2 }}
-                className="text-zinc-600 text-xs mt-2 text-center"
+                className="text-zinc-400 text-xs mt-2 text-center"
               >
                 {roles.find((r) => r.id === selectedRole)?.desc}
               </motion.p>
@@ -212,24 +205,24 @@ export default function LoginPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div>
-              <label className="text-[10px] text-zinc-500 tracking-[0.15em] uppercase block mb-1.5">
+              <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
                 Correo Electrónico
               </label>
               <input
                 type="email"
                 required
                 autoComplete="email"
-                className="w-full bg-zinc-900 border border-zinc-800 text-zinc-100 text-sm px-4 py-3.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-700"
+                className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400"
                 placeholder="usuario@steigern.com.mx"
               />
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-[10px] text-zinc-500 tracking-[0.15em] uppercase">
+                <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase">
                   Contraseña
                 </label>
-                <a href="/recuperar-contrasena" className="text-[10px] text-zinc-600 hover:text-[#E02020] tracking-[0.08em] uppercase transition-colors duration-200">
+                <a href="/recuperar-contrasena" className="text-[10px] text-zinc-400 hover:text-[#E02020] tracking-[0.08em] uppercase transition-colors duration-200">
                   ¿Olvidaste tu contraseña?
                 </a>
               </div>
@@ -238,13 +231,13 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   required
                   autoComplete="current-password"
-                  className="w-full bg-zinc-900 border border-zinc-800 text-zinc-100 text-sm px-4 py-3.5 pr-12 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-700"
+                  className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3.5 pr-12 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-300 transition-colors duration-200"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors duration-200"
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
                   {showPassword ? (
@@ -288,15 +281,15 @@ export default function LoginPage() {
           </form>
 
           {/* Footer links */}
-          <div className="mt-10 pt-6 border-t border-zinc-800 flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2 text-zinc-600 hover:text-zinc-300 text-xs tracking-[0.08em] uppercase transition-colors duration-200">
+          <div className="mt-10 pt-6 border-t border-zinc-200 flex items-center justify-between">
+            <a href="/" className="flex items-center gap-2 text-zinc-400 hover:text-zinc-700 text-xs tracking-[0.08em] uppercase transition-colors duration-200">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12" />
                 <polyline points="12 19 5 12 12 5" />
               </svg>
               Volver al sitio
             </a>
-            <a href="/contacto" className="text-zinc-600 hover:text-[#E02020] text-xs tracking-[0.08em] uppercase transition-colors duration-200">
+            <a href="/contacto" className="text-zinc-400 hover:text-[#E02020] text-xs tracking-[0.08em] uppercase transition-colors duration-200">
               Solicitar acceso
             </a>
           </div>
