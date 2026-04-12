@@ -4,49 +4,65 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus, faMagnifyingGlass,
+  faPenToSquare, faRotate, faTrash,
+  faStar as faStarSolid,
+} from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 import NuevoProveedorModal from "../components/NuevoProveedorModal";
+import ActionDropdown, { DropdownAction } from "@/app/global/components/ui/ActionDropdown";
+import ConfirmModal from "@/app/global/components/ui/ConfirmModal";
 
 interface Proveedor {
-  id: number;
-  codigo_proveedor: string;
-  razon_social: string;
-  nombre_comercial?: string;
-  rfc?: string;
-  pais: string;
-  ciudad?: string;
+  id: number; codigo_proveedor: string; razon_social: string;
+  nombre_comercial?: string; rfc?: string; pais: string; ciudad?: string;
   estatus: "activo" | "inactivo" | "en_revision" | "bloqueado";
-  calificacion?: number;
-  categoria?: string;
+  calificacion?: number; categoria?: string;
 }
 
 const statusColors: Record<string, string> = {
-  activo: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  inactivo: "bg-zinc-100 text-zinc-500 border-zinc-200",
+  activo:      "bg-emerald-50 text-emerald-700 border-emerald-200",
+  inactivo:    "bg-zinc-100 text-zinc-500 border-zinc-200",
   en_revision: "bg-amber-50 text-amber-700 border-amber-200",
-  bloqueado: "bg-red-50 text-red-700 border-red-200",
+  bloqueado:   "bg-red-50 text-red-700 border-red-200",
 };
 const statusLabel: Record<string, string> = {
   activo: "Activo", inactivo: "Inactivo", en_revision: "En Revisión", bloqueado: "Bloqueado",
 };
+const nextStatus: Record<string, string> = {
+  activo: "inactivo", inactivo: "activo", en_revision: "activo", bloqueado: "inactivo",
+};
+const nextStatusLabel: Record<string, string> = {
+  activo: "Marcar Inactivo", inactivo: "Marcar Activo", en_revision: "Aprobar (Activo)", bloqueado: "Marcar Inactivo",
+};
 
 function Stars({ n }: { n: number }) {
   return (
-    <div className="flex gap-0.5">
-      {[1, 2, 3, 4, 5].map(i => (
-        <svg key={i} width="11" height="11" viewBox="0 0 24 24" fill={i <= n ? "#E02020" : "none"} stroke={i <= n ? "#E02020" : "#d4d4d8"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
+    <div className="flex gap-0.5 items-center">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <FontAwesomeIcon
+          key={i}
+          icon={i <= n ? faStarSolid : faStarRegular}
+          className={`w-2.5 h-2.5 ${i <= n ? "text-[#E02020]" : "text-zinc-300 dark:text-zinc-600"}`}
+        />
       ))}
     </div>
   );
 }
 
 export default function ProveedoresPage() {
+  const router = useRouter();
   const [proveedores, setProveedores] = useState<Proveedor[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"todos" | "activo" | "en_revision" | "inactivo">("todos");
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<Proveedor | null>(null);
+  const [confirmStatus, setConfirmStatus] = useState<Proveedor | null>(null);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const fetchProveedores = useCallback(async () => {
     setLoading(true);
@@ -63,9 +79,68 @@ export default function ProveedoresPage() {
 
   useEffect(() => { fetchProveedores(); }, [fetchProveedores]);
 
+  async function handleDelete() {
+    if (!confirmDelete) return;
+    setActionLoading(true);
+    try {
+      await fetch(`/api/proveedores/${confirmDelete.id}`, { method: "DELETE" });
+      setConfirmDelete(null);
+      fetchProveedores();
+    } finally { setActionLoading(false); }
+  }
+
+  async function handleToggleStatus() {
+    if (!confirmStatus) return;
+    setActionLoading(true);
+    try {
+      await fetch(`/api/proveedores/${confirmStatus.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ estatus: nextStatus[confirmStatus.estatus] }),
+      });
+      setConfirmStatus(null);
+      fetchProveedores();
+    } finally { setActionLoading(false); }
+  }
+
+  function getActions(p: Proveedor): DropdownAction[] {
+    return [
+      {
+        label: "Editar",
+        icon: <FontAwesomeIcon icon={faPenToSquare} className="w-3 h-3" />,
+        onClick: () => router.push(`/admin/proveedores/${p.id}`),
+      },
+      {
+        label: nextStatusLabel[p.estatus],
+        icon: <FontAwesomeIcon icon={faRotate} className="w-3 h-3" />,
+        onClick: () => setConfirmStatus(p),
+        dividerBefore: true,
+      },
+      {
+        label: "Eliminar",
+        icon: <FontAwesomeIcon icon={faTrash} className="w-3 h-3" />,
+        onClick: () => setConfirmDelete(p),
+        variant: "danger",
+      },
+    ];
+  }
+
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900">
       <NuevoProveedorModal open={modalOpen} onClose={() => setModalOpen(false)} onSuccess={fetchProveedores} />
+
+      <ConfirmModal
+        open={!!confirmDelete} onClose={() => setConfirmDelete(null)} onConfirm={handleDelete}
+        loading={actionLoading} variant="danger" title="Eliminar Proveedor"
+        description={`¿Estás seguro de que deseas eliminar a ${confirmDelete?.razon_social}? Esta acción no se puede deshacer.`}
+        confirmLabel="Sí, Eliminar"
+      />
+      <ConfirmModal
+        open={!!confirmStatus} onClose={() => setConfirmStatus(null)} onConfirm={handleToggleStatus}
+        loading={actionLoading} variant="warning" title="Cambiar Estatus"
+        description={confirmStatus ? `¿Cambiar "${confirmStatus.razon_social}" de ${statusLabel[confirmStatus.estatus]} a ${statusLabel[nextStatus[confirmStatus.estatus]]}?` : ""}
+        confirmLabel="Confirmar Cambio"
+      />
 
       <header className="sticky top-0 z-40 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-14 flex items-center gap-6">
@@ -96,23 +171,19 @@ export default function ProveedoresPage() {
             </div>
             <button onClick={() => setModalOpen(true)}
               className="self-start sm:self-auto flex items-center gap-2 text-xs font-black tracking-[0.12em] uppercase px-5 py-2.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
+              <FontAwesomeIcon icon={faPlus} className="w-3 h-3" />
               Nuevo Proveedor
             </button>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <div className="relative flex-1 max-w-xs">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar proveedor…"
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 w-3 h-3" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar proveedor…"
                 className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" />
             </div>
             <div className="flex gap-2 flex-wrap">
-              {(["todos", "activo", "en_revision", "inactivo"] as const).map(f => (
+              {(["todos", "activo", "en_revision", "inactivo"] as const).map((f) => (
                 <button key={f} onClick={() => setFilter(f)}
                   className={`px-3 py-2 text-[10px] font-black tracking-[0.1em] uppercase border transition-colors ${filter === f ? "border-[#E02020] text-[#E02020]" : "border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:border-zinc-400"}`}>
                   {f === "todos" ? "Todos" : f === "en_revision" ? "En Revisión" : f.charAt(0).toUpperCase() + f.slice(1)}
@@ -134,31 +205,33 @@ export default function ProveedoresPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-zinc-100 dark:border-zinc-800">
-                      {["Código", "Razón Social", "Categoría", "Ubicación", "Estatus", "Calificación", ""].map(h => (
+                      {["Código", "Razón Social", "Categoría", "Ubicación", "Calificación", "Estatus", ""].map((h) => (
                         <th key={h} className="px-5 py-3 text-left text-[9px] font-black tracking-[0.15em] uppercase text-zinc-400 dark:text-zinc-600 whitespace-nowrap">{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-zinc-50 dark:divide-zinc-800">
-                    {proveedores.map(p => (
-                      <tr key={p.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors group">
+                    {proveedores.map((p) => (
+                      <tr key={p.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
                         <td className="px-5 py-4 text-[10px] font-bold text-zinc-400 tracking-[0.08em] whitespace-nowrap">{p.codigo_proveedor}</td>
                         <td className="px-5 py-4">
-                          <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200 whitespace-nowrap">{p.razon_social}</p>
-                          {p.rfc && <p className="text-[10px] text-zinc-400">{p.rfc}</p>}
+                          <Link href={`/admin/proveedores/${p.id}`} className="group">
+                            <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200 whitespace-nowrap group-hover:text-[#E02020] transition-colors">{p.razon_social}</p>
+                            {p.rfc && <p className="text-[10px] text-zinc-400">{p.rfc}</p>}
+                          </Link>
                         </td>
                         <td className="px-5 py-4 text-xs text-zinc-500 dark:text-zinc-400 whitespace-nowrap">{p.categoria ?? "—"}</td>
                         <td className="px-5 py-4 text-xs text-zinc-500 dark:text-zinc-400 whitespace-nowrap">{[p.ciudad, p.pais].filter(Boolean).join(", ") || "—"}</td>
+                        <td className="px-5 py-4">
+                          {p.calificacion ? <Stars n={p.calificacion} /> : <span className="text-[10px] text-zinc-300 dark:text-zinc-700">—</span>}
+                        </td>
                         <td className="px-5 py-4">
                           <span className={`text-[9px] font-bold tracking-[0.1em] uppercase px-2 py-0.5 border ${statusColors[p.estatus]}`}>
                             {statusLabel[p.estatus]}
                           </span>
                         </td>
-                        <td className="px-5 py-4">
-                          {p.calificacion ? <Stars n={p.calificacion} /> : <span className="text-[10px] text-zinc-300 dark:text-zinc-700">—</span>}
-                        </td>
-                        <td className="px-5 py-4">
-                          <button className="opacity-0 group-hover:opacity-100 text-[10px] font-bold tracking-[0.08em] uppercase text-zinc-400 hover:text-[#E02020] transition-all">Editar</button>
+                        <td className="px-4 py-4">
+                          <ActionDropdown actions={getActions(p)} />
                         </td>
                       </tr>
                     ))}

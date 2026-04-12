@@ -68,12 +68,12 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 }
 
 // ─── DELETE /api/empleados/[id] ─────────────────────────────────────────────
-// Soft delete — sets activo = 0
+// Hard delete — elimina el registro permanentemente
 export async function DELETE(_req: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
     const [result] = await pool.query<ResultSetHeader>(
-      "UPDATE empleados SET activo = 0 WHERE id = ?",
+      "DELETE FROM empleados WHERE id = ?",
       [id]
     );
     if (result.affectedRows === 0) {

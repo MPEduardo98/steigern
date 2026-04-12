@@ -76,12 +76,12 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 }
 
 // ─── DELETE /api/proveedores/[id] ───────────────────────────────────────────
-// Soft delete — sets estatus = 'inactivo'
+// Hard delete — elimina el registro permanentemente
 export async function DELETE(_req: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
     const [result] = await pool.query<ResultSetHeader>(
-      "UPDATE proveedores SET estatus = 'inactivo' WHERE id = ?",
+      "DELETE FROM proveedores WHERE id = ?",
       [id]
     );
     if (result.affectedRows === 0) {

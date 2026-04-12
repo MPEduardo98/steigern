@@ -4,23 +4,24 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus, faMagnifyingGlass,
+  faPenToSquare, faBan, faCircleCheck, faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import NuevoEmpleadoModal from "../components/NuevoEmpleadoModal";
+import ActionDropdown, { DropdownAction } from "@/app/global/components/ui/ActionDropdown";
+import ConfirmModal from "@/app/global/components/ui/ConfirmModal";
 
 interface Empleado {
-  id: number;
-  numero_empleado: string;
-  nombre: string;
-  apellidos: string;
-  email: string;
-  telefono?: string;
-  puesto: string;
-  departamento?: string;
-  fecha_ingreso: string;
-  activo: number;
+  id: number; numero_empleado: string; nombre: string; apellidos: string;
+  email: string; telefono?: string; puesto: string; departamento?: string;
+  fecha_ingreso: string; activo: number;
 }
 
 function Avatar({ name, size = 32 }: { name: string; size?: number }) {
-  const initials = name.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
+  const initials = name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
   const hue = (name.charCodeAt(0) * 37) % 360;
   return (
     <div style={{ width: size, height: size, minWidth: size, borderRadius: "50%", background: `hsl(${hue},55%,88%)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: size * 0.32, fontWeight: 600, color: `hsl(${hue},45%,35%)` }}>
@@ -30,11 +31,15 @@ function Avatar({ name, size = 32 }: { name: string; size?: number }) {
 }
 
 export default function EmpleadosPage() {
+  const router = useRouter();
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"todos" | "activos" | "bajas">("todos");
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState<Empleado | null>(null);
+  const [confirmStatus, setConfirmStatus] = useState<Empleado | null>(null);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const fetchEmpleados = useCallback(async () => {
     setLoading(true);
@@ -52,11 +57,76 @@ export default function EmpleadosPage() {
 
   useEffect(() => { fetchEmpleados(); }, [fetchEmpleados]);
 
-  const formatDate = (d: string) => new Date(d).toLocaleDateString("es-MX", { day: "2-digit", month: "short", year: "numeric" });
+  const formatDate = (d: string) =>
+    new Date(d).toLocaleDateString("es-MX", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" });
+
+  async function handleDelete() {
+    if (!confirmDelete) return;
+    setActionLoading(true);
+    try {
+      await fetch(`/api/empleados/${confirmDelete.id}`, { method: "DELETE" });
+      setConfirmDelete(null);
+      fetchEmpleados();
+    } finally { setActionLoading(false); }
+  }
+
+  async function handleToggleStatus() {
+    if (!confirmStatus) return;
+    setActionLoading(true);
+    try {
+      await fetch(`/api/empleados/${confirmStatus.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ activo: confirmStatus.activo ? 0 : 1 }),
+      });
+      setConfirmStatus(null);
+      fetchEmpleados();
+    } finally { setActionLoading(false); }
+  }
+
+  function getActions(e: Empleado): DropdownAction[] {
+    return [
+      {
+        label: "Editar",
+        icon: <FontAwesomeIcon icon={faPenToSquare} className="w-3 h-3" />,
+        onClick: () => router.push(`/admin/empleados/${e.id}`),
+      },
+      {
+        label: e.activo ? "Dar de baja" : "Reactivar",
+        icon: <FontAwesomeIcon icon={e.activo ? faBan : faCircleCheck} className="w-3 h-3" />,
+        onClick: () => setConfirmStatus(e),
+        dividerBefore: true,
+      },
+      {
+        label: "Eliminar",
+        icon: <FontAwesomeIcon icon={faTrash} className="w-3 h-3" />,
+        onClick: () => setConfirmDelete(e),
+        variant: "danger",
+      },
+    ];
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900">
       <NuevoEmpleadoModal open={modalOpen} onClose={() => setModalOpen(false)} onSuccess={fetchEmpleados} />
+
+      <ConfirmModal
+        open={!!confirmDelete} onClose={() => setConfirmDelete(null)} onConfirm={handleDelete}
+        loading={actionLoading} variant="danger" title="Eliminar Empleado"
+        description={`¿Estás seguro de que deseas eliminar a ${confirmDelete?.nombre} ${confirmDelete?.apellidos}? Esta acción no se puede deshacer.`}
+        confirmLabel="Sí, Eliminar"
+      />
+      <ConfirmModal
+        open={!!confirmStatus} onClose={() => setConfirmStatus(null)} onConfirm={handleToggleStatus}
+        loading={actionLoading} variant="warning"
+        title={confirmStatus?.activo ? "Dar de Baja" : "Reactivar Empleado"}
+        description={
+          confirmStatus?.activo
+            ? `¿Dar de baja a ${confirmStatus?.nombre} ${confirmStatus?.apellidos}? Su acceso será desactivado.`
+            : `¿Reactivar a ${confirmStatus?.nombre} ${confirmStatus?.apellidos}?`
+        }
+        confirmLabel={confirmStatus?.activo ? "Dar de Baja" : "Reactivar"}
+      />
 
       <header className="sticky top-0 z-40 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-14 flex items-center gap-6">
@@ -87,23 +157,19 @@ export default function EmpleadosPage() {
             </div>
             <button onClick={() => setModalOpen(true)}
               className="self-start sm:self-auto flex items-center gap-2 text-xs font-black tracking-[0.12em] uppercase px-5 py-2.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-              </svg>
+              <FontAwesomeIcon icon={faPlus} className="w-3 h-3" />
               Nuevo Empleado
             </button>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <div className="relative flex-1 max-w-xs">
-              <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar empleado…"
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 w-3 h-3" />
+              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar empleado…"
                 className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" />
             </div>
             <div className="flex gap-2">
-              {(["todos", "activos", "bajas"] as const).map(f => (
+              {(["todos", "activos", "bajas"] as const).map((f) => (
                 <button key={f} onClick={() => setFilter(f)}
                   className={`px-3 py-2 text-[10px] font-black tracking-[0.1em] uppercase border transition-colors ${filter === f ? "border-[#E02020] text-[#E02020]" : "border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:border-zinc-400"}`}>
                   {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -125,23 +191,23 @@ export default function EmpleadosPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-zinc-100 dark:border-zinc-800">
-                      {["ID", "Empleado", "Puesto", "Departamento", "Ingreso", "Estatus", ""].map(h => (
+                      {["ID", "Empleado", "Puesto", "Departamento", "Ingreso", "Estatus", ""].map((h) => (
                         <th key={h} className="px-5 py-3 text-left text-[9px] font-black tracking-[0.15em] uppercase text-zinc-400 dark:text-zinc-600 whitespace-nowrap">{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-zinc-50 dark:divide-zinc-800">
-                    {empleados.map(e => (
-                      <tr key={e.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors group">
+                    {empleados.map((e) => (
+                      <tr key={e.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
                         <td className="px-5 py-4 text-[10px] font-bold text-zinc-400 tracking-[0.08em] whitespace-nowrap">{e.numero_empleado}</td>
                         <td className="px-5 py-4">
-                          <div className="flex items-center gap-2.5">
+                          <Link href={`/admin/empleados/${e.id}`} className="flex items-center gap-2.5 group">
                             <Avatar name={`${e.nombre} ${e.apellidos}`} size={28} />
                             <div>
-                              <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200 whitespace-nowrap">{e.nombre} {e.apellidos}</p>
+                              <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200 whitespace-nowrap group-hover:text-[#E02020] transition-colors">{e.nombre} {e.apellidos}</p>
                               <p className="text-[10px] text-zinc-400">{e.email}</p>
                             </div>
-                          </div>
+                          </Link>
                         </td>
                         <td className="px-5 py-4 text-xs text-zinc-500 dark:text-zinc-400 whitespace-nowrap">{e.puesto}</td>
                         <td className="px-5 py-4 text-xs text-zinc-500 dark:text-zinc-400 whitespace-nowrap">{e.departamento ?? "—"}</td>
@@ -151,8 +217,8 @@ export default function EmpleadosPage() {
                             {e.activo ? "Activo" : "Baja"}
                           </span>
                         </td>
-                        <td className="px-5 py-4">
-                          <button className="opacity-0 group-hover:opacity-100 text-[10px] font-bold tracking-[0.08em] uppercase text-zinc-400 hover:text-[#E02020] transition-all">Editar</button>
+                        <td className="px-4 py-4">
+                          <ActionDropdown actions={getActions(e)} />
                         </td>
                       </tr>
                     ))}
