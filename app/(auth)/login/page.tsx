@@ -1,111 +1,129 @@
 // app/(auth)/login/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useActionState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBriefcase,
+  faUser,
+  faShield,
+  faEye,
+  faEyeSlash,
+  faArrowRight,
+  faCircleExclamation,
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { loginAction } from "@/app/actions/auth";
+import type { UserRole } from "@/auth";
 
-type Role = "proveedor" | "empleado" | "administrador";
-
-const roles: { id: Role; label: string; desc: string; icon: React.ReactNode }[] = [
+const ROLES = [
   {
-    id: "proveedor",
+    id: "proveedor"      as UserRole,
     label: "Proveedor",
-    desc: "Gestión de órdenes y documentos",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2" />
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-      </svg>
-    ),
+    desc:  "Gestión de órdenes y documentos",
+    icon:  faBriefcase,
   },
   {
-    id: "empleado",
+    id: "empleado"       as UserRole,
     label: "Empleado",
-    desc: "Acceso interno a proyectos",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-    ),
+    desc:  "Acceso interno a proyectos",
+    icon:  faUser,
   },
   {
-    id: "administrador",
+    id: "administrador"  as UserRole,
     label: "Administrador",
-    desc: "Control total del sistema",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
+    desc:  "Control total del sistema",
+    icon:  faShield,
   },
 ];
 
-export default function LoginPage() {
-  const [selectedRole, setSelectedRole] = useState<Role>("proveedor");
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+const REDIRECT: Record<UserRole, string> = {
+  administrador: "/admin",
+  empleado:      "/admin",
+  proveedor:     "/portal-proveedores",
+};
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => setLoading(false), 2000);
-  }
+// ─────────────────────────────────────────────────────────────────
+export default function LoginPage() {
+  const router        = useRouter();
+  const searchParams  = useSearchParams();
+  const callbackUrl   = searchParams.get("callbackUrl");
+
+  const [role,         setRole]         = useState<UserRole>("proveedor");
+  const [showPassword, setShowPassword] = useState(false);
+  const [state,        action,  pending] = useActionState(loginAction, {});
+
+  // Redirige en cuanto el server action confirma éxito
+  useEffect(() => {
+    if (!state.success) return;
+    router.push(callbackUrl || REDIRECT[role]);
+  }, [state.success, callbackUrl, role, router]);
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-white dark:bg-zinc-950">
 
-      {/* ── LEFT PANEL: negro ── */}
-      <div className="hidden lg:flex lg:w-[42%] relative flex-col justify-between p-16 overflow-hidden bg-black">
+      {/* ── PANEL IZQUIERDO ─────────────────────────────────────── */}
+      <motion.aside
+        initial={{ x: -40, opacity: 0 }}
+        animate={{ x: 0,   opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="hidden lg:flex lg:w-[46%] relative flex-col justify-between p-16 bg-zinc-950 overflow-hidden"
+      >
+        {/* Grid pattern */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(224,32,32,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(224,32,32,0.04) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
+              "linear-gradient(rgba(224,32,32,0.6) 1px, transparent 1px)," +
+              "linear-gradient(90deg, rgba(224,32,32,0.6) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
           }}
         />
-        <div className="absolute left-0 top-0 w-1 h-full bg-[#E02020]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#E02020] opacity-[0.05] rounded-full blur-[100px] pointer-events-none" />
+
+        {/* Barra roja izquierda */}
+        <div className="absolute left-0 top-0 w-[3px] h-full bg-[#E02020]" />
+
+        {/* Glow rojo central */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-[#E02020] opacity-[0.04] rounded-full blur-[120px] pointer-events-none" />
 
         {/* Logo */}
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
-          <a href="/">
-            <span
-              className="text-white text-4xl leading-none"
-              style={{
-                fontFamily: "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
-                fontWeight: 300,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-              }}
-            >
-              STEIGERN
-            </span>
-          </a>
-        </motion.div>
+        <a href="/" className="relative z-10">
+          <span
+            className="text-white text-4xl leading-none tracking-[0.18em] uppercase"
+            style={{ fontFamily: "var(--font-bankgothic),'Helvetica Neue',Arial,sans-serif", fontWeight: 300 }}
+          >
+            STEIGERN
+          </span>
+        </a>
 
-        {/* Center */}
+        {/* Copy central */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0  }}
+          transition={{ duration: 0.8, delay: 0.25 }}
           className="relative z-10"
         >
           <div className="flex items-center gap-3 mb-6">
             <span className="w-6 h-px bg-[#E02020]" />
-            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Portal Interno</span>
+            <span className="text-[#E02020] text-[10px] font-bold tracking-[0.3em] uppercase">
+              Portal Interno
+            </span>
           </div>
+
           <h2
-            className="text-white font-black text-[clamp(2.2rem,3.5vw,3.8rem)] leading-[0.95] tracking-[-0.03em] uppercase mb-6"
-            style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+            className="text-white font-black text-[clamp(2.4rem,3.5vw,4rem)] leading-[0.93] tracking-[-0.03em] uppercase mb-6"
+            style={{ fontFamily: "var(--font-body),'Open Sans',sans-serif" }}
           >
             Acceso
             <br />
             <span className="text-[#E02020]">Seguro</span>
           </h2>
+
           <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
-            Plataforma centralizada para proveedores, empleados y administradores de STEIGERN.
+            Plataforma centralizada para proveedores, empleados y
+            administradores de STEIGERN Design In Motion.
           </p>
         </motion.div>
 
@@ -113,36 +131,31 @@ export default function LoginPage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex flex-col gap-4 border-t border-zinc-800 pt-8 relative z-10"
+          transition={{ duration: 0.7, delay: 0.55 }}
+          className="relative z-10 border-t border-zinc-800 pt-8 flex flex-col gap-4"
         >
           {[
-            { value: "256-bit", label: "Cifrado SSL" },
-            { value: "99.9%", label: "Disponibilidad" },
-            { value: "24/7", label: "Soporte técnico" },
-          ].map(({ value, label }) => (
+            { label: "Cifrado de sesión", value: "JWT · HS256" },
+            { label: "Expiración",        value: "8 horas"     },
+            { label: "Acceso restringido",value: "Por rol"      },
+          ].map(({ label, value }) => (
             <div key={label} className="flex items-center justify-between">
-              <span className="text-zinc-600 text-xs uppercase tracking-[0.12em]">{label}</span>
-              <span className="text-zinc-300 text-xs font-bold tracking-[0.1em]">{value}</span>
+              <span className="text-zinc-600 text-[10px] uppercase tracking-[0.15em]">{label}</span>
+              <span className="text-zinc-400 text-[10px] font-bold tracking-[0.1em]">{value}</span>
             </div>
           ))}
         </motion.div>
-      </div>
+      </motion.aside>
 
-      {/* ── RIGHT PANEL: blanco ── */}
-      <div className="flex-1 flex flex-col justify-center px-8 sm:px-16 lg:px-20 py-16 bg-white">
+      {/* ── PANEL DERECHO ───────────────────────────────────────── */}
+      <main className="flex-1 flex flex-col justify-center px-8 sm:px-14 lg:px-20 py-16 bg-white dark:bg-zinc-950">
 
-        {/* Mobile logo */}
+        {/* Logo mobile */}
         <div className="lg:hidden mb-12">
           <a href="/">
             <span
-              className="text-[#E02020] text-3xl leading-none"
-              style={{
-                fontFamily: "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
-                fontWeight: 300,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-              }}
+              className="text-[#E02020] text-3xl leading-none tracking-[0.15em] uppercase"
+              style={{ fontFamily: "var(--font-bankgothic),'Helvetica Neue',Arial,sans-serif", fontWeight: 300 }}
             >
               STEIGERN
             </span>
@@ -151,117 +164,143 @@ export default function LoginPage() {
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
+          animate={{ opacity: 1, y: 0  }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="w-full max-w-[420px] mx-auto lg:mx-0"
         >
-          {/* Header */}
+          {/* Encabezado */}
           <div className="mb-10">
             <h1
-              className="text-zinc-900 font-black text-3xl uppercase tracking-[-0.02em] mb-2"
-              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+              className="text-zinc-900 dark:text-zinc-100 font-black text-3xl uppercase tracking-[-0.02em] mb-1.5"
+              style={{ fontFamily: "var(--font-body),'Open Sans',sans-serif" }}
             >
               Iniciar Sesión
             </h1>
-            <p className="text-zinc-500 text-sm">Selecciona tu perfil y accede al portal.</p>
+            <p className="text-zinc-400 text-sm">
+              Selecciona tu perfil de acceso y continúa.
+            </p>
           </div>
 
-          {/* Role selector */}
-          <div className="mb-8">
-            <p className="text-zinc-400 text-[10px] font-bold tracking-[0.18em] uppercase mb-3">Tipo de acceso</p>
-            <div className="grid grid-cols-3 gap-2">
-              {roles.map((r) => (
-                <button
-                  key={r.id}
-                  type="button"
-                  onClick={() => setSelectedRole(r.id)}
-                  className={`flex flex-col items-center gap-2 p-4 border transition-all duration-200 text-center ${
-                    selectedRole === r.id
-                      ? "border-[#E02020] bg-red-50 text-zinc-900"
-                      : "border-zinc-200 text-zinc-400 hover:border-zinc-400 hover:text-zinc-600"
-                  }`}
+          <form action={action} className="flex flex-col gap-5">
+            {/* ── Selector de rol ── */}
+            <div>
+              <p className="text-[10px] text-zinc-400 font-bold tracking-[0.18em] uppercase mb-3">
+                Tipo de acceso
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {ROLES.map((r) => {
+                  const active = role === r.id;
+                  return (
+                    <button
+                      key={r.id}
+                      type="button"
+                      onClick={() => setRole(r.id)}
+                      className={`
+                        relative flex flex-col items-center gap-2 p-4 border
+                        text-center transition-all duration-200 cursor-pointer
+                        ${active
+                          ? "border-[#E02020] bg-red-50 dark:bg-red-950/20"
+                          : "border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600"
+                        }
+                      `}
+                    >
+                      <FontAwesomeIcon
+                        icon={r.icon}
+                        className={`w-4 h-4 transition-colors duration-200 ${active ? "text-[#E02020]" : "text-zinc-400 dark:text-zinc-600"}`}
+                      />
+                      <span className={`text-[10px] font-black tracking-[0.1em] uppercase leading-tight transition-colors ${active ? "text-[#E02020]" : "text-zinc-500 dark:text-zinc-400"}`}>
+                        {r.label}
+                      </span>
+
+                      {/* input hidden para el role */}
+                      {active && (
+                        <input type="hidden" name="role" value={r.id} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Descripción animada del rol */}
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={role}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1,  y: 0  }}
+                  exit={{   opacity: 0,  y:  4  }}
+                  transition={{ duration: 0.18 }}
+                  className="text-zinc-400 text-xs mt-2 text-center"
                 >
-                  <span className={`transition-colors duration-200 ${selectedRole === r.id ? "text-[#E02020]" : ""}`}>
-                    {r.icon}
-                  </span>
-                  <span className="text-[10px] font-black tracking-[0.12em] uppercase leading-tight">{r.label}</span>
-                </button>
-              ))}
+                  {ROLES.find((r) => r.id === role)?.desc}
+                </motion.p>
+              </AnimatePresence>
             </div>
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={selectedRole}
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.2 }}
-                className="text-zinc-400 text-xs mt-2 text-center"
-              >
-                {roles.find((r) => r.id === selectedRole)?.desc}
-              </motion.p>
-            </AnimatePresence>
-          </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {/* ── Email ── */}
             <div>
               <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
                 Correo Electrónico
               </label>
               <input
+                name="email"
                 type="email"
                 required
                 autoComplete="email"
-                className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400"
                 placeholder="usuario@steigern.com.mx"
+                className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
               />
             </div>
 
+            {/* ── Contraseña ── */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase">
                   Contraseña
                 </label>
-                <a href="/recuperar-contrasena" className="text-[10px] text-zinc-400 hover:text-[#E02020] tracking-[0.08em] uppercase transition-colors duration-200">
-                  ¿Olvidaste tu contraseña?
-                </a>
               </div>
               <div className="relative">
                 <input
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   required
                   autoComplete="current-password"
-                  className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3.5 pr-12 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400"
                   placeholder="••••••••"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3.5 pr-12 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors duration-200"
+                  onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
                 >
-                  {showPassword ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-                      <line x1="1" y1="1" x2="23" y2="23" />
-                    </svg>
-                  ) : (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                      <circle cx="12" cy="12" r="3" />
-                    </svg>
-                  )}
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
+            {/* ── Error ── */}
+            <AnimatePresence>
+              {state.error && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{   opacity: 0, height: 0       }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center gap-3 px-4 py-3 border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/30"
+                >
+                  <FontAwesomeIcon icon={faCircleExclamation} className="w-3.5 h-3.5 text-[#E02020] shrink-0" />
+                  <p className="text-[#E02020] text-xs font-semibold">{state.error}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* ── Submit ── */}
             <button
               type="submit"
-              disabled={loading}
-              className="w-full bg-[#E02020] text-white text-xs font-black tracking-[0.2em] uppercase py-4 hover:bg-[#c41a1a] transition-colors duration-200 flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+              disabled={pending}
+              className="w-full bg-[#E02020] text-white text-xs font-black tracking-[0.2em] uppercase py-4 hover:bg-[#c41a1a] transition-colors duration-200 flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed mt-1"
             >
-              {loading ? (
+              {pending ? (
                 <>
                   <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -272,30 +311,33 @@ export default function LoginPage() {
               ) : (
                 <>
                   Ingresar al Portal
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  <FontAwesomeIcon
+                    icon={faArrowRight}
+                    className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200"
+                  />
                 </>
               )}
             </button>
           </form>
 
-          {/* Footer links */}
-          <div className="mt-10 pt-6 border-t border-zinc-200 flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2 text-zinc-400 hover:text-zinc-700 text-xs tracking-[0.08em] uppercase transition-colors duration-200">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
+          {/* ── Footer del form ── */}
+          <div className="mt-10 pt-6 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+            <a
+              href="/"
+              className="flex items-center gap-2 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 text-xs tracking-[0.08em] uppercase transition-colors duration-200"
+            >
+              <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
               Volver al sitio
             </a>
-            <a href="/contacto" className="text-zinc-400 hover:text-[#E02020] text-xs tracking-[0.08em] uppercase transition-colors duration-200">
+            <a
+              href="/contacto"
+              className="text-zinc-400 hover:text-[#E02020] text-xs tracking-[0.08em] uppercase transition-colors duration-200"
+            >
               Solicitar acceso
             </a>
           </div>
         </motion.div>
-      </div>
-
+      </main>
     </div>
   );
 }
