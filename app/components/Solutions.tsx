@@ -19,7 +19,7 @@ const featured = [
     desc: "Desde el desarrollo temprano del concepto hasta el estudio detallado de factibilidad, incluidos proyectos para la manipulación de materiales.",
     tags: ["Conveyors", "Manejo de Materiales", "Logística"],
     href: "/soluciones/conveyors",
-    img: "/assets/images/soluciones/conveyors.jpg",
+    img: "/assets/images/soluciones/conveyors.png",
   },
   {
     num: "03",
