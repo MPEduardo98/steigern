@@ -3,6 +3,7 @@
 
 import { Suspense, useState, useActionState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -234,13 +235,13 @@ function LoginForm() {
 
           {/* Back */}
           <div className="mt-8 pt-8 border-t border-zinc-100">
-            <a
+            <Link
               href="/"
               className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-700 transition-colors"
             >
               <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
               Volver al sitio principal
-            </a>
+            </Link>
           </div>
         </div>
       </motion.main>
