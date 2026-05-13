@@ -1,7 +1,7 @@
 // app/(auth)/login/page.tsx
 "use client";
 
-import { useState, useActionState, useEffect } from "react";
+import { Suspense, useState, useActionState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,24 +19,9 @@ import { loginAction } from "@/app/actions/auth";
 import type { UserRole } from "@/auth";
 
 const ROLES = [
-  {
-    id: "proveedor"      as UserRole,
-    label: "Proveedor",
-    desc:  "Gestión de órdenes y documentos",
-    icon:  faBriefcase,
-  },
-  {
-    id: "empleado"       as UserRole,
-    label: "Empleado",
-    desc:  "Acceso interno a proyectos",
-    icon:  faUser,
-  },
-  {
-    id: "administrador"  as UserRole,
-    label: "Administrador",
-    desc:  "Control total del sistema",
-    icon:  faShield,
-  },
+  { id: "proveedor"     as UserRole, label: "Proveedor",      desc: "Gestión de órdenes y documentos",  icon: faBriefcase },
+  { id: "empleado"      as UserRole, label: "Empleado",       desc: "Acceso interno a proyectos",        icon: faUser      },
+  { id: "administrador" as UserRole, label: "Administrador",  desc: "Control total del sistema",         icon: faShield    },
 ];
 
 const REDIRECT: Record<UserRole, string> = {
@@ -45,26 +30,24 @@ const REDIRECT: Record<UserRole, string> = {
   proveedor:     "/portal-proveedores",
 };
 
-// ─────────────────────────────────────────────────────────────────
-export default function LoginPage() {
-  const router        = useRouter();
-  const searchParams  = useSearchParams();
-  const callbackUrl   = searchParams.get("callbackUrl");
+// ── Inner component que usa useSearchParams ──────────────────────────────────
+function LoginForm() {
+  const router       = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl  = searchParams.get("callbackUrl");
 
-  const [role,         setRole]         = useState<UserRole>("proveedor");
+  const [role,         setRole]        = useState<UserRole>("proveedor");
   const [showPassword, setShowPassword] = useState(false);
-  const [state,        action,  pending] = useActionState(loginAction, {});
+  const [state, action, pending]       = useActionState(loginAction, {});
 
-  // Redirige en cuanto el server action confirma éxito
   useEffect(() => {
     if (!state.success) return;
     router.push(callbackUrl || REDIRECT[role]);
   }, [state.success, callbackUrl, role, router]);
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-zinc-950">
-
-      {/* ── PANEL IZQUIERDO ─────────────────────────────────────── */}
+    <div className="min-h-screen flex bg-white">
+      {/* ── PANEL IZQUIERDO ───────────────────────────────────────────────── */}
       <motion.aside
         initial={{ x: -40, opacity: 0 }}
         animate={{ x: 0,   opacity: 1 }}
@@ -83,106 +66,63 @@ export default function LoginPage() {
         />
 
         {/* Barra roja izquierda */}
-        <div className="absolute left-0 top-0 w-[3px] h-full bg-[#E02020]" />
+        <div className="absolute left-0 top-0 w-[3px] h-full bg-accent" />
 
-        {/* Glow rojo central */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-[#E02020] opacity-[0.04] rounded-full blur-[120px] pointer-events-none" />
+        {/* Glow rojo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] bg-accent opacity-[0.04] rounded-full blur-3xl pointer-events-none" />
 
         {/* Logo */}
-        <a href="/" className="relative z-10">
-          <span
-            className="text-white text-4xl leading-none tracking-[0.18em] uppercase"
-            style={{ fontFamily: "var(--font-bankgothic),'Helvetica Neue',Arial,sans-serif", fontWeight: 300 }}
-          >
+        <div>
+          <span className="font-brand text-3xl font-black tracking-widest text-white uppercase">
             STEIGERN
           </span>
-        </a>
-
-        {/* Copy central */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0  }}
-          transition={{ duration: 0.8, delay: 0.25 }}
-          className="relative z-10"
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-6 h-px bg-[#E02020]" />
-            <span className="text-[#E02020] text-[10px] font-bold tracking-[0.3em] uppercase">
-              Portal Interno
-            </span>
-          </div>
-
-          <h2
-            className="text-white font-black text-[clamp(2.4rem,3.5vw,4rem)] leading-[0.93] tracking-[-0.03em] uppercase mb-6"
-            style={{ fontFamily: "var(--font-body),'Open Sans',sans-serif" }}
-          >
-            Acceso
-            <br />
-            <span className="text-[#E02020]">Seguro</span>
-          </h2>
-
-          <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
-            Plataforma centralizada para proveedores, empleados y
-            administradores de STEIGERN Design In Motion.
-          </p>
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="relative z-10 border-t border-zinc-800 pt-8 flex flex-col gap-4"
-        >
-          {[
-            { label: "Cifrado de sesión", value: "JWT · HS256" },
-            { label: "Expiración",        value: "8 horas"     },
-            { label: "Acceso restringido",value: "Por rol"      },
-          ].map(({ label, value }) => (
-            <div key={label} className="flex items-center justify-between">
-              <span className="text-zinc-600 text-[10px] uppercase tracking-[0.15em]">{label}</span>
-              <span className="text-zinc-400 text-[10px] font-bold tracking-[0.1em]">{value}</span>
-            </div>
-          ))}
-        </motion.div>
-      </motion.aside>
-
-      {/* ── PANEL DERECHO ───────────────────────────────────────── */}
-      <main className="flex-1 flex flex-col justify-center px-8 sm:px-14 lg:px-20 py-16 bg-white dark:bg-zinc-950">
-
-        {/* Logo mobile */}
-        <div className="lg:hidden mb-12">
-          <a href="/">
-            <span
-              className="text-[#E02020] text-3xl leading-none tracking-[0.15em] uppercase"
-              style={{ fontFamily: "var(--font-bankgothic),'Helvetica Neue',Arial,sans-serif", fontWeight: 300 }}
-            >
-              STEIGERN
-            </span>
-          </a>
+          <div className="w-8 h-px bg-accent mt-4" />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0  }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full max-w-[420px] mx-auto lg:mx-0"
-        >
-          {/* Encabezado */}
-          <div className="mb-10">
-            <h1
-              className="text-zinc-900 dark:text-zinc-100 font-black text-3xl uppercase tracking-[-0.02em] mb-1.5"
-              style={{ fontFamily: "var(--font-body),'Open Sans',sans-serif" }}
-            >
-              Iniciar Sesión
-            </h1>
-            <p className="text-zinc-400 text-sm">
-              Selecciona tu perfil de acceso y continúa.
-            </p>
+        {/* Tagline */}
+        <div className="space-y-6">
+          <p className="text-[11px] text-zinc-500 font-bold tracking-[0.22em] uppercase">
+            Portal Corporativo
+          </p>
+          <h1 className="text-4xl font-black text-white leading-tight tracking-tight">
+            Ingeniería en<br />
+            <span className="text-accent">Movimiento</span>
+          </h1>
+          <p className="text-sm text-zinc-400 leading-relaxed max-w-xs">
+            Accede al sistema centralizado de gestión de proyectos, proveedores y operaciones de STEIGERN.
+          </p>
+        </div>
+
+        {/* Footer */}
+        <p className="text-[10px] text-zinc-600 tracking-widest uppercase">
+          © {new Date().getFullYear()} STEIGERN Design In Motion
+        </p>
+      </motion.aside>
+
+      {/* ── PANEL DERECHO ────────────────────────────────────────────────── */}
+      <motion.main
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16"
+      >
+        <div className="w-full max-w-md">
+          {/* Mobile logo */}
+          <div className="lg:hidden mb-10">
+            <span className="font-brand text-2xl font-black tracking-widest text-zinc-950 uppercase">
+              STEIGERN
+            </span>
           </div>
 
+          <p className="text-[10px] text-zinc-400 font-bold tracking-[0.22em] uppercase mb-2">
+            Bienvenido
+          </p>
+          <h2 className="text-2xl font-black text-zinc-950 tracking-tight mb-8">
+            Iniciar sesión
+          </h2>
+
           <form action={action} className="flex flex-col gap-5">
-            {/* ── Selector de rol ── */}
+            {/* Selector de rol */}
             <div>
               <p className="text-[10px] text-zinc-400 font-bold tracking-[0.18em] uppercase mb-3">
                 Tipo de acceso
@@ -199,145 +139,124 @@ export default function LoginPage() {
                         relative flex flex-col items-center gap-2 p-4 border
                         text-center transition-all duration-200 cursor-pointer
                         ${active
-                          ? "border-[#E02020] bg-red-50 dark:bg-red-950/20"
-                          : "border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600"
+                          ? "border-accent bg-red-50"
+                          : "border-zinc-200 hover:border-zinc-400"
                         }
                       `}
                     >
                       <FontAwesomeIcon
                         icon={r.icon}
-                        className={`w-4 h-4 transition-colors duration-200 ${active ? "text-[#E02020]" : "text-zinc-400 dark:text-zinc-600"}`}
+                        className={`w-4 h-4 transition-colors duration-200 ${active ? "text-accent" : "text-zinc-400"}`}
                       />
-                      <span className={`text-[10px] font-black tracking-[0.1em] uppercase leading-tight transition-colors ${active ? "text-[#E02020]" : "text-zinc-500 dark:text-zinc-400"}`}>
+                      <span className={`text-[10px] font-black tracking-[0.1em] uppercase leading-tight transition-colors ${active ? "text-accent" : "text-zinc-500"}`}>
                         {r.label}
                       </span>
-
-                      {/* input hidden para el role */}
-                      {active && (
-                        <input type="hidden" name="role" value={r.id} />
-                      )}
                     </button>
                   );
                 })}
               </div>
-
-              {/* Descripción animada del rol */}
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={role}
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1,  y: 0  }}
-                  exit={{   opacity: 0,  y:  4  }}
-                  transition={{ duration: 0.18 }}
-                  className="text-zinc-400 text-xs mt-2 text-center"
-                >
-                  {ROLES.find((r) => r.id === role)?.desc}
-                </motion.p>
-              </AnimatePresence>
+              <input type="hidden" name="role" value={role} />
             </div>
 
-            {/* ── Email ── */}
+            {/* Email */}
             <div>
-              <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
-                Correo Electrónico
+              <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
+                Correo electrónico
               </label>
               <input
-                name="email"
                 type="email"
+                name="email"
                 required
                 autoComplete="email"
                 placeholder="usuario@steigern.com.mx"
-                className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder:text-zinc-400"
               />
             </div>
 
-            {/* ── Contraseña ── */}
+            {/* Password */}
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase">
-                  Contraseña
-                </label>
-              </div>
+              <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
+                Contraseña
+              </label>
               <div className="relative">
                 <input
-                  name="password"
                   type={showPassword ? "text" : "password"}
+                  name="password"
                   required
                   autoComplete="current-password"
                   placeholder="••••••••"
-                  className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm px-4 py-3.5 pr-12 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                  className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 pr-12 focus:outline-none focus:border-accent transition-colors placeholder:text-zinc-400"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors"
                 >
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* ── Error ── */}
+            {/* Error */}
             <AnimatePresence>
               {state.error && (
                 <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{   opacity: 0, height: 0       }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center gap-3 px-4 py-3 border border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/30"
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-3 bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700"
                 >
-                  <FontAwesomeIcon icon={faCircleExclamation} className="w-3.5 h-3.5 text-[#E02020] shrink-0" />
-                  <p className="text-[#E02020] text-xs font-semibold">{state.error}</p>
+                  <FontAwesomeIcon icon={faCircleExclamation} className="w-4 h-4 shrink-0" />
+                  {state.error}
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* ── Submit ── */}
+            {/* Submit */}
             <button
               type="submit"
               disabled={pending}
-              className="w-full bg-[#E02020] text-white text-xs font-black tracking-[0.2em] uppercase py-4 hover:bg-[#c41a1a] transition-colors duration-200 flex items-center justify-center gap-3 group disabled:opacity-60 disabled:cursor-not-allowed mt-1"
+              className="flex items-center justify-center gap-3 bg-accent hover:bg-red-700 disabled:opacity-60 text-white text-sm font-bold tracking-[0.12em] uppercase px-6 py-4 transition-colors duration-200 rounded-lg mt-1"
             >
               {pending ? (
-                <>
-                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                  </svg>
-                  Verificando...
-                </>
+                <span className="flex items-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Verificando…
+                </span>
               ) : (
                 <>
-                  Ingresar al Portal
-                  <FontAwesomeIcon
-                    icon={faArrowRight}
-                    className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200"
-                  />
+                  Ingresar
+                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                 </>
               )}
             </button>
           </form>
 
-          {/* ── Footer del form ── */}
-          <div className="mt-10 pt-6 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+          {/* Back */}
+          <div className="mt-8 pt-8 border-t border-zinc-100">
             <a
               href="/"
-              className="flex items-center gap-2 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 text-xs tracking-[0.08em] uppercase transition-colors duration-200"
+              className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-700 transition-colors"
             >
               <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
-              Volver al sitio
-            </a>
-            <a
-              href="/contacto"
-              className="text-zinc-400 hover:text-[#E02020] text-xs tracking-[0.08em] uppercase transition-colors duration-200"
-            >
-              Solicitar acceso
+              Volver al sitio principal
             </a>
           </div>
-        </motion.div>
-      </main>
+        </div>
+      </motion.main>
     </div>
+  );
+}
+
+// ── Page export con Suspense boundary ────────────────────────────────────────
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <span className="w-6 h-6 border-2 border-zinc-200 border-t-accent rounded-full animate-spin" />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }
