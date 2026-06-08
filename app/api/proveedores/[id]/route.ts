@@ -1,7 +1,7 @@
 // app/api/proveedores/[id]/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool from "@root/lib/db";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 type Params = { params: Promise<{ id: string }> };

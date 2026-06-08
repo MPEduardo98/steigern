@@ -5,6 +5,7 @@ import Image from "next/image";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
 import Contact from "../../(homepage)/_components/Contact";
+import { solutions as allSolutions } from "./_data/solutions";
 
 export const metadata: Metadata = {
   title: "Soluciones de Ingeniería Industrial",
@@ -18,44 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-const solutions = [
-  {
-    num: "01", title: "Perfil Estructural de Aluminio",
-    desc: "Los perfiles estructurales de aluminio para aplicaciones en entornos de trabajo son más eficientes cuando se adaptan individualmente a su propósito específico. Una alternativa moderna al acero para máquinas que exigen estabilidad.",
-    tags: ["Modular", "Ligero", "Adaptable"],
-    href: "/soluciones/perfil-de-aluminio", img: "/assets/images/soluciones/perfil.png",
-  },
-  {
-    num: "02", title: "Sistemas de Transporte",
-    desc: "Desde el desarrollo temprano del concepto hasta el estudio detallado de factibilidad, incluidos proyectos para la manipulación de materiales que consideran la logística de forma integral.",
-    tags: ["Conveyors", "Manejo de Materiales", "Logística"],
-    href: "/soluciones/conveyors", img: "/assets/images/soluciones/conveyors.png",
-  },
-  {
-    num: "03", title: "Estaciones de Trabajo",
-    desc: "Diseño ergonómico óptimo que adapta el lugar de trabajo considerando la iluminación, el entorno y las capacidades del operario. Protección y seguridad avanzada en cada instalación.",
-    tags: ["Ergonomía", "Seguridad", "Productividad"],
-    href: "/soluciones/estaciones-de-trabajo", img: "/assets/images/soluciones/estaciones.png",
-  },
-  {
-    num: "04", title: "Dispositivos Asistidos por Co-Bots",
-    desc: "Integración de robots colaborativos para asistir y potenciar las capacidades del operario en líneas de ensamble, reduciendo errores y mejorando tiempos de ciclo.",
-    tags: ["Cobots", "Ensamble", "Automatización"],
-    href: "/soluciones/dispositivos-asistidos-por-cobots", img: "/assets/images/soluciones/cobots.png",
-  },
-  {
-    num: "05", title: "Elevación y Guías Lineales",
-    desc: "Sistemas de elevación y guías lineales de precisión para el movimiento controlado de componentes y subconjuntos dentro de líneas de manufactura y ensamblaje.",
-    tags: ["Elevación", "Guías Lineales", "Precisión"],
-    href: "/soluciones/elevacion-y-guias-lineales", img: "/assets/images/soluciones/elevacion.png",
-  },
-  {
-    num: "06", title: "Soluciones Lean",
-    desc: "Implementación de manufactura esbelta mediante estructuras físicas: supermercados de materiales, carros de kit, tableros de gestión visual y células de manufactura optimizadas.",
-    tags: ["Lean", "5S", "Kaizen"],
-    href: "/soluciones/soluciones-lean", img: "/assets/images/soluciones/estructuras.png",
-  },
-];
+const solutions = allSolutions.slice(0, 6);
 
 export default function SolucionesPage() {
   return (
@@ -105,7 +69,7 @@ export default function SolucionesPage() {
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-zinc-200">
             {solutions.map((s) => (
-              <Link key={s.num} href={s.href}
+              <Link key={s.slug} href={`/soluciones/${s.slug}`}
                 className="bg-white group hover:bg-zinc-50 transition-colors duration-300 flex flex-col">
                 <div className="overflow-hidden bg-zinc-100 aspect-[4/3]">
                   <Image src={s.img} alt={s.title} width={600} height={450} loading="lazy"

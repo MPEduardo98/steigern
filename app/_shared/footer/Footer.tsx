@@ -8,7 +8,7 @@ const soluciones = [
   { label: "Estaciones de Trabajo", href: "/soluciones/estaciones-de-trabajo" },
   { label: "Co-Bots", href: "/soluciones/dispositivos-asistidos-por-cobots" },
   { label: "ElevaciÃ³n y GuÃ­as Lineales", href: "/soluciones/elevacion-y-guias-lineales" },
-  { label: "Soluciones Lean", href: "/soluciones/lean" },
+  { label: "Soluciones Lean", href: "/soluciones/soluciones-lean" },
 ];
 
 const empresa = [

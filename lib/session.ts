@@ -1,7 +1,7 @@
 // lib/session.ts
-import { auth }     from "@/auth";
+import { auth }     from "@root/auth";
 import { redirect } from "next/navigation";
-import type { UserRole } from "@/auth";
+import type { UserRole } from "@root/auth";
 
 /** Devuelve la sesión activa o redirige a /login */
 export async function requireSession(allowedRoles?: UserRole[]) {

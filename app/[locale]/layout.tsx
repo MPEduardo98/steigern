@@ -94,7 +94,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} data-scroll-behavior="smooth">
       <body
         className={`${openSans.variable} ${bankGothic.variable} font-body antialiased bg-white text-zinc-900`}
       >

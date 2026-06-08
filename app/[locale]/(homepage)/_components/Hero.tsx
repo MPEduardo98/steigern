@@ -126,6 +126,7 @@ export default function Hero() {
             alt="STEIGERN — Solución Industrial"
             width={520}
             height={520}
+            priority
             className="w-full max-w-[420px] lg:max-w-[500px] h-auto object-contain drop-shadow-2xl mix-blend-multiply select-none pointer-events-none"
             draggable={false}
           />
