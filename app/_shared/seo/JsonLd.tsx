@@ -14,7 +14,7 @@
     },
     image: "https://steigern.com.mx/assets/images/og-image.jpg",
     description:
-      "Empresa mexicana especializada en automatizaciÃ³n industrial: diseÃ±o e integraciÃ³n de sistemas de transporte, perfiles de aluminio, estaciones de trabajo, co-bots y soluciones lean.",
+      "Empresa mexicana especializada en automatización industrial: diseño e integración de sistemas de transporte, perfiles de aluminio, estaciones de trabajo, co-bots y soluciones lean.",
     foundingDate: "2011",
     numberOfEmployees: {
       "@type": "QuantitativeValue",
@@ -22,8 +22,8 @@
     },
     address: {
       "@type": "PostalAddress",
-      addressLocality: "QuerÃ©taro",
-      addressRegion: "QuerÃ©taro",
+      addressLocality: "Querétaro",
+      addressRegion: "Querétaro",
       addressCountry: "MX",
     },
     contactPoint: [
@@ -56,15 +56,15 @@
     ],
     areaServed: {
       "@type": "Place",
-      name: "MÃ©xico y ExportaciÃ³n Global",
+      name: "México y Exportación Global",
     },
     knowsAbout: [
-      "AutomatizaciÃ³n Industrial",
+      "Automatización Industrial",
       "Sistemas de Transporte",
       "Perfiles de Aluminio Estructural",
-      "Estaciones de Trabajo ErgonÃ³micas",
+      "Estaciones de Trabajo Ergonómicas",
       "Robots Colaborativos",
-      "GuÃ­as Lineales",
+      "Guías Lineales",
       "Lean Manufacturing",
     ],
   };
@@ -75,7 +75,7 @@
     "@id": "https://steigern.com.mx/#website",
     url: "https://steigern.com.mx",
     name: "STEIGERN Design In Motion",
-    description: "Soluciones de automatizaciÃ³n industrial y sistemas de ingenierÃ­a en MÃ©xico",
+    description: "Soluciones de automatización industrial y sistemas de ingeniería en México",
     publisher: {
       "@id": "https://steigern.com.mx/#organization",
     },
@@ -85,7 +85,7 @@
   const services = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Soluciones de IngenierÃ­a STEIGERN",
+    name: "Soluciones de Ingeniería STEIGERN",
     itemListElement: [
       {
         "@type": "ListItem",
@@ -96,7 +96,7 @@
           url: "https://steigern.com.mx/soluciones/perfil-de-aluminio",
           provider: { "@id": "https://steigern.com.mx/#organization" },
           description:
-            "DiseÃ±o e integraciÃ³n de perfiles estructurales de aluminio adaptados individualmente para cada entorno de trabajo industrial.",
+            "Diseño e integración de perfiles estructurales de aluminio adaptados individualmente para cada entorno de trabajo industrial.",
         },
       },
       {
@@ -108,7 +108,7 @@
           url: "https://steigern.com.mx/soluciones/conveyors",
           provider: { "@id": "https://steigern.com.mx/#organization" },
           description:
-            "Sistemas conveyor industriales personalizados: de banda, rodillos, modulares y elevadores para lÃ­neas de manufactura.",
+            "Sistemas conveyor industriales personalizados: de banda, rodillos, modulares y elevadores para líneas de manufactura.",
         },
       },
       {
@@ -120,7 +120,7 @@
           url: "https://steigern.com.mx/soluciones/estaciones-de-trabajo",
           provider: { "@id": "https://steigern.com.mx/#organization" },
           description:
-            "Estaciones de trabajo ergonÃ³micas con diseÃ±o Ã³ptimo de iluminaciÃ³n, entorno y seguridad para el operario.",
+            "Estaciones de trabajo ergonómicas con diseño óptimo de iluminación, entorno y seguridad para el operario.",
         },
       },
       {
@@ -132,7 +132,7 @@
           url: "https://steigern.com.mx/soluciones/dispositivos-asistidos-por-cobots",
           provider: { "@id": "https://steigern.com.mx/#organization" },
           description:
-            "IntegraciÃ³n de robots colaborativos para asistir al operario en lÃ­neas de ensamble industrial.",
+            "Integración de robots colaborativos para asistir al operario en líneas de ensamble industrial.",
         },
       },
       {
@@ -140,11 +140,11 @@
         position: 5,
         item: {
           "@type": "Service",
-          name: "ElevaciÃ³n y GuÃ­as Lineales",
+          name: "Elevación y Guías Lineales",
           url: "https://steigern.com.mx/soluciones/elevacion-y-guias-lineales",
           provider: { "@id": "https://steigern.com.mx/#organization" },
           description:
-            "Sistemas de elevaciÃ³n y guÃ­as lineales de precisiÃ³n para manufactura y ensamblaje industrial.",
+            "Sistemas de elevación y guías lineales de precisión para manufactura y ensamblaje industrial.",
         },
       },
       {

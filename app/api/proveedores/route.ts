@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const {
       codigo_proveedor, razon_social, nombre_comercial, rfc,
-      pais = "MÃ©xico", estado, ciudad, direccion, codigo_postal,
+      pais = "México", estado, ciudad, direccion, codigo_postal,
       sitio_web, categoria_id, estatus = "en_revision",
       calificacion, notas,
     } = body;
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
   } catch (err: unknown) {
     const e = err as { code?: string };
     if (e.code === "ER_DUP_ENTRY") {
-      return NextResponse.json({ ok: false, error: "CÃ³digo de proveedor o RFC duplicado" }, { status: 409 });
+      return NextResponse.json({ ok: false, error: "Código de proveedor o RFC duplicado" }, { status: 409 });
     }
     console.error("[POST /api/proveedores]", err);
     return NextResponse.json({ ok: false, error: "Error al crear proveedor" }, { status: 500 });

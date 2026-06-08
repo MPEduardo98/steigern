@@ -20,7 +20,7 @@ import { loginAction } from "../_actions/auth";
 import type { UserRole } from "@root/auth";
 
 const ROLES = [
-  { id: "proveedor"     as UserRole, label: "Proveedor",      desc: "GestiÃ³n de Ã³rdenes y documentos",  icon: faBriefcase },
+  { id: "proveedor"     as UserRole, label: "Proveedor",      desc: "Gestión de órdenes y documentos",  icon: faBriefcase },
   { id: "empleado"      as UserRole, label: "Empleado",       desc: "Acceso interno a proyectos",        icon: faUser      },
   { id: "administrador" as UserRole, label: "Administrador",  desc: "Control total del sistema",         icon: faShield    },
 ];
@@ -86,11 +86,11 @@ function LoginForm() {
             Portal Corporativo
           </p>
           <h1 className="text-4xl font-black text-white leading-tight tracking-tight">
-            IngenierÃ­a en<br />
+            Ingeniería en<br />
             <span className="text-accent">Movimiento</span>
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed max-w-xs">
-            Accede al sistema centralizado de gestiÃ³n de proyectos, proveedores y operaciones de STEIGERN.
+            Accede al sistema centralizado de gestión de proyectos, proveedores y operaciones de STEIGERN.
           </p>
         </div>
 
@@ -119,7 +119,7 @@ function LoginForm() {
             Bienvenido
           </p>
           <h2 className="text-2xl font-black text-zinc-950 tracking-tight mb-8">
-            Iniciar sesiÃ³n
+            Iniciar sesión
           </h2>
 
           <form action={action} className="flex flex-col gap-5">
@@ -162,7 +162,7 @@ function LoginForm() {
             {/* Email */}
             <div>
               <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
-                Correo electrÃ³nico
+                Correo electrónico
               </label>
               <input
                 type="email"
@@ -177,7 +177,7 @@ function LoginForm() {
             {/* Password */}
             <div>
               <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
-                ContraseÃ±a
+                Contraseña
               </label>
               <div className="relative">
                 <input

@@ -7,7 +7,7 @@ const soluciones = [
   { label: "Sistemas de Transporte", href: "/soluciones/conveyors" },
   { label: "Estaciones de Trabajo", href: "/soluciones/estaciones-de-trabajo" },
   { label: "Co-Bots", href: "/soluciones/dispositivos-asistidos-por-cobots" },
-  { label: "ElevaciÃ³n y GuÃ­as Lineales", href: "/soluciones/elevacion-y-guias-lineales" },
+  { label: "Elevación y Guías Lineales", href: "/soluciones/elevacion-y-guias-lineales" },
   { label: "Soluciones Lean", href: "/soluciones/soluciones-lean" },
 ];
 
@@ -40,7 +40,7 @@ const contacto = [
     ),
   },
   {
-    label: "Puebla, MÃ©xico",
+    label: "Puebla, México",
     href: "https://maps.google.com",
     icon: (
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -173,7 +173,7 @@ export default function Footer() {
               href="/contacto"
               className="mt-8 inline-flex items-center gap-2 bg-brand text-white text-xs font-bold tracking-widest uppercase px-5 py-3 hover:bg-brand-dark transition-colors duration-200"
             >
-              Solicitar cotizaciÃ³n
+              Solicitar cotización
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -190,7 +190,7 @@ export default function Footer() {
             Â© {new Date().getFullYear()} STEIGERN Design In Motion S.A de C.V. â€” <span className="text-zinc-600 italic">We enjoy making machines.</span>
           </p>
           <p className="text-zinc-500 text-xs">
-            DiseÃ±ado por{" "}
+            Diseñado por{" "}
             <a
               href="https://www.instagram.com/eduardo_martinez66"
               target="_blank"

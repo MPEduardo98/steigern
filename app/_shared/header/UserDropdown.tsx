@@ -46,9 +46,9 @@ const ROLE_PORTAL: Record<UserRole, string> = {
 };
 
 const LANGUAGES = [
-  { code: "es", label: "EspaÃ±ol", flag: "ðŸ‡²ðŸ‡½" },
-  { code: "en", label: "English", flag: "ðŸ‡ºðŸ‡¸" },
-  { code: "de", label: "Deutsch", flag: "ðŸ‡©ðŸ‡ª" },
+  { code: "es", label: "Español", flag: "🇲🇽" },
+  { code: "en", label: "English", flag: "🇺🇸" },
+  { code: "de", label: "Deutsch", flag: "🇩🇪" },
 ];
 
 export default function UserDropdown({ user }: Props) {
@@ -87,7 +87,7 @@ export default function UserDropdown({ user }: Props) {
       {/* â”€â”€ Trigger â”€â”€ */}
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label="MenÃº de usuario"
+        aria-label="Menú de usuario"
         className={`flex items-center gap-2 px-3 py-2 border transition-colors duration-200 ${
           open
             ? "border-[#E02020] text-[#E02020]"
@@ -138,7 +138,7 @@ export default function UserDropdown({ user }: Props) {
                   </span>
                   <div>
                     <p className="text-xs font-bold text-zinc-900">Invitado</p>
-                    <p className="text-[10px] text-zinc-400">Sin sesiÃ³n activa</p>
+                    <p className="text-[10px] text-zinc-400">Sin sesión activa</p>
                   </div>
                 </div>
                 <Link
@@ -147,7 +147,7 @@ export default function UserDropdown({ user }: Props) {
                   className="flex items-center justify-center gap-2 w-full px-3 py-2 bg-[#E02020] text-white text-xs font-bold tracking-[0.1em] uppercase hover:bg-[#c41a1a] transition-colors duration-200"
                 >
                   <FontAwesomeIcon icon={faRightToBracket} className="w-3 h-3" />
-                  Iniciar SesiÃ³n
+                  Iniciar Sesión
                 </Link>
               </div>
             ) : (
@@ -187,7 +187,7 @@ export default function UserDropdown({ user }: Props) {
                   className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold tracking-[0.08em] uppercase text-zinc-500 hover:text-[#E02020] hover:bg-red-50 transition-colors duration-150 disabled:opacity-50"
                 >
                   <FontAwesomeIcon icon={faRightFromBracket} className="w-3 h-3" />
-                  {loading ? "Cerrando..." : "Cerrar SesiÃ³n"}
+                  {loading ? "Cerrando..." : "Cerrar Sesión"}
                 </button>
               </div>
             )}

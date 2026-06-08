@@ -58,7 +58,7 @@ export default function NavbarShell({ user }: Props) {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="MenÃº"
+          aria-label="Menú"
           className="md:hidden flex flex-col gap-1.5 p-2"
         >
           <span className={`w-5 h-px bg-zinc-900 transition-all duration-200 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
@@ -112,7 +112,7 @@ export default function NavbarShell({ user }: Props) {
                     onClick={() => setMenuOpen(false)}
                     className="text-xs font-bold tracking-[0.1em] uppercase text-zinc-600 hover:text-[#E02020] transition-colors duration-200"
                   >
-                    Iniciar SesiÃ³n
+                    Iniciar Sesión
                   </Link>
                 )}
               </div>

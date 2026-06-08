@@ -35,9 +35,9 @@ export async function loginAction(
     if (err instanceof AuthError) {
       switch (err.type) {
         case "CredentialsSignin":
-          return { error: "Correo, contraseÃ±a o perfil incorrectos." };
+          return { error: "Correo, contraseña o perfil incorrectos." };
         default:
-          return { error: "Error de autenticaciÃ³n. Intenta de nuevo." };
+          return { error: "Error de autenticación. Intenta de nuevo." };
       }
     }
     return { error: "Error interno del servidor." };

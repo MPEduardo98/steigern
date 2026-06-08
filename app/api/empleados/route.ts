@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
   } catch (err: unknown) {
     const e = err as { code?: string };
     if (e.code === "ER_DUP_ENTRY") {
-      return NextResponse.json({ ok: false, error: "NÃºmero de empleado o email duplicado" }, { status: 409 });
+      return NextResponse.json({ ok: false, error: "Número de empleado o email duplicado" }, { status: 409 });
     }
     console.error("[POST /api/empleados]", err);
     return NextResponse.json({ ok: false, error: "Error al crear empleado" }, { status: 500 });
