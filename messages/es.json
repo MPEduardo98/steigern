@@ -74,5 +74,29 @@
     "item4_label": "Experiencia en la Industria",
     "item4_sublabel": "fundada en 1984, Múnich",
     "item4_suffix": " años"
+  },
+  "Login": {
+    "panel_eyebrow": "Portal Corporativo",
+    "panel_title_line1": "Ingeniería en",
+    "panel_title_line2": "Movimiento",
+    "panel_description": "Accede al sistema centralizado de gestión de proyectos, proveedores y operaciones de STEIGERN.",
+    "welcome": "Bienvenido",
+    "heading": "Iniciar sesión",
+    "access_type": "Tipo de acceso",
+    "role_proveedor": "Proveedor",
+    "role_proveedor_desc": "Gestión de órdenes y documentos",
+    "role_empleado": "Empleado",
+    "role_empleado_desc": "Acceso interno a proyectos",
+    "role_administrador": "Administrador",
+    "role_administrador_desc": "Control total del sistema",
+    "email_label": "Correo electrónico",
+    "password_label": "Contraseña",
+    "submit": "Ingresar",
+    "submitting": "Verificando…",
+    "back": "Volver al sitio principal",
+    "error_required": "Todos los campos son requeridos.",
+    "error_invalid": "Correo, contraseña o perfil incorrectos.",
+    "error_auth": "Error de autenticación. Intenta de nuevo.",
+    "error_server": "Error interno del servidor."
   }
 }

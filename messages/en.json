@@ -74,5 +74,29 @@
     "item4_label": "Industry Experience",
     "item4_sublabel": "founded 1984, Munich",
     "item4_suffix": " years"
+  },
+  "Login": {
+    "panel_eyebrow": "Corporate Portal",
+    "panel_title_line1": "Engineering in",
+    "panel_title_line2": "Motion",
+    "panel_description": "Access STEIGERN's centralized system for managing projects, suppliers and operations.",
+    "welcome": "Welcome",
+    "heading": "Sign in",
+    "access_type": "Access type",
+    "role_proveedor": "Supplier",
+    "role_proveedor_desc": "Order and document management",
+    "role_empleado": "Employee",
+    "role_empleado_desc": "Internal project access",
+    "role_administrador": "Administrator",
+    "role_administrador_desc": "Full system control",
+    "email_label": "Email address",
+    "password_label": "Password",
+    "submit": "Sign in",
+    "submitting": "Verifying…",
+    "back": "Back to main site",
+    "error_required": "All fields are required.",
+    "error_invalid": "Incorrect email, password or profile.",
+    "error_auth": "Authentication error. Please try again.",
+    "error_server": "Internal server error."
   }
 }

@@ -7,6 +7,10 @@
 
   --color-brand:      #E02020;
   --color-brand-dark: #c41a1a;
+
+  /* Alias de marca usado en la pantalla de login */
+  --color-accent:      #E02020;
+  --color-accent-dark: #c41a1a;
 }
 
 /* ─── Design Tokens ─────────────────────────────────────────── */
@@ -50,7 +54,8 @@ body {
 }
 
 /* ─── Typography ─────────────────────────────────────────────── */
-.font-bankgothic {
+.font-bankgothic,
+.font-brand {
   font-family: var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
   letter-spacing: 0.15em;

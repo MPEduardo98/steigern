@@ -1,8 +1,9 @@
-﻿// app/(auth)/_actions/auth.ts
+﻿// app/[locale]/_actions/auth.ts
 "use server";
 
 import { signIn, signOut } from "@root/auth";
 import { AuthError } from "next-auth";
+import { getTranslations } from "next-intl/server";
 import type { UserRole } from "@root/auth";
 
 export interface LoginState {
@@ -14,12 +15,14 @@ export async function loginAction(
   _prev: LoginState,
   formData: FormData
 ): Promise<LoginState> {
+  const t = await getTranslations("Login");
+
   const email    = formData.get("email")    as string;
   const password = formData.get("password") as string;
   const role     = formData.get("role")     as UserRole;
 
   if (!email || !password || !role) {
-    return { error: "Todos los campos son requeridos." };
+    return { error: t("error_required") };
   }
 
   try {
@@ -35,12 +38,12 @@ export async function loginAction(
     if (err instanceof AuthError) {
       switch (err.type) {
         case "CredentialsSignin":
-          return { error: "Correo, contraseña o perfil incorrectos." };
+          return { error: t("error_invalid") };
         default:
-          return { error: "Error de autenticación. Intenta de nuevo." };
+          return { error: t("error_auth") };
       }
     }
-    return { error: "Error interno del servidor." };
+    return { error: t("error_server") };
   }
 }
 

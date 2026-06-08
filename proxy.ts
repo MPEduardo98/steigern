@@ -12,10 +12,11 @@ const intlMiddleware = createMiddleware(routing);
 const { auth: nextAuthMiddleware } = NextAuth(authConfig);
 
 // Rutas privadas â€” gestionadas por NextAuth, sin prefijo de locale.
+// El login vive dentro de [locale] (/login, /en/login, /de/login) y lo
+// gestiona next-intl, por eso NO va aquí.
 const AUTH_ROUTES = [
   /^\/admin(\/.*)?$/,
   /^\/portal-proveedores(\/.*)?$/,
-  /^\/login$/,
 ];
 
 export default function middleware(request: NextRequest) {

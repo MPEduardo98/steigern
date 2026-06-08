@@ -74,5 +74,29 @@
     "item4_label": "Branchenerfahrung",
     "item4_sublabel": "gegründet 1984, München",
     "item4_suffix": " Jahre"
+  },
+  "Login": {
+    "panel_eyebrow": "Unternehmensportal",
+    "panel_title_line1": "Technik in",
+    "panel_title_line2": "Bewegung",
+    "panel_description": "Zugang zum zentralen System von STEIGERN für die Verwaltung von Projekten, Lieferanten und Betrieb.",
+    "welcome": "Willkommen",
+    "heading": "Anmelden",
+    "access_type": "Zugriffstyp",
+    "role_proveedor": "Lieferant",
+    "role_proveedor_desc": "Bestell- und Dokumentenverwaltung",
+    "role_empleado": "Mitarbeiter",
+    "role_empleado_desc": "Interner Projektzugriff",
+    "role_administrador": "Administrator",
+    "role_administrador_desc": "Vollständige Systemkontrolle",
+    "email_label": "E-Mail-Adresse",
+    "password_label": "Passwort",
+    "submit": "Anmelden",
+    "submitting": "Wird überprüft…",
+    "back": "Zurück zur Hauptseite",
+    "error_required": "Alle Felder sind erforderlich.",
+    "error_invalid": "E-Mail, Passwort oder Profil ist falsch.",
+    "error_auth": "Authentifizierungsfehler. Bitte versuche es erneut.",
+    "error_server": "Interner Serverfehler."
   }
 }

@@ -1,9 +1,10 @@
-﻿// app/(auth)/login/page.tsx
+﻿// app/[locale]/login/page.tsx
 "use client";
 
 import { Suspense, useState, useActionState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
+import { Link, usePathname, useRouter as useIntlRouter } from "@root/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,14 +17,56 @@ import {
   faCircleExclamation,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import MX from "country-flag-icons/react/3x2/MX";
+import US from "country-flag-icons/react/3x2/US";
+import DE from "country-flag-icons/react/3x2/DE";
 import { loginAction } from "../_actions/auth";
 import type { UserRole } from "@root/auth";
 
 const ROLES = [
-  { id: "proveedor"     as UserRole, label: "Proveedor",      desc: "Gestión de órdenes y documentos",  icon: faBriefcase },
-  { id: "empleado"      as UserRole, label: "Empleado",       desc: "Acceso interno a proyectos",        icon: faUser      },
-  { id: "administrador" as UserRole, label: "Administrador",  desc: "Control total del sistema",         icon: faShield    },
+  { id: "proveedor"     as UserRole, icon: faBriefcase },
+  { id: "empleado"      as UserRole, icon: faUser      },
+  { id: "administrador" as UserRole, icon: faShield    },
 ];
+
+const LANGUAGES = [
+  { code: "es", label: "Español", Flag: MX },
+  { code: "en", label: "English", Flag: US },
+  { code: "de", label: "Deutsch", Flag: DE },
+];
+
+// â”€â”€ Selector de idioma â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function LanguageSwitcher({ dark = false }: { dark?: boolean }) {
+  const locale       = useLocale();
+  const pathname     = usePathname();
+  const intlRouter   = useIntlRouter();
+
+  return (
+    <div className="flex items-center gap-1.5">
+      {LANGUAGES.map((l) => {
+        const active = locale === l.code;
+        return (
+          <button
+            key={l.code}
+            type="button"
+            onClick={() => intlRouter.replace(pathname, { locale: l.code })}
+            aria-label={l.label}
+            title={l.label}
+            className={`flex items-center justify-center w-8 h-6 rounded-[3px] border transition-all duration-200 cursor-pointer ${
+              active
+                ? "border-accent ring-1 ring-accent/40 opacity-100"
+                : dark
+                  ? "border-white/15 opacity-50 hover:opacity-100 hover:border-white/40"
+                  : "border-zinc-200 opacity-50 hover:opacity-100 hover:border-zinc-400"
+            }`}
+          >
+            <l.Flag title={l.label} className="w-5 h-auto rounded-[1px]" />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 const REDIRECT: Record<UserRole, string> = {
   administrador: "/admin",
@@ -33,6 +76,7 @@ const REDIRECT: Record<UserRole, string> = {
 
 // â”€â”€ Inner component que usa useSearchParams â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function LoginForm() {
+  const t            = useTranslations("Login");
   const router       = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl  = searchParams.get("callbackUrl");
@@ -74,29 +118,29 @@ function LoginForm() {
 
         {/* Logo */}
         <div>
-          <span className="font-brand text-3xl font-black tracking-widest text-white uppercase">
+          <span className="font-brand text-4xl text-white leading-none">
             STEIGERN
           </span>
-          <div className="w-8 h-px bg-accent mt-4" />
+          <div className="w-10 h-[3px] bg-accent mt-4" />
         </div>
 
         {/* Tagline */}
         <div className="space-y-6">
           <p className="text-[11px] text-zinc-500 font-bold tracking-[0.22em] uppercase">
-            Portal Corporativo
+            {t("panel_eyebrow")}
           </p>
           <h1 className="text-4xl font-black text-white leading-tight tracking-tight">
-            Ingeniería en<br />
-            <span className="text-accent">Movimiento</span>
+            {t("panel_title_line1")}<br />
+            <span className="text-accent">{t("panel_title_line2")}</span>
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed max-w-xs">
-            Accede al sistema centralizado de gestión de proyectos, proveedores y operaciones de STEIGERN.
+            {t("panel_description")}
           </p>
         </div>
 
         {/* Footer */}
         <p className="text-[10px] text-zinc-600 tracking-widest uppercase">
-          Â© {new Date().getFullYear()} STEIGERN Design In Motion
+          © {new Date().getFullYear()} STEIGERN Design In Motion
         </p>
       </motion.aside>
 
@@ -105,28 +149,37 @@ function LoginForm() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        className="flex-1 flex flex-col items-center justify-center p-8 lg:p-16"
+        className="relative flex-1 flex flex-col items-center justify-center p-8 lg:p-16"
       >
+        {/* Selector de idioma */}
+        <div className="absolute top-6 right-6 lg:top-8 lg:right-8">
+          <LanguageSwitcher />
+        </div>
+
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden mb-10">
-            <span className="font-brand text-2xl font-black tracking-widest text-zinc-950 uppercase">
+            <span className="font-brand text-3xl text-zinc-950 leading-none">
               STEIGERN
             </span>
+            <div className="w-8 h-[3px] bg-accent mt-3" />
           </div>
 
-          <p className="text-[10px] text-zinc-400 font-bold tracking-[0.22em] uppercase mb-2">
-            Bienvenido
-          </p>
-          <h2 className="text-2xl font-black text-zinc-950 tracking-tight mb-8">
-            Iniciar sesión
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-5 h-[3px] bg-accent" />
+            <p className="text-[10px] text-zinc-400 font-bold tracking-[0.22em] uppercase">
+              {t("welcome")}
+            </p>
+          </div>
+          <h2 className="text-3xl font-black text-zinc-950 tracking-tight mb-8">
+            {t("heading")}
           </h2>
 
           <form action={action} className="flex flex-col gap-5">
             {/* Selector de rol */}
             <div>
               <p className="text-[10px] text-zinc-400 font-bold tracking-[0.18em] uppercase mb-3">
-                Tipo de acceso
+                {t("access_type")}
               </p>
               <div className="grid grid-cols-3 gap-2">
                 {ROLES.map((r) => {
@@ -150,7 +203,7 @@ function LoginForm() {
                         className={`w-4 h-4 transition-colors duration-200 ${active ? "text-accent" : "text-zinc-400"}`}
                       />
                       <span className={`text-[10px] font-black tracking-[0.1em] uppercase leading-tight transition-colors ${active ? "text-accent" : "text-zinc-500"}`}>
-                        {r.label}
+                        {t(`role_${r.id}`)}
                       </span>
                     </button>
                   );
@@ -162,7 +215,7 @@ function LoginForm() {
             {/* Email */}
             <div>
               <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
-                Correo electrónico
+                {t("email_label")}
               </label>
               <input
                 type="email"
@@ -170,14 +223,14 @@ function LoginForm() {
                 required
                 autoComplete="email"
                 placeholder="usuario@steigern.com.mx"
-                className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder:text-zinc-400"
+                className="w-full bg-zinc-50 border border-zinc-200 rounded-md text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 focus:bg-white transition-all placeholder:text-zinc-400"
               />
             </div>
 
             {/* Password */}
             <div>
               <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
-                Contraseña
+                {t("password_label")}
               </label>
               <div className="relative">
                 <input
@@ -185,8 +238,8 @@ function LoginForm() {
                   name="password"
                   required
                   autoComplete="current-password"
-                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
-                  className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 pr-12 focus:outline-none focus:border-accent transition-colors placeholder:text-zinc-400"
+                  placeholder="••••••••"
+                  className="w-full bg-zinc-50 border border-zinc-200 rounded-md text-zinc-900 text-sm px-4 py-3 pr-12 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 focus:bg-white transition-all placeholder:text-zinc-400"
                 />
                 <button
                   type="button"
@@ -217,16 +270,16 @@ function LoginForm() {
             <button
               type="submit"
               disabled={pending}
-              className="flex items-center justify-center gap-3 bg-accent hover:bg-red-700 disabled:opacity-60 text-white text-sm font-bold tracking-[0.12em] uppercase px-6 py-4 transition-colors duration-200 rounded-lg mt-1"
+              className="flex items-center justify-center gap-3 bg-accent hover:bg-accent-dark disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-bold tracking-[0.12em] uppercase px-6 py-4 transition-all duration-200 rounded-md mt-1 shadow-[0_4px_16px_rgba(224,32,32,0.25)] hover:shadow-[0_6px_20px_rgba(224,32,32,0.35)] cursor-pointer"
             >
               {pending ? (
                 <span className="flex items-center gap-2">
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Verificandoâ€¦
+                  {t("submitting")}
                 </span>
               ) : (
                 <>
-                  Ingresar
+                  {t("submit")}
                   <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                 </>
               )}
@@ -240,7 +293,7 @@ function LoginForm() {
               className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-700 transition-colors"
             >
               <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
-              Volver al sitio principal
+              {t("back")}
             </Link>
           </div>
         </div>

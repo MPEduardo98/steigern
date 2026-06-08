@@ -16,8 +16,11 @@ import {
   faBriefcase,
   faTruck,
 } from "@fortawesome/free-solid-svg-icons";
-import { logoutAction } from "@/(auth)/_actions/auth";
+import { logoutAction } from "@/[locale]/_actions/auth";
 import type { UserRole } from "@root/auth";
+import MX from "country-flag-icons/react/3x2/MX";
+import US from "country-flag-icons/react/3x2/US";
+import DE from "country-flag-icons/react/3x2/DE";
 
 interface Props {
   user: {
@@ -46,9 +49,9 @@ const ROLE_PORTAL: Record<UserRole, string> = {
 };
 
 const LANGUAGES = [
-  { code: "es", label: "Español", flag: "🇲🇽" },
-  { code: "en", label: "English", flag: "🇺🇸" },
-  { code: "de", label: "Deutsch", flag: "🇩🇪" },
+  { code: "es", label: "Español", Flag: MX },
+  { code: "en", label: "English", Flag: US },
+  { code: "de", label: "Deutsch", Flag: DE },
 ];
 
 export default function UserDropdown({ user }: Props) {
@@ -79,7 +82,6 @@ export default function UserDropdown({ user }: Props) {
   }
 
   const isGuest    = !user;
-  const activeLang = LANGUAGES.find((l) => l.code === locale) ?? LANGUAGES[0];
   const firstName  = user?.name?.split(" ")[0] ?? "Usuario";
 
   return (
@@ -106,8 +108,6 @@ export default function UserDropdown({ user }: Props) {
         <span className="text-xs font-bold tracking-[0.1em] uppercase">
           {isGuest ? "Invitado" : firstName}
         </span>
-
-        <span className="text-sm">{activeLang.flag}</span>
 
         <svg
           width="10" height="10" viewBox="0 0 24 24"
@@ -209,7 +209,7 @@ export default function UserDropdown({ user }: Props) {
                         : "border-zinc-200 text-zinc-500 hover:border-zinc-400"
                     }`}
                   >
-                    <span>{l.flag}</span>
+                    <l.Flag title={l.label} className="w-4 h-auto rounded-[1px] shrink-0" />
                     {l.code.toUpperCase()}
                   </button>
                 ))}
