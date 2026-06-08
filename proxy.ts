@@ -1,32 +1,28 @@
-// proxy.ts  (raíz del proyecto — reemplaza al anterior)
-// ✅  Encadena next-intl (locale routing) + NextAuth (auth guard)
-//     Solo Web APIs — Edge-safe.
+﻿// proxy.ts  (raÃ­z del proyecto)
+// Encadena NextAuth (guard de rutas privadas) + next-intl (routing de locale).
+// Las rutas privadas (login, admin, portal-proveedores) viven FUERA del
+// segmento [locale]; las pÃºblicas dentro de [locale].
 import createMiddleware from "next-intl/middleware";
 import NextAuth from "next-auth";
-import { authConfig } from "@/auth.config";
-import { routing } from "@/i18n/routing";
+import { authConfig } from "./auth.config";
+import { routing } from "./i18n/routing";
 import type { NextRequest } from "next/server";
 
-// ── next-intl: maneja prefijos de locale (/en/..., /de/...) ──────────────
 const intlMiddleware = createMiddleware(routing);
-
-// ── NextAuth: solo verifica JWT, no toca BD ──────────────────────────────
 const { auth: nextAuthMiddleware } = NextAuth(authConfig);
 
-// Rutas que requieren protección de auth (sin prefijo de locale)
+// Rutas privadas â€” gestionadas por NextAuth, sin prefijo de locale.
 const AUTH_ROUTES = [
-  /^(\/[a-z]{2})?\/admin(\/.*)?$/,
-  /^(\/[a-z]{2})?\/portal-proveedores(\/.*)?$/,
-  /^(\/[a-z]{2})?\/login$/,
+  /^\/admin(\/.*)?$/,
+  /^\/portal-proveedores(\/.*)?$/,
+  /^\/login$/,
 ];
 
-export default async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+export default function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  const needsAuth = AUTH_ROUTES.some((r) => r.test(pathname));
-
-  if (needsAuth) {
-    // @ts-expect-error — NextAuth middleware acepta NextRequest internamente
+  if (AUTH_ROUTES.some((r) => r.test(pathname))) {
+    // @ts-expect-error â€” NextAuth acepta NextRequest internamente
     return nextAuthMiddleware(request);
   }
 
@@ -34,8 +30,7 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    // Todas las rutas excepto _next, api/auth y archivos estáticos
-    "/((?!_next|api/auth|.*\\..*).*)",
-  ],
+  // Excluye API completa, _next, archivos estÃ¡ticos y rutas de auth de next-intl.
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
+

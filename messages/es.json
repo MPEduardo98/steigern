@@ -1,0 +1,78 @@
+{
+  "Hero": {
+    "eyebrow": "Excelencia Industrial",
+    "title_line1": "Ingeniería que",
+    "title_line2": "Transforma el Futuro",
+    "description": "Soluciones de ingeniería de precisión y automatización industrial que transforman las operaciones de manufactura. Construido para rendir. Diseñado para durar.",
+    "cta_solutions": "Ver Soluciones",
+    "cta_history": "Nuestra Historia",
+    "stat1_value": "13+",
+    "stat1_label": "Años de Experiencia",
+    "stat2_value": "60+",
+    "stat2_label": "Países Atendidos",
+    "stat3_value": "100%",
+    "stat3_label": "Hecho en México",
+    "scroll": "Scroll"
+  },
+  "Solutions": {
+    "eyebrow": "Lo Que Construimos",
+    "title_line1": "Soluciones de",
+    "title_line2": "Ingeniería",
+    "description": "Diseñamos e integramos dispositivos para el ensamble de componentes industriales, automatizando procesos manuales y líneas de manufactura.",
+    "view_all": "Ver todas las soluciones",
+    "item1_title": "Perfil Estructural de Aluminio",
+    "item1_desc": "Los perfiles estructurales de aluminio para aplicaciones en entornos de trabajo son más eficientes cuando se adaptan individualmente a su propósito específico.",
+    "item2_title": "Sistemas de Transporte",
+    "item2_desc": "Desde el desarrollo temprano del concepto hasta el estudio detallado de factibilidad, incluidos proyectos para la manipulación de materiales.",
+    "item3_title": "Estaciones de Trabajo",
+    "item3_desc": "Diseño ergonómico óptimo que adapta el lugar de trabajo considerando la iluminación, el entorno y las capacidades del operario."
+  },
+  "About": {
+    "eyebrow": "Nuestra Historia",
+    "title_line1": "Quiénes",
+    "title_line2": "Somos",
+    "paragraph1_pre": "Somos una empresa mexicana comprometida con el ",
+    "paragraph1_highlight": "desarrollo tecnológico industrial",
+    "paragraph1_post": ", mediante servicios y productos vanguardistas acorde a las exigencias a nivel mundial.",
+    "paragraph2_pre": "Con ",
+    "paragraph2_highlight": "13 años de experiencia",
+    "paragraph2_post": ", nos hemos convertido en un socio comercial confiable en dispositivos de ensamble para componentes de automoción, exportando desde México al mundo.",
+    "stat1_value": "13+",
+    "stat1_label": "Años de Experiencia",
+    "stat2_value": "MX→USA",
+    "stat2_label": "Exportando desde 2020",
+    "stat3_value": "QRO",
+    "stat3_label": "Corporativo en Querétaro",
+    "cta": "Conocer nuestra historia completa"
+  },
+  "GlobalPresence": {
+    "eyebrow": "Presencia Global",
+    "title_line1": "From Mexico",
+    "title_line2": "To The World",
+    "description": "En STEIGERN llevamos la innovación mexicana a los mercados internacionales, entregando calidad y diseño industrial de clase mundial. Nuestro compromiso trasciende fronteras para conectar con clientes y proyectos en todo el planeta.",
+    "stat1_value": "60+",
+    "stat1_label": "Países Atendidos",
+    "stat2_value": "3",
+    "stat2_label": "Continentes",
+    "stat3_value": "100%",
+    "stat3_label": "Hecho en México"
+  },
+  "Brands": {
+    "eyebrow": "Tecnología de Clase Mundial",
+    "title_line1": "Integrando con las",
+    "title_line2": "Mejores Marcas",
+    "description": "Integramos componentes de las marcas más reconocidas en automatización y control industrial, asegurando soluciones confiables, eficientes y personalizadas para cada proyecto.",
+    "disclaimer": "*Todas las marcas y logotipos mostrados son propiedad de sus respectivos titulares. Usados únicamente con fines informativos para mostrar compatibilidad y experiencia tecnológica."
+  },
+  "Metrics": {
+    "item1_label": "Máquinas Instaladas",
+    "item1_sublabel": "en más de 60 países",
+    "item2_label": "Garantía de Disponibilidad",
+    "item2_sublabel": "estándar SLA contractual",
+    "item3_label": "Ingenieros en Plantilla",
+    "item3_sublabel": "mecánica, eléctrica y SW",
+    "item4_label": "Experiencia en la Industria",
+    "item4_sublabel": "fundada en 1984, Múnich",
+    "item4_suffix": " años"
+  }
+}

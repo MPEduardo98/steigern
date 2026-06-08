@@ -1,4 +1,4 @@
-// app/(auth)/login/page.tsx
+﻿// app/(auth)/login/page.tsx
 "use client";
 
 import { Suspense, useState, useActionState, useEffect } from "react";
@@ -16,11 +16,11 @@ import {
   faCircleExclamation,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { loginAction } from "@/app/actions/auth";
-import type { UserRole } from "@/auth";
+import { loginAction } from "../_actions/auth";
+import type { UserRole } from "@root/auth";
 
 const ROLES = [
-  { id: "proveedor"     as UserRole, label: "Proveedor",      desc: "Gestión de órdenes y documentos",  icon: faBriefcase },
+  { id: "proveedor"     as UserRole, label: "Proveedor",      desc: "GestiÃ³n de Ã³rdenes y documentos",  icon: faBriefcase },
   { id: "empleado"      as UserRole, label: "Empleado",       desc: "Acceso interno a proyectos",        icon: faUser      },
   { id: "administrador" as UserRole, label: "Administrador",  desc: "Control total del sistema",         icon: faShield    },
 ];
@@ -31,7 +31,7 @@ const REDIRECT: Record<UserRole, string> = {
   proveedor:     "/portal-proveedores",
 };
 
-// ── Inner component que usa useSearchParams ──────────────────────────────────
+// â”€â”€ Inner component que usa useSearchParams â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function LoginForm() {
   const router       = useRouter();
   const searchParams = useSearchParams();
@@ -48,7 +48,7 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen flex bg-white">
-      {/* ── PANEL IZQUIERDO ───────────────────────────────────────────────── */}
+      {/* â”€â”€ PANEL IZQUIERDO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <motion.aside
         initial={{ x: -40, opacity: 0 }}
         animate={{ x: 0,   opacity: 1 }}
@@ -86,21 +86,21 @@ function LoginForm() {
             Portal Corporativo
           </p>
           <h1 className="text-4xl font-black text-white leading-tight tracking-tight">
-            Ingeniería en<br />
+            IngenierÃ­a en<br />
             <span className="text-accent">Movimiento</span>
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed max-w-xs">
-            Accede al sistema centralizado de gestión de proyectos, proveedores y operaciones de STEIGERN.
+            Accede al sistema centralizado de gestiÃ³n de proyectos, proveedores y operaciones de STEIGERN.
           </p>
         </div>
 
         {/* Footer */}
         <p className="text-[10px] text-zinc-600 tracking-widest uppercase">
-          © {new Date().getFullYear()} STEIGERN Design In Motion
+          Â© {new Date().getFullYear()} STEIGERN Design In Motion
         </p>
       </motion.aside>
 
-      {/* ── PANEL DERECHO ────────────────────────────────────────────────── */}
+      {/* â”€â”€ PANEL DERECHO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <motion.main
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -119,7 +119,7 @@ function LoginForm() {
             Bienvenido
           </p>
           <h2 className="text-2xl font-black text-zinc-950 tracking-tight mb-8">
-            Iniciar sesión
+            Iniciar sesiÃ³n
           </h2>
 
           <form action={action} className="flex flex-col gap-5">
@@ -162,7 +162,7 @@ function LoginForm() {
             {/* Email */}
             <div>
               <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
-                Correo electrónico
+                Correo electrÃ³nico
               </label>
               <input
                 type="email"
@@ -177,7 +177,7 @@ function LoginForm() {
             {/* Password */}
             <div>
               <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">
-                Contraseña
+                ContraseÃ±a
               </label>
               <div className="relative">
                 <input
@@ -185,7 +185,7 @@ function LoginForm() {
                   name="password"
                   required
                   autoComplete="current-password"
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                   className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 pr-12 focus:outline-none focus:border-accent transition-colors placeholder:text-zinc-400"
                 />
                 <button
@@ -222,7 +222,7 @@ function LoginForm() {
               {pending ? (
                 <span className="flex items-center gap-2">
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Verificando…
+                  Verificandoâ€¦
                 </span>
               ) : (
                 <>
@@ -249,7 +249,7 @@ function LoginForm() {
   );
 }
 
-// ── Page export con Suspense boundary ────────────────────────────────────────
+// â”€â”€ Page export con Suspense boundary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function LoginPage() {
   return (
     <Suspense fallback={

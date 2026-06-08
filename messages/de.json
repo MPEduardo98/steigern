@@ -1,0 +1,78 @@
+{
+  "Hero": {
+    "eyebrow": "Industrielle Exzellenz",
+    "title_line1": "Technik, die",
+    "title_line2": "die Zukunft gestaltet",
+    "description": "Präzisionstechnik und industrielle Automatisierungslösungen, die Fertigungsprozesse transformieren. Gebaut für Leistung. Konzipiert für Langlebigkeit.",
+    "cta_solutions": "Lösungen ansehen",
+    "cta_history": "Unsere Geschichte",
+    "stat1_value": "13+",
+    "stat1_label": "Jahre Erfahrung",
+    "stat2_value": "60+",
+    "stat2_label": "Belieferte Länder",
+    "stat3_value": "100%",
+    "stat3_label": "Made in Mexico",
+    "scroll": "Scrollen"
+  },
+  "Solutions": {
+    "eyebrow": "Was wir bauen",
+    "title_line1": "Technische",
+    "title_line2": "Lösungen",
+    "description": "Wir entwickeln und integrieren Vorrichtungen für die Montage industrieller Komponenten und automatisieren manuelle Prozesse und Fertigungslinien.",
+    "view_all": "Alle Lösungen ansehen",
+    "item1_title": "Aluminium-Strukturprofil",
+    "item1_desc": "Aluminium-Strukturprofile für Arbeitsplatzanwendungen sind effizienter, wenn sie individuell an ihren Zweck angepasst werden.",
+    "item2_title": "Fördersysteme",
+    "item2_desc": "Von der frühen Konzeptentwicklung bis zur detaillierten Machbarkeitsstudie, einschließlich Materialhandhabungsprojekten.",
+    "item3_title": "Arbeitsplätze",
+    "item3_desc": "Optimales ergonomisches Design, das den Arbeitsplatz unter Berücksichtigung von Beleuchtung, Umgebung und Bedienerfähigkeiten anpasst."
+  },
+  "About": {
+    "eyebrow": "Unsere Geschichte",
+    "title_line1": "Wer",
+    "title_line2": "wir sind",
+    "paragraph1_pre": "Wir sind ein mexikanisches Unternehmen, das sich der ",
+    "paragraph1_highlight": "industriellen technologischen Entwicklung",
+    "paragraph1_post": " verschrieben hat – mit zukunftsweisenden Dienstleistungen und Produkten nach weltweiten Standards.",
+    "paragraph2_pre": "Mit ",
+    "paragraph2_highlight": "13 Jahren Erfahrung",
+    "paragraph2_post": " sind wir zu einem zuverlässigen Geschäftspartner für Montagevorrichtungen für Automobilkomponenten geworden und exportieren von Mexiko in die ganze Welt.",
+    "stat1_value": "13+",
+    "stat1_label": "Jahre Erfahrung",
+    "stat2_value": "MX→USA",
+    "stat2_label": "Export seit 2020",
+    "stat3_value": "QRO",
+    "stat3_label": "Hauptsitz in Querétaro",
+    "cta": "Unsere ganze Geschichte erfahren"
+  },
+  "GlobalPresence": {
+    "eyebrow": "Globale Präsenz",
+    "title_line1": "From Mexico",
+    "title_line2": "To The World",
+    "description": "Bei STEIGERN bringen wir mexikanische Innovation auf internationale Märkte und liefern Qualität und Industriedesign von Weltklasse. Unser Engagement überwindet Grenzen, um Kunden und Projekte auf der ganzen Welt zu verbinden.",
+    "stat1_value": "60+",
+    "stat1_label": "Belieferte Länder",
+    "stat2_value": "3",
+    "stat2_label": "Kontinente",
+    "stat3_value": "100%",
+    "stat3_label": "Made in Mexico"
+  },
+  "Brands": {
+    "eyebrow": "Weltklasse-Technologie",
+    "title_line1": "Integration mit den",
+    "title_line2": "besten Marken",
+    "description": "Wir integrieren Komponenten der renommiertesten Marken in der industriellen Automatisierung und Steuerung und gewährleisten zuverlässige, effiziente und maßgeschneiderte Lösungen für jedes Projekt.",
+    "disclaimer": "*Alle gezeigten Marken und Logos sind Eigentum ihrer jeweiligen Inhaber. Verwendung ausschließlich zu Informationszwecken zur Darstellung von Kompatibilität und technologischer Expertise."
+  },
+  "Metrics": {
+    "item1_label": "Installierte Maschinen",
+    "item1_sublabel": "in über 60 Ländern",
+    "item2_label": "Verfügbarkeitsgarantie",
+    "item2_sublabel": "vertraglicher SLA-Standard",
+    "item3_label": "Ingenieure im Team",
+    "item3_sublabel": "Mechanik, Elektrik & SW",
+    "item4_label": "Branchenerfahrung",
+    "item4_sublabel": "gegründet 1984, München",
+    "item4_suffix": " Jahre"
+  }
+}

@@ -1,17 +1,17 @@
-// auth.ts  (raíz del proyecto)
-// ✅  Este archivo corre SOLO en Node.js (servidor). Nunca en Edge/middleware.
-//     Importa authConfig (Edge-safe) y le añade el provider con bcrypt + mysql2.
+﻿// auth.ts  (raÃ­z del proyecto)
+// âœ…  Este archivo corre SOLO en Node.js (servidor). Nunca en Edge/middleware.
+//     Importa authConfig (Edge-safe) y le aÃ±ade el provider con bcrypt + mysql2.
 import NextAuth, { type DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
-import pool from "@/lib/db";
+import pool from "./lib/db";
 import type { RowDataPacket } from "mysql2";
-import { authConfig } from "@/auth.config";
-import type { UserRole } from "@/types/auth";
+import { authConfig } from "./auth.config";
+import type { UserRole } from "./types/auth";
 
 export type { UserRole };
 
-// ── Augmentation según doc oficial authjs.dev/getting-started/typescript ──
+// â”€â”€ Augmentation segÃºn doc oficial authjs.dev/getting-started/typescript â”€â”€
 declare module "next-auth" {
   interface User {
     role: UserRole;
@@ -25,7 +25,7 @@ declare module "next-auth" {
   }
 }
 
-// JWT vive en su propio submodule — authjs.dev/getting-started/typescript
+// JWT vive en su propio submodule â€” authjs.dev/getting-started/typescript
 import type { JWT } from "next-auth/jwt";
 declare module "next-auth/jwt" {
   interface JWT {
@@ -41,11 +41,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       name: "credentials",
       credentials: {
         email:    { label: "Email",      type: "email" },
-        password: { label: "Contraseña", type: "password" },
+        password: { label: "ContraseÃ±a", type: "password" },
         role:     { label: "Rol",        type: "text" },
       },
       async authorize(credentials) {
-        // Validación server-side con zod — recomendado por authjs.dev
+        // ValidaciÃ³n server-side con zod â€” recomendado por authjs.dev
         const { z } = await import("zod");
         const schema = z.object({
           email:    z.string().email(),
@@ -58,7 +58,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const { email, password, role } = parsed.data;
 
-        // ── Proveedor ─────────────────────────────────────────────
+        // â”€â”€ Proveedor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         if (role === "proveedor") {
           const [rows] = await pool.query<RowDataPacket[]>(
             `SELECT upp.id, upp.email, upp.password_hash,
@@ -88,7 +88,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           };
         }
 
-        // ── Empleado / Administrador ───────────────────────────────
+        // â”€â”€ Empleado / Administrador â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         const [rows] = await pool.query<RowDataPacket[]>(
           `SELECT up.id, up.email, up.password_hash, up.rol,
                   up.empleado_id,
@@ -143,3 +143,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   session: { strategy: "jwt", maxAge: 8 * 60 * 60 },
 });
+

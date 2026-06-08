@@ -1,0 +1,78 @@
+{
+  "Hero": {
+    "eyebrow": "Industrial Excellence",
+    "title_line1": "Engineering that",
+    "title_line2": "Transforms the Future",
+    "description": "Precision engineering and industrial automation solutions that transform manufacturing operations. Built to perform. Designed to last.",
+    "cta_solutions": "View Solutions",
+    "cta_history": "Our Story",
+    "stat1_value": "13+",
+    "stat1_label": "Years of Experience",
+    "stat2_value": "60+",
+    "stat2_label": "Countries Served",
+    "stat3_value": "100%",
+    "stat3_label": "Made in Mexico",
+    "scroll": "Scroll"
+  },
+  "Solutions": {
+    "eyebrow": "What We Build",
+    "title_line1": "Engineering",
+    "title_line2": "Solutions",
+    "description": "We design and integrate devices for the assembly of industrial components, automating manual processes and manufacturing lines.",
+    "view_all": "View all solutions",
+    "item1_title": "Aluminum Structural Profile",
+    "item1_desc": "Aluminum structural profiles for workplace applications are more efficient when individually adapted to their specific purpose.",
+    "item2_title": "Conveyor Systems",
+    "item2_desc": "From early concept development to detailed feasibility studies, including material handling projects.",
+    "item3_title": "Workstations",
+    "item3_desc": "Optimal ergonomic design that adapts the workplace considering lighting, environment, and operator capabilities."
+  },
+  "About": {
+    "eyebrow": "Our Story",
+    "title_line1": "Who",
+    "title_line2": "We Are",
+    "paragraph1_pre": "We are a Mexican company committed to ",
+    "paragraph1_highlight": "industrial technological development",
+    "paragraph1_post": ", through cutting-edge services and products aligned with global standards.",
+    "paragraph2_pre": "With ",
+    "paragraph2_highlight": "13 years of experience",
+    "paragraph2_post": ", we have become a reliable commercial partner in assembly devices for automotive components, exporting from Mexico to the world.",
+    "stat1_value": "13+",
+    "stat1_label": "Years of Experience",
+    "stat2_value": "MX→USA",
+    "stat2_label": "Exporting since 2020",
+    "stat3_value": "QRO",
+    "stat3_label": "Headquarters in Querétaro",
+    "cta": "Learn our full story"
+  },
+  "GlobalPresence": {
+    "eyebrow": "Global Presence",
+    "title_line1": "From Mexico",
+    "title_line2": "To The World",
+    "description": "At STEIGERN we bring Mexican innovation to international markets, delivering world-class quality and industrial design. Our commitment transcends borders to connect with clients and projects across the globe.",
+    "stat1_value": "60+",
+    "stat1_label": "Countries Served",
+    "stat2_value": "3",
+    "stat2_label": "Continents",
+    "stat3_value": "100%",
+    "stat3_label": "Made in Mexico"
+  },
+  "Brands": {
+    "eyebrow": "World-Class Technology",
+    "title_line1": "Integrating with the",
+    "title_line2": "Best Brands",
+    "description": "We integrate components from the most recognized brands in industrial automation and control, ensuring reliable, efficient, and tailored solutions for every project.",
+    "disclaimer": "*All brands and logos shown are property of their respective owners. Used solely for informational purposes to demonstrate compatibility and technological expertise."
+  },
+  "Metrics": {
+    "item1_label": "Machines Installed",
+    "item1_sublabel": "in over 60 countries",
+    "item2_label": "Uptime Guarantee",
+    "item2_sublabel": "contractual SLA standard",
+    "item3_label": "Engineers on Staff",
+    "item3_sublabel": "mechanical, electrical & SW",
+    "item4_label": "Industry Experience",
+    "item4_sublabel": "founded 1984, Munich",
+    "item4_suffix": " years"
+  }
+}

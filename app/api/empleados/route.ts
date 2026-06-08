@@ -1,10 +1,10 @@
-// app/api/empleados/route.ts
+﻿// app/api/empleados/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool from "@root/lib/db";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
-// ─── GET /api/empleados ─────────────────────────────────────────────────────
+// â”€â”€â”€ GET /api/empleados â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Query params: ?search=&activo=1|0&departamento_id=
 export async function GET(req: NextRequest) {
   try {
@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// ─── POST /api/empleados ────────────────────────────────────────────────────
+// â”€â”€â”€ POST /api/empleados â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
   } catch (err: unknown) {
     const e = err as { code?: string };
     if (e.code === "ER_DUP_ENTRY") {
-      return NextResponse.json({ ok: false, error: "Número de empleado o email duplicado" }, { status: 409 });
+      return NextResponse.json({ ok: false, error: "NÃºmero de empleado o email duplicado" }, { status: 409 });
     }
     console.error("[POST /api/empleados]", err);
     return NextResponse.json({ ok: false, error: "Error al crear empleado" }, { status: 500 });

@@ -1,8 +1,8 @@
-// auth.config.ts  (raíz del proyecto)
-// ⚠️  NO importar nada de Node.js (mysql2, bcryptjs, fs, stream…)
-//     Solo Web APIs. Único archivo que el middleware puede importar.
+﻿// auth.config.ts  (raÃ­z del proyecto)
+// âš ï¸  NO importar nada de Node.js (mysql2, bcryptjs, fs, streamâ€¦)
+//     Solo Web APIs. Ãšnico archivo que el middleware puede importar.
 import type { NextAuthConfig, Session } from "next-auth";
-import type { UserRole, AuthUser } from "@/types/auth";
+import type { UserRole, AuthUser } from "./types/auth";
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -13,17 +13,17 @@ export const authConfig: NextAuthConfig = {
   session: { strategy: "jwt", maxAge: 8 * 60 * 60 },
 
   callbacks: {
-    // authorized() corre en Edge — verifica el JWT, no toca la BD.
+    // authorized() corre en Edge â€” verifica el JWT, no toca la BD.
     authorized({ auth, request: { nextUrl } }: {
       auth:    Session | null;
       request: { nextUrl: URL };
     }) {
-      // auth puede ser null — extraemos role de forma segura sin cast peligroso
+      // auth puede ser null â€” extraemos role de forma segura sin cast peligroso
       const user     = (auth?.user ?? null) as AuthUser | null;
       const role     = user?.role;
       const pathname = nextUrl.pathname;
 
-      // ── Rutas /admin ───────────────────────────────────────────────
+      // â”€â”€ Rutas /admin â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (pathname.startsWith("/admin")) {
         if (!user) {
           return Response.redirect(
@@ -35,7 +35,7 @@ export const authConfig: NextAuthConfig = {
         }
       }
 
-      // ── Rutas /portal-proveedores ──────────────────────────────────
+      // â”€â”€ Rutas /portal-proveedores â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (pathname.startsWith("/portal-proveedores")) {
         if (!user) {
           return Response.redirect(
@@ -47,7 +47,7 @@ export const authConfig: NextAuthConfig = {
         }
       }
 
-      // ── Usuario ya autenticado intenta ir a /login ─────────────────
+      // â”€â”€ Usuario ya autenticado intenta ir a /login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (pathname === "/login" && user) {
         const dest: string =
           role === "administrador" || role === "empleado"
@@ -60,5 +60,6 @@ export const authConfig: NextAuthConfig = {
     },
   },
 
-  providers: [], // vacío — los providers con Node.js van solo en auth.ts
+  providers: [], // vacÃ­o â€” los providers con Node.js van solo en auth.ts
 };
+
