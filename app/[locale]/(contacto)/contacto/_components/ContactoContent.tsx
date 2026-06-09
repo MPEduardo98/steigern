@@ -4,40 +4,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-
-const funcionesLaborales = [
-  "Dirección General / CEO",
-  "Gerencia de Manufactura",
-  "Gerencia de Ingeniería",
-  "Gerencia de Proyectos",
-  "Compras / Procurement",
-  "Mantenimiento Industrial",
-  "Automatización / Robótica",
-  "Consultor / Integrador",
-  "Otro",
-];
-
-const soluciones = [
-  "Perfil Estructural de Aluminio",
-  "Sistemas de Transporte / Conveyors",
-  "Estaciones de Trabajo Ergonómicas",
-  "Dispositivos Asistidos por Co-Bots",
-  "Elevación y Guías Lineales",
-  "Soluciones Lean Manufacturing",
-  "No lo sé aún — quiero asesoría",
-];
-
-const motivoContacto = [
-  "Agendar una llamada con un asesor",
-  "Solicitar una cotización formal",
-  "Requiero una visita técnica",
-  "Solo deseo información general",
-  "Otro",
-];
+import { useTranslations } from "next-intl";
 
 const contactInfo = [
   {
-    label: "Teléfono",
+    key: "phone",
     value: "+52 (222) 5 82 92 54",
     href: "tel:+522225829254",
     icon: (
@@ -47,7 +18,7 @@ const contactInfo = [
     ),
   },
   {
-    label: "Correo",
+    key: "email",
     value: "customerservice@steigern.com.mx",
     href: "mailto:customerservice@steigern.com.mx",
     icon: (
@@ -58,7 +29,7 @@ const contactInfo = [
     ),
   },
   {
-    label: "Dirección",
+    key: "address",
     value: "Central Park, Querétaro, México",
     href: "https://maps.google.com/?q=Central+Park+Queretaro+Mexico",
     icon: (
@@ -69,8 +40,8 @@ const contactInfo = [
     ),
   },
   {
-    label: "Horario",
-    value: "Lun–Vie 8am–6pm · Sáb 9am–2pm",
+    key: "hours",
+    value: null,
     href: null,
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -108,7 +79,12 @@ const inputCls = "w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm
 const selectCls = "w-full bg-zinc-50 border border-zinc-200 text-zinc-700 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors";
 
 export default function ContactoContent() {
+  const t = useTranslations("Contacto");
   const [submitted, setSubmitted] = useState(false);
+  const roles = t.raw("roles") as string[];
+  const soluciones = t.raw("solutions") as string[];
+  const motivoContacto = t.raw("reasons") as string[];
+  const hoursValue = t("value_hours");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -122,9 +98,9 @@ export default function ContactoContent() {
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-8">
-            <Link href="/" className="text-zinc-400 hover:text-zinc-600 text-xs tracking-[0.1em] uppercase transition-colors">Inicio</Link>
+            <Link href="/" className="text-zinc-400 hover:text-zinc-600 text-xs tracking-[0.1em] uppercase transition-colors">{t("breadcrumb_home")}</Link>
             <span className="text-zinc-300 text-xs">/</span>
-            <span className="text-[#E02020] text-xs tracking-[0.1em] uppercase">Contacto</span>
+            <span className="text-[#E02020] text-xs tracking-[0.1em] uppercase">{t("breadcrumb_current")}</span>
           </div>
 
           <motion.div
@@ -134,7 +110,7 @@ export default function ContactoContent() {
             className="flex items-center gap-3 mb-5"
           >
             <span className="w-6 h-px bg-[#E02020]" />
-            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Construyamos Juntos</span>
+            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{t("eyebrow")}</span>
           </motion.div>
 
           <motion.h1
@@ -143,9 +119,9 @@ export default function ContactoContent() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="heading heading-xl text-zinc-900 uppercase mb-6"
           >
-            Inicia Tu
+            {t("title_line1")}
             <br />
-            <span className="text-[#E02020]">Proyecto</span>
+            <span className="text-[#E02020]">{t("title_line2")}</span>
           </motion.h1>
 
           <motion.p
@@ -154,7 +130,7 @@ export default function ContactoContent() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="text-zinc-500 text-base leading-relaxed max-w-xl"
           >
-            El primer contacto es sumamente importante para nosotros. Nuestros asesores te guiarán desde el diseño hasta la construcción de tu proyecto.
+            {t("description")}
           </motion.p>
         </div>
       </section>
@@ -183,10 +159,10 @@ export default function ContactoContent() {
                     </svg>
                   </motion.div>
                   <h3 className="heading heading-md text-zinc-900 uppercase mb-3">
-                    Mensaje Enviado
+                    {t("sent_title")}
                   </h3>
                   <p className="text-zinc-500 text-sm max-w-sm leading-relaxed">
-                    Uno de nuestros asesores se pondrá en contacto contigo en menos de 24 horas hábiles.
+                    {t("sent_text")}
                   </p>
                 </div>
               ) : (
@@ -197,39 +173,39 @@ export default function ContactoContent() {
                     <div className="flex items-center gap-3 mb-5">
                       <span className="text-[#E02020] font-black text-xs tracking-[0.2em] uppercase">01</span>
                       <span className="w-full h-px bg-zinc-200" />
-                      <span className="text-zinc-400 text-xs tracking-[0.15em] uppercase whitespace-nowrap">Datos de Contacto</span>
+                      <span className="text-zinc-400 text-xs tracking-[0.15em] uppercase whitespace-nowrap">{t("section1")}</span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="md:col-span-2">
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
-                          Nombre Completo <span className="text-[#E02020]">*</span>
+                          {t("field_fullname")} <span className="text-[#E02020]">*</span>
                         </label>
-                        <input required className={inputCls} placeholder="Tu nombre completo" />
+                        <input required className={inputCls} placeholder={t("ph_fullname")} />
                       </div>
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
-                          Empresa <span className="text-[#E02020]">*</span>
+                          {t("field_company")} <span className="text-[#E02020]">*</span>
                         </label>
-                        <input required className={inputCls} placeholder="Nombre de tu empresa" />
+                        <input required className={inputCls} placeholder={t("ph_company")} />
                       </div>
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
-                          Función Laboral <span className="text-[#E02020]">*</span>
+                          {t("field_role")} <span className="text-[#E02020]">*</span>
                         </label>
                         <select required className={selectCls}>
-                          <option value="">Selecciona una opción</option>
-                          {funcionesLaborales.map((f) => <option key={f}>{f}</option>)}
+                          <option value="">{t("select_placeholder")}</option>
+                          {roles.map((f) => <option key={f}>{f}</option>)}
                         </select>
                       </div>
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
-                          Correo Electrónico <span className="text-[#E02020]">*</span>
+                          {t("field_email")} <span className="text-[#E02020]">*</span>
                         </label>
-                        <input type="email" required className={inputCls} placeholder="tu@empresa.com" />
+                        <input type="email" required className={inputCls} placeholder={t("ph_email")} />
                       </div>
                       <div>
-                        <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Teléfono</label>
-                        <input type="tel" className={inputCls} placeholder="+52 222 000 0000" />
+                        <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">{t("field_phone")}</label>
+                        <input type="tel" className={inputCls} placeholder={t("ph_phone")} />
                       </div>
                     </div>
                   </div>
@@ -239,10 +215,10 @@ export default function ContactoContent() {
                     <div className="flex items-center gap-3 mb-5">
                       <span className="text-[#E02020] font-black text-xs tracking-[0.2em] uppercase">02</span>
                       <span className="w-full h-px bg-zinc-200" />
-                      <span className="text-zinc-400 text-xs tracking-[0.15em] uppercase whitespace-nowrap">Solución de Interés</span>
+                      <span className="text-zinc-400 text-xs tracking-[0.15em] uppercase whitespace-nowrap">{t("section2")}</span>
                     </div>
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-3">
-                      ¿Qué solución te interesa explorar?
+                      {t("solutions_q")}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {soluciones.map((s) => (
@@ -259,24 +235,24 @@ export default function ContactoContent() {
                     <div className="flex items-center gap-3 mb-5">
                       <span className="text-[#E02020] font-black text-xs tracking-[0.2em] uppercase">03</span>
                       <span className="w-full h-px bg-zinc-200" />
-                      <span className="text-zinc-400 text-xs tracking-[0.15em] uppercase whitespace-nowrap">Tu Mensaje</span>
+                      <span className="text-zinc-400 text-xs tracking-[0.15em] uppercase whitespace-nowrap">{t("section3")}</span>
                     </div>
                     <div className="flex flex-col gap-4">
                       <div>
-                        <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">Motivo de Contacto</label>
+                        <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">{t("field_reason")}</label>
                         <select className={selectCls}>
                           {motivoContacto.map((m) => <option key={m}>{m}</option>)}
                         </select>
                       </div>
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
-                          Mensaje <span className="text-[#E02020]">*</span>
+                          {t("field_message")} <span className="text-[#E02020]">*</span>
                         </label>
                         <textarea
                           required
                           rows={5}
                           className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400"
-                          placeholder="Cuéntanos sobre tu proyecto. Entre más detalle compartas, mejor podremos orientarte."
+                          placeholder={t("ph_message")}
                         />
                       </div>
                     </div>
@@ -286,7 +262,7 @@ export default function ContactoContent() {
                     type="submit"
                     className="w-full bg-[#E02020] text-white text-xs font-black tracking-[0.2em] uppercase py-4 hover:bg-[#c41a1a] transition-colors duration-200 flex items-center justify-center gap-3 group"
                   >
-                    Enviar Mensaje
+                    {t("submit")}
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -304,29 +280,32 @@ export default function ContactoContent() {
             >
               {/* Contact cards */}
               <div className="border border-zinc-200 divide-y divide-zinc-200 mb-5">
-                {contactInfo.map((c) => (
-                  <div key={c.label} className="p-5 flex gap-4 items-start group">
+                {contactInfo.map((c) => {
+                  const value = c.value ?? hoursValue;
+                  return (
+                  <div key={c.key} className="p-5 flex gap-4 items-start group">
                     <div className="text-zinc-400 group-hover:text-[#E02020] transition-colors duration-200 mt-0.5 shrink-0">
                       {c.icon}
                     </div>
                     <div>
-                      <p className="text-[10px] text-zinc-400 tracking-[0.18em] uppercase mb-0.5">{c.label}</p>
+                      <p className="text-[10px] text-zinc-400 tracking-[0.18em] uppercase mb-0.5">{t(`label_${c.key}`)}</p>
                       {c.href ? (
                         <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
                           className="text-zinc-800 text-sm font-medium hover:text-[#E02020] transition-colors duration-200">
-                          {c.value}
+                          {value}
                         </a>
                       ) : (
-                        <p className="text-zinc-800 text-sm font-medium">{c.value}</p>
+                        <p className="text-zinc-800 text-sm font-medium">{value}</p>
                       )}
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Social */}
               <div className="border border-zinc-200 p-5 mb-5">
-                <p className="text-[10px] text-zinc-400 tracking-[0.2em] uppercase mb-4">Síguenos en Redes</p>
+                <p className="text-[10px] text-zinc-400 tracking-[0.2em] uppercase mb-4">{t("follow")}</p>
                 <div className="flex gap-2">
                   {socials.map((s) => (
                     <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
@@ -356,10 +335,10 @@ export default function ContactoContent() {
                 <div className="w-5 h-1 bg-[#E02020] mb-3" />
                 <p className="text-zinc-900 font-black text-xs uppercase tracking-[0.08em] mb-1.5"
                   style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>
-                  Respuesta en &lt; 24 h
+                  {t("promise_title")}
                 </p>
                 <p className="text-zinc-500 text-xs leading-relaxed">
-                  Todos los mensajes son atendidos por un asesor técnico. No recibirás respuestas automáticas.
+                  {t("promise_text")}
                 </p>
               </div>
             </motion.aside>

@@ -2,25 +2,38 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { setRequestLocale } from "next-intl/server";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
-import { solutions as allSolutions } from "./_data/solutions";
+import { getSolutions, getSolutionLabels, localizedUrl, hreflangAlternates } from "./_data/solutions";
 
-export const metadata: Metadata = {
-  title: "Soluciones de Ingeniería Industrial",
-  description:
-    "Descubre las 6 soluciones de automatización industrial de STEIGERN: perfiles de aluminio, conveyors, estaciones de trabajo, co-bots, elevación y guías lineales, y soluciones lean.",
-  alternates: { canonical: "https://steigern.com.mx/soluciones" },
-  openGraph: {
-    title: "Soluciones de Ingeniería | STEIGERN",
-    description: "Diseñamos e integramos 6 familias de soluciones industriales a medida para automatizar y optimizar tu planta de manufactura.",
-    url: "https://steigern.com.mx/soluciones",
-  },
-};
+type Params = { params: Promise<{ locale: string }> };
 
-const solutions = allSolutions.slice(0, 6);
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const { locale } = await params;
+  const l = getSolutionLabels(locale);
+  const path = "/soluciones";
+  return {
+    title: l.metaTitle,
+    description: l.metaDesc,
+    alternates: {
+      canonical: localizedUrl(locale, path),
+      languages: hreflangAlternates(path),
+    },
+    openGraph: {
+      title: `${l.metaTitle} | STEIGERN`,
+      description: l.metaDesc,
+      url: localizedUrl(locale, path),
+    },
+  };
+}
 
-export default function SolucionesPage() {
+export default async function SolucionesPage({ params }: Params) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const l = getSolutionLabels(locale);
+  const solutions = getSolutions(locale).slice(0, 6);
+
   return (
     <main className="min-h-screen bg-white">
       <Header />
@@ -34,16 +47,16 @@ export default function SolucionesPage() {
         <div className="absolute top-0 left-0 w-1 h-full bg-[#E02020] z-10" />
         <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-20 pb-16 pt-36">
           <div className="flex items-center gap-2 mb-6">
-            <Link href="/" className="text-zinc-500 hover:text-zinc-800 text-xs tracking-[0.1em] uppercase transition-colors">Inicio</Link>
+            <Link href="/" className="text-zinc-500 hover:text-zinc-800 text-xs tracking-[0.1em] uppercase transition-colors">{l.home}</Link>
             <span className="text-zinc-400 text-xs">/</span>
-            <span className="text-[#E02020] text-xs tracking-[0.1em] uppercase">Soluciones</span>
+            <span className="text-[#E02020] text-xs tracking-[0.1em] uppercase">{l.solutions}</span>
           </div>
           <div className="flex items-center gap-3 mb-4">
             <span className="w-6 h-px bg-[#E02020]" />
-            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Ingeniería Industrial</span>
+            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{l.industrial}</span>
           </div>
           <h1 className="heading heading-xl text-zinc-900 uppercase max-w-3xl">
-            Soluciones de<br /><span className="text-[#E02020]">Ingeniería</span>
+            {l.heroLine1}<br /><span className="text-[#E02020]">{l.heroLine2}</span>
           </h1>
         </div>
       </section>
@@ -52,12 +65,8 @@ export default function SolucionesPage() {
       <section className="w-full py-16 bg-white border-b border-zinc-200">
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <p className="text-zinc-500 text-base leading-relaxed">
-              Diseñamos e integramos dispositivos para el ensamble de componentes industriales, automatizando procesos manuales y líneas de manufactura. Cada solución se adapta al proceso específico del cliente.
-            </p>
-            <p className="text-zinc-500 text-base leading-relaxed">
-              Con 13 años de experiencia y presencia en más de 60 países, somos el socio de ingeniería que transforma ideas en sistemas funcionales, desde el concepto hasta la puesta en marcha.
-            </p>
+            <p className="text-zinc-500 text-base leading-relaxed">{l.intro1}</p>
+            <p className="text-zinc-500 text-base leading-relaxed">{l.intro2}</p>
           </div>
         </div>
       </section>
@@ -98,14 +107,14 @@ export default function SolucionesPage() {
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-4">
               <span className="w-6 h-px bg-[#E02020]" />
-              <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Esto lo hace STEIGERN</span>
+              <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{l.ctaEyebrow}</span>
             </div>
-            <h2 className="heading heading-lg text-zinc-900 uppercase">¿No encuentras lo que buscas?</h2>
-            <p className="text-zinc-500 text-base leading-relaxed mt-4">Desarrollamos soluciones a medida para cualquier desafío industrial.</p>
+            <h2 className="heading heading-lg text-zinc-900 uppercase">{l.notFoundTitle}</h2>
+            <p className="text-zinc-500 text-base leading-relaxed mt-4">{l.notFoundText}</p>
           </div>
           <Link href="/contacto"
             className="shrink-0 inline-flex items-center justify-center gap-2 text-xs font-bold tracking-[0.15em] uppercase px-8 py-4 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200">
-            Hablar con un asesor
+            {l.ctaButton}
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>

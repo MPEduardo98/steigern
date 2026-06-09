@@ -1,22 +1,6 @@
 ﻿// app/_shared/footer/Footer.tsx
 import Link from "next/link";
-
-const soluciones = [
-  { label: "Perfil Estructural de Aluminio", href: "/soluciones/perfil-de-aluminio" },
-  { label: "Sistemas de Transporte", href: "/soluciones/conveyors" },
-  { label: "Estaciones de Trabajo", href: "/soluciones/estaciones-de-trabajo" },
-  { label: "Co-Bots", href: "/soluciones/dispositivos-asistidos-por-cobots" },
-  { label: "Elevación y Guías Lineales", href: "/soluciones/elevacion-y-guias-lineales" },
-  { label: "Soluciones Lean", href: "/soluciones/soluciones-lean" },
-];
-
-const empresa = [
-  { label: "Inicio", href: "/" },
-  { label: "Soluciones", href: "/soluciones" },
-  { label: "Nosotros", href: "/nosotros" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contacto", href: "/contacto" },
-];
+import { getTranslations } from "next-intl/server";
 
 const contacto = [
   {
@@ -50,7 +34,26 @@ const contacto = [
   },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const t = await getTranslations("Footer");
+
+  const soluciones = [
+    { label: t("sol1"), href: "/soluciones/perfil-de-aluminio" },
+    { label: t("sol2"), href: "/soluciones/conveyors" },
+    { label: t("sol3"), href: "/soluciones/estaciones-de-trabajo" },
+    { label: t("sol4"), href: "/soluciones/dispositivos-asistidos-por-cobots" },
+    { label: t("sol5"), href: "/soluciones/elevacion-y-guias-lineales" },
+    { label: t("sol6"), href: "/soluciones/soluciones-lean" },
+  ];
+
+  const empresa = [
+    { label: t("nav_home"), href: "/" },
+    { label: t("nav_solutions"), href: "/soluciones" },
+    { label: t("nav_about"), href: "/nosotros" },
+    { label: t("nav_blog"), href: "/blog" },
+    { label: t("nav_contact"), href: "/contacto" },
+  ];
+
   return (
     <footer className="bg-black text-white">
 
@@ -122,7 +125,7 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <p className="text-neutral-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
               <span className="w-4 h-px bg-brand flex-shrink-0" />
-              Soluciones
+              {t("col_solutions")}
             </p>
             <ul className="flex flex-col gap-3">
               {soluciones.map((s) => (
@@ -142,7 +145,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <p className="text-neutral-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
               <span className="w-4 h-px bg-brand flex-shrink-0" />
-              Empresa
+              {t("col_company")}
             </p>
             <ul className="flex flex-col gap-3">
               {empresa.map((e) => (
@@ -162,7 +165,7 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <p className="text-neutral-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
               <span className="w-4 h-px bg-brand flex-shrink-0" />
-              Contacto
+              {t("col_contact")}
             </p>
             <ul className="flex flex-col gap-4">
               {contacto.map((c) => (
@@ -190,7 +193,7 @@ export default function Footer() {
                 <rect x="3" y="11" width="18" height="11" rx="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
-              Acceso
+              {t("access")}
             </Link>
           </div>
 
@@ -204,7 +207,7 @@ export default function Footer() {
             © {new Date().getFullYear()} STEIGERN Design In Motion S.A de C.V.
           </p>
           <p className="text-zinc-500 text-xs">
-            Design by{" "}
+            {t("designed_by")}{" "}
             <a
               href="https://www.instagram.com/eduardo_martinez66"
               target="_blank"

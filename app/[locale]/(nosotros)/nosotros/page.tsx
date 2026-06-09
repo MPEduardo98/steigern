@@ -1,43 +1,38 @@
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
 import Contact from "../../(homepage)/_components/Contact";
 
-export const metadata: Metadata = {
-  title: "Nosotros",
-  description:
-    "Conoce a STEIGERN: empresa mexicana con 13 años de experiencia en automatización industrial. Misión, visión, valores y nuestra historia desde Querétaro hasta el mundo.",
-  alternates: {
-    canonical: "https://steigern.com.mx/nosotros",
-  },
-  openGraph: {
-    title: "Nosotros | STEIGERN",
-    description:
-      "Somos una empresa mexicana comprometida con el desarrollo tecnológico industrial. 13 años automatizando procesos, impulsando el futuro.",
-    url: "https://steigern.com.mx/nosotros",
-  },
-};
+type Params = { params: Promise<{ locale: string }> };
 
-const values = [
-  { label: "Transparencia" },
-  { label: "Honestidad" },
-  { label: "Pasión" },
-  { label: "Competitividad" },
-  { label: "Diligencia" },
-];
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Nosotros" });
+  return {
+    title: t("meta_title"),
+    description: t("meta_desc"),
+    alternates: { canonical: "https://steigern.com.mx/nosotros" },
+    openGraph: {
+      title: `${t("meta_title")} | STEIGERN`,
+      description: t("meta_desc"),
+      url: "https://steigern.com.mx/nosotros",
+    },
+  };
+}
 
-const pillars = [
-  {
-    title: "Misión",
-    desc: "Como proveedor global de mecanos y sistemas de producción para la industria, nuestro objetivo es desarrollar, producir y vender soluciones que impulsen la innovación tecnológica de las empresas, satisfaciendo al cliente en términos de asesoramiento, tiempos y calidad.",
-  },
-  {
-    title: "Visión",
-    desc: "Ser un socio comercial líder en automatización e integración industrial, destacando por ofrecer soluciones innovadoras y componentes de alta calidad. Actuar con mayor rapidez que nuestros competidores y brindar resultados con compromiso empresarial.",
-  },
-];
+export default async function NosotrosPage({ params }: Params) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "Nosotros" });
 
-export default function NosotrosPage() {
+  const values = t.raw("values") as string[];
+  const milestones = t.raw("milestones") as string[];
+  const pillars = [
+    { title: t("mision_title"), desc: t("mision_desc") },
+    { title: t("vision_title"), desc: t("vision_desc") },
+  ];
+
   return (
     <main className="min-h-screen bg-white">
       <Header />
@@ -49,17 +44,15 @@ export default function NosotrosPage() {
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           <div className="flex items-center gap-3 mb-5">
             <span className="w-6 h-px bg-[#E02020]" />
-            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Nuestra Historia</span>
+            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{t("eyebrow")}</span>
           </div>
-          <h1
-            className="heading heading-hero text-zinc-900 uppercase max-w-3xl mb-6"
-          >
-            Quiénes
+          <h1 className="heading heading-hero text-zinc-900 uppercase max-w-3xl mb-6">
+            {t("title_line1")}
             <br />
-            <span className="text-[#E02020]">Somos</span>
+            <span className="text-[#E02020]">{t("title_line2")}</span>
           </h1>
           <p className="text-zinc-500 text-lg max-w-xl leading-relaxed">
-            Automatizando procesos, impulsamos el futuro. Una empresa mexicana con 13 años de experiencia en desarrollo tecnológico industrial.
+            {t("hero_desc")}
           </p>
         </div>
       </section>
@@ -71,19 +64,19 @@ export default function NosotrosPage() {
             <div className="bg-white p-10 flex flex-col justify-center">
               <div className="w-8 h-1 bg-[#E02020] mb-6" />
               <p className="text-zinc-500 text-base leading-relaxed mb-5">
-                Somos una empresa mexicana comprometida con el{" "}
-                <span className="text-zinc-800 font-semibold">desarrollo tecnológico industrial</span>,
-                mediante servicios y productos vanguardistas acorde a las exigencias a nivel mundial.
+                {t("intro1_pre")}
+                <span className="text-zinc-800 font-semibold">{t("intro1_hl")}</span>
+                {t("intro1_post")}
               </p>
               <p className="text-zinc-500 text-base leading-relaxed mb-5">
-                Dedicados al{" "}
-                <span className="text-zinc-800 font-semibold">diseño e integración</span>{" "}
-                de dispositivos para el ensamble de componentes industriales, suministramos soluciones para automatizar procesos manuales, líneas de manufactura y sistemas a prueba de error en todos los niveles, mejorando la competitividad empresarial.
+                {t("intro2_pre")}
+                <span className="text-zinc-800 font-semibold">{t("intro2_hl")}</span>
+                {t("intro2_post")}
               </p>
               <p className="text-zinc-500 text-base leading-relaxed">
-                Con{" "}
-                <span className="text-zinc-800 font-semibold">13 años de experiencia</span>,
-                nos hemos convertido en un socio comercial confiable en dispositivos de ensamble para componentes de automoción. En 2020 comenzamos a exportar a Estados Unidos y para 2021 establecimos nuestro corporativo en Querétaro, en Central Park.
+                {t("intro3_pre")}
+                <span className="text-zinc-800 font-semibold">{t("intro3_hl")}</span>
+                {t("intro3_post")}
               </p>
             </div>
             <div className="bg-white overflow-hidden min-h-[400px]">
@@ -104,10 +97,10 @@ export default function NosotrosPage() {
           <div className="mb-14">
             <div className="flex items-center gap-3 mb-5">
               <span className="w-6 h-px bg-[#E02020]" />
-              <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Filosofía</span>
+              <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{t("philosophy")}</span>
             </div>
             <h2 className="heading heading-lg text-zinc-900 uppercase">
-              Misión y Visión
+              {t("mv_title")}
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-200">
@@ -131,34 +124,30 @@ export default function NosotrosPage() {
             <div>
               <div className="flex items-center gap-3 mb-5">
                 <span className="w-6 h-px bg-[#E02020]" />
-                <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Lo que nos define</span>
+                <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{t("values_eyebrow")}</span>
               </div>
               <h2 className="heading heading-lg text-zinc-900 uppercase mb-6">
-                Nuestros Valores
+                {t("values_title")}
               </h2>
               <p className="text-zinc-500 text-base leading-relaxed mb-10">
-                La lealtad con nuestros socios comerciales es esencial para mantener la credibilidad. Trabajamos día a día con actitud, liderazgo responsable y valor añadido para nuestros productos.
+                {t("values_desc")}
               </p>
               <div className="flex flex-wrap gap-3">
                 {values.map((v) => (
                   <span
-                    key={v.label}
+                    key={v}
                     className="text-xs font-black tracking-[0.15em] uppercase px-5 py-2.5 border-2 border-[#E02020] text-[#E02020]"
                   >
-                    {v.label}
+                    {v}
                   </span>
                 ))}
               </div>
             </div>
             <div className="grid grid-cols-1 gap-px bg-zinc-200">
-              {[
-                { num: "01", text: "Figuramos como proveedor integral y reflejamos a un desarrollador y fabricante único en el mercado." },
-                { num: "02", text: "En 2020 comenzamos a exportar dispositivos de ensamble a Estados Unidos." },
-                { num: "03", text: "Para 2021 establecimos nuestro corporativo en Querétaro, en Central Park." },
-              ].map((item) => (
-                <div key={item.num} className="bg-zinc-50 p-8 flex gap-6 items-start">
-                  <span className="text-[#E02020] text-xs font-black tracking-[0.2em] shrink-0 mt-1">{item.num}</span>
-                  <p className="text-zinc-500 text-sm leading-relaxed">{item.text}</p>
+              {milestones.map((text, i) => (
+                <div key={i} className="bg-zinc-50 p-8 flex gap-6 items-start">
+                  <span className="text-[#E02020] text-xs font-black tracking-[0.2em] shrink-0 mt-1">{String(i + 1).padStart(2, "0")}</span>
+                  <p className="text-zinc-500 text-sm leading-relaxed">{text}</p>
                 </div>
               ))}
             </div>

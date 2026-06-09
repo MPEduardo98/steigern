@@ -3,8 +3,10 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Slogan() {
+  const t = useTranslations("Slogan");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -19,7 +21,7 @@ export default function Slogan() {
             className="flex items-center justify-center gap-3 mb-8"
           >
             <span className="w-6 h-px bg-[#E02020]" />
-            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">Nuestra Filosofía</span>
+            <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{t("eyebrow")}</span>
             <span className="w-6 h-px bg-[#E02020]" />
           </motion.div>
 
@@ -40,9 +42,7 @@ export default function Slogan() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="text-zinc-500 text-lg leading-relaxed max-w-2xl mx-auto mt-8"
           >
-            No es solo un trabajo: nos apasiona resolver retos de ingeniería y construir
-            máquinas que impulsan a nuestros clientes. Cada proyecto es una oportunidad de
-            hacer algo mejor que ayer.
+            {t("text")}
           </motion.p>
         </div>
       </div>

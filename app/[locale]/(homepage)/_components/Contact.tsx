@@ -3,8 +3,10 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Contact() {
+  const t = useTranslations("ContactForm");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [submitted, setSubmitted] = useState(false);
@@ -29,7 +31,7 @@ export default function Contact() {
             >
               <span className="w-6 h-px bg-[#E02020]" />
               <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">
-                Construyamos Juntos
+                {t("eyebrow")}
               </span>
             </motion.div>
 
@@ -39,9 +41,9 @@ export default function Contact() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="heading heading-lg text-zinc-900 uppercase mb-6"
             >
-              Inicia Tu
+              {t("title_line1")}
               <br />
-              <span className="text-[#E02020]">Proyecto</span>
+              <span className="text-[#E02020]">{t("title_line2")}</span>
             </motion.h2>
 
             <motion.p
@@ -50,9 +52,7 @@ export default function Contact() {
               transition={{ duration: 0.7, delay: 0.3 }}
               className="text-zinc-500 text-sm leading-relaxed mb-10"
             >
-              El primer contacto es sumamente importante para nosotros. Si estás interesado
-              en unirnos a tu equipo de trabajo, nuestros asesores te guiarán desde el diseño
-              hasta la construcción de tu proyecto.
+              {t("description")}
             </motion.p>
 
             <motion.div
@@ -62,9 +62,9 @@ export default function Contact() {
               className="flex flex-col gap-5"
             >
               {[
-                { label: "Teléfono", value: "+52 (222) 5 82 92 54", href: "tel:+522225829254" },
-                { label: "Correo", value: "customerservice@steigern.com.mx", href: "mailto:customerservice@steigern.com.mx" },
-                { label: "Dirección", value: "Central Park, Querétaro, México", href: "https://maps.google.com/?q=Central+Park+Queretaro+Mexico" },
+                { label: t("label_phone"), value: "+52 (222) 5 82 92 54", href: "tel:+522225829254" },
+                { label: t("label_email"), value: "customerservice@steigern.com.mx", href: "mailto:customerservice@steigern.com.mx" },
+                { label: t("label_address"), value: "Central Park, Querétaro, México", href: "https://maps.google.com/?q=Central+Park+Queretaro+Mexico" },
               ].map((item) => (
                 <div key={item.label}>
                   <p className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase mb-0.5">{item.label}</p>
@@ -90,10 +90,10 @@ export default function Contact() {
                   </svg>
                 </div>
                 <h3 className="heading heading-sm text-zinc-900 uppercase">
-                  Mensaje enviado
+                  {t("sent_title")}
                 </h3>
                 <p className="text-zinc-500 text-sm leading-relaxed">
-                  Gracias por contactarnos. Un asesor se pondrá en contacto contigo en las próximas 24 horas.
+                  {t("sent_text")}
                 </p>
               </div>
             ) : (
@@ -101,49 +101,49 @@ export default function Contact() {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
-                      Nombre <span className="text-[#E02020]">*</span>
+                      {t("field_name")} <span className="text-[#E02020]">*</span>
                     </label>
-                    <input type="text" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder="Tu nombre" />
+                    <input type="text" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_name")} />
                   </div>
                   <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">Empresa</label>
-                    <input type="text" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder="Tu empresa" />
+                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_company")}</label>
+                    <input type="text" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_company")} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
-                      Correo <span className="text-[#E02020]">*</span>
+                      {t("field_email")} <span className="text-[#E02020]">*</span>
                     </label>
-                    <input type="email" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder="tu@empresa.com" />
+                    <input type="email" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_email")} />
                   </div>
                   <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">Teléfono</label>
-                    <input type="tel" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder="+52 222 000 0000" />
+                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_phone")}</label>
+                    <input type="tel" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_phone")} />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">Motivo de contacto</label>
+                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_reason")}</label>
                   <select className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors">
-                    <option>Agendar una llamada con un asesor</option>
-                    <option>Solicitar una cotización</option>
-                    <option>Requiere una visita técnica</option>
-                    <option>Solo desea información general</option>
-                    <option>Otro</option>
+                    <option>{t("reason1")}</option>
+                    <option>{t("reason2")}</option>
+                    <option>{t("reason3")}</option>
+                    <option>{t("reason4")}</option>
+                    <option>{t("reason5")}</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
-                    Mensaje <span className="text-[#E02020]">*</span>
+                    {t("field_message")} <span className="text-[#E02020]">*</span>
                   </label>
-                  <textarea required rows={4} className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400" placeholder="Cuéntanos sobre tu proyecto o necesidad..." />
+                  <textarea required rows={4} className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400" placeholder={t("ph_message")} />
                 </div>
 
                 <button type="submit" className="w-full bg-[#E02020] text-white text-xs font-bold tracking-[0.15em] uppercase py-3.5 hover:bg-[#c41a1a] transition-colors duration-200 mt-1">
-                  Enviar Mensaje
+                  {t("submit")}
                 </button>
               </form>
             )}

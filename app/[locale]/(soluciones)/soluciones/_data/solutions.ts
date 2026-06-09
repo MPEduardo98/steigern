@@ -2,6 +2,9 @@
 // Fuente única de datos para la página índice de soluciones y las páginas de detalle [slug].
 // Cada solución es un artículo tipo blog: contenido informativo que atrae tráfico
 // y remata con que STEIGERN lo diseña, fabrica e integra.
+// El contenido por idioma vive en solutions.{en,de}.ts; el español es el canónico aquí.
+import { solutionsEN } from "./solutions.en";
+import { solutionsDE } from "./solutions.de";
 
 export interface SolutionSection {
   heading: string;
@@ -492,6 +495,155 @@ export const solutions: Solution[] = [
   },
 ];
 
-export function getSolution(slug: string): Solution | undefined {
-  return solutions.find((s) => s.slug === slug);
+// ── Acceso por idioma ──────────────────────────────────────────
+const byLocale: Record<string, Solution[]> = {
+  es: solutions,
+  en: solutionsEN,
+  de: solutionsDE,
+};
+
+/** Devuelve las soluciones en el idioma indicado (cae a español). */
+export function getSolutions(locale: string): Solution[] {
+  return byLocale[locale] ?? solutions;
+}
+
+/** Devuelve una solución por slug en el idioma indicado (cae a español). */
+export function getSolution(locale: string, slug: string): Solution | undefined {
+  return getSolutions(locale).find((s) => s.slug === slug);
+}
+
+// ── Etiquetas de UI traducidas (las páginas no las escriben a mano) ──
+export interface SolutionLabels {
+  home: string;
+  solutions: string;
+  industrial: string;
+  reading: string;        // sufijo: "5 min {de lectura}"
+  benefits: string;
+  applications: string;
+  faq: string;
+  ctaEyebrow: string;
+  ctaTitle: string;
+  ctaText: string;
+  ctaButton: string;
+  otherSolutions: string;
+  features: string;
+  asideText: (title: string) => string;
+  asideButton: string;
+  // Página índice
+  metaTitle: string;
+  metaDesc: string;
+  heroLine1: string;
+  heroLine2: string;
+  intro1: string;
+  intro2: string;
+  notFoundTitle: string;
+  notFoundText: string;
+}
+
+const labels: Record<string, SolutionLabels> = {
+  es: {
+    home: "Inicio",
+    solutions: "Soluciones",
+    industrial: "Ingeniería Industrial",
+    reading: "de lectura",
+    benefits: "Beneficios clave",
+    applications: "Aplicaciones",
+    faq: "Preguntas frecuentes",
+    ctaEyebrow: "Esto lo hace STEIGERN",
+    ctaTitle: "¿Tienes un proyecto en mente?",
+    ctaText: "Lo diseñamos, fabricamos e integramos a la medida de tu proceso.",
+    ctaButton: "Hablar con un asesor",
+    otherSolutions: "Otras Soluciones",
+    features: "Características",
+    asideText: (t) => `¿Tienes un proyecto de ${t.toLowerCase()}? Cuéntanos tu caso y te asesoramos.`,
+    asideButton: "Solicitar información",
+    metaTitle: "Soluciones de Ingeniería Industrial",
+    metaDesc: "Descubre las soluciones de automatización industrial de STEIGERN: perfiles de aluminio, conveyors, estaciones de trabajo, co-bots, elevación y guías lineales, y soluciones lean.",
+    heroLine1: "Soluciones de",
+    heroLine2: "Ingeniería",
+    intro1: "Diseñamos e integramos dispositivos para el ensamble de componentes industriales, automatizando procesos manuales y líneas de manufactura. Cada solución se adapta al proceso específico del cliente.",
+    intro2: "Con 13 años de experiencia y presencia en más de 60 países, somos el socio de ingeniería que transforma ideas en sistemas funcionales, desde el concepto hasta la puesta en marcha.",
+    notFoundTitle: "¿No encuentras lo que buscas?",
+    notFoundText: "Desarrollamos soluciones a medida para cualquier desafío industrial.",
+  },
+  en: {
+    home: "Home",
+    solutions: "Solutions",
+    industrial: "Industrial Engineering",
+    reading: "read",
+    benefits: "Key benefits",
+    applications: "Applications",
+    faq: "Frequently asked questions",
+    ctaEyebrow: "This is what STEIGERN does",
+    ctaTitle: "Have a project in mind?",
+    ctaText: "We design, manufacture and integrate it to fit your process.",
+    ctaButton: "Talk to an advisor",
+    otherSolutions: "Other Solutions",
+    features: "Features",
+    asideText: (t) => `Have a ${t.toLowerCase()} project? Tell us about it and we'll advise you.`,
+    asideButton: "Request information",
+    metaTitle: "Industrial Engineering Solutions",
+    metaDesc: "Discover STEIGERN's industrial automation solutions: aluminum profiles, conveyors, workstations, cobots, lifting and linear guides, and lean solutions.",
+    heroLine1: "Engineering",
+    heroLine2: "Solutions",
+    intro1: "We design and integrate devices for the assembly of industrial components, automating manual processes and manufacturing lines. Each solution is tailored to the client's specific process.",
+    intro2: "With 13 years of experience and a presence in more than 60 countries, we are the engineering partner that turns ideas into functional systems, from concept to commissioning.",
+    notFoundTitle: "Can't find what you're looking for?",
+    notFoundText: "We develop tailored solutions for any industrial challenge.",
+  },
+  de: {
+    home: "Startseite",
+    solutions: "Lösungen",
+    industrial: "Industrielles Engineering",
+    reading: "Lesezeit",
+    benefits: "Zentrale Vorteile",
+    applications: "Anwendungen",
+    faq: "Häufige Fragen",
+    ctaEyebrow: "Das macht STEIGERN",
+    ctaTitle: "Haben Sie ein Projekt im Kopf?",
+    ctaText: "Wir entwerfen, fertigen und integrieren es passend zu Ihrem Prozess.",
+    ctaButton: "Mit einem Berater sprechen",
+    otherSolutions: "Weitere Lösungen",
+    features: "Merkmale",
+    asideText: (t) => `Haben Sie ein ${t}-Projekt? Erzählen Sie uns davon, wir beraten Sie.`,
+    asideButton: "Informationen anfordern",
+    metaTitle: "Lösungen für industrielles Engineering",
+    metaDesc: "Entdecken Sie die Industrieautomatisierungslösungen von STEIGERN: Aluminiumprofile, Förderer, Arbeitsplätze, Cobots, Hub- und Linearführungen sowie Lean-Lösungen.",
+    heroLine1: "Engineering-",
+    heroLine2: "Lösungen",
+    intro1: "Wir entwerfen und integrieren Vorrichtungen für die Montage industrieller Komponenten und automatisieren manuelle Prozesse und Fertigungslinien. Jede Lösung ist auf den spezifischen Prozess des Kunden zugeschnitten.",
+    intro2: "Mit 13 Jahren Erfahrung und Präsenz in über 60 Ländern sind wir der Engineering-Partner, der Ideen in funktionsfähige Systeme verwandelt – vom Konzept bis zur Inbetriebnahme.",
+    notFoundTitle: "Nicht das Richtige gefunden?",
+    notFoundText: "Wir entwickeln maßgeschneiderte Lösungen für jede industrielle Herausforderung.",
+  },
+};
+
+export function getSolutionLabels(locale: string): SolutionLabels {
+  return labels[locale] ?? labels.es;
+}
+
+// ── SEO: URLs y hreflang por idioma ────────────────────────────
+// localePrefix "as-needed": español sin prefijo, en/de con prefijo.
+export const SITE = "https://steigern.com.mx";
+
+export function localePrefix(locale: string): string {
+  return locale === "es" ? "" : `/${locale}`;
+}
+
+/** URL absoluta de un path interno para un idioma concreto. */
+export function localizedUrl(locale: string, path: string): string {
+  return `${SITE}${localePrefix(locale)}${path}`;
+}
+
+/**
+ * Mapa de alternates hreflang para un path (sin prefijo de locale),
+ * ej. "/soluciones/perfil-de-aluminio".
+ */
+export function hreflangAlternates(path: string): Record<string, string> {
+  return {
+    es: `${SITE}${path}`,
+    en: `${SITE}/en${path}`,
+    de: `${SITE}/de${path}`,
+    "x-default": `${SITE}${path}`,
+  };
 }
