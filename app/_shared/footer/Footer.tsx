@@ -1,6 +1,5 @@
 ﻿// app/_shared/footer/Footer.tsx
 import Link from "next/link";
-import Image from "next/image";
 
 const soluciones = [
   { label: "Perfil Estructural de Aluminio", href: "/soluciones/perfil-de-aluminio" },
@@ -65,16 +64,30 @@ export default function Footer() {
           {/* Brand col â€” 4 cols */}
           <div className="lg:col-span-4 flex flex-col gap-8">
 
-            <div>
-              <Image
-                src="/assets/images/logos/steigern.webp"
-                alt="STEIGERN"
-                width={160}
-                height={54}
-                className="h-12 w-auto object-contain"
-                style={{ filter: "brightness(0) saturate(0) invert(1)" }}
-              />
-            </div>
+            <Link href="/" className="flex flex-col items-start leading-none group">
+              <span
+                className="text-white text-3xl leading-none"
+                style={{
+                  fontFamily:    "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
+                  fontWeight:    300,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                }}
+              >
+                STEIGERN
+              </span>
+              <span
+                className="text-[14.2px] text-white mt-1"
+                style={{
+                  fontFamily:    "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
+                  fontWeight:    700,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                }}
+              >
+                Design In Motion
+              </span>
+            </Link>
 
             {/* Social */}
             <div className="flex gap-2">
@@ -107,7 +120,7 @@ export default function Footer() {
 
           {/* Soluciones â€” 3 cols */}
           <div className="lg:col-span-3">
-            <p className="text-zinc-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
+            <p className="text-neutral-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
               <span className="w-4 h-px bg-brand flex-shrink-0" />
               Soluciones
             </p>
@@ -127,7 +140,7 @@ export default function Footer() {
 
           {/* Empresa â€” 2 cols */}
           <div className="lg:col-span-2">
-            <p className="text-zinc-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
+            <p className="text-neutral-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
               <span className="w-4 h-px bg-brand flex-shrink-0" />
               Empresa
             </p>
@@ -147,7 +160,7 @@ export default function Footer() {
 
           {/* Contacto â€” 3 cols */}
           <div className="lg:col-span-3">
-            <p className="text-zinc-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
+            <p className="text-neutral-400 text-xs font-bold tracking-widest uppercase mb-6 flex items-center gap-3">
               <span className="w-4 h-px bg-brand flex-shrink-0" />
               Contacto
             </p>
@@ -170,13 +183,14 @@ export default function Footer() {
             </ul>
 
             <Link
-              href="/contacto"
-              className="mt-8 inline-flex items-center gap-2 bg-brand text-white text-xs font-bold tracking-widest uppercase px-5 py-3 hover:bg-brand-dark transition-colors duration-200"
+              href="/login"
+              className="mt-8 inline-flex items-center gap-1.5 text-zinc-500 hover:text-brand text-xs tracking-wide transition-colors duration-200"
             >
-              Solicitar cotización
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
               </svg>
+              Acceso
             </Link>
           </div>
 
@@ -187,10 +201,10 @@ export default function Footer() {
       <div className="border-t border-zinc-800">
         <div className="max-w-screen-xl mx-auto px-8 lg:px-20 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <p className="text-zinc-500 text-xs">
-            Â© {new Date().getFullYear()} STEIGERN Design In Motion S.A de C.V. â€” <span className="text-zinc-600 italic">We enjoy making machines.</span>
+            © {new Date().getFullYear()} STEIGERN Design In Motion S.A de C.V.
           </p>
           <p className="text-zinc-500 text-xs">
-            Diseñado por{" "}
+            Design by{" "}
             <a
               href="https://www.instagram.com/eduardo_martinez66"
               target="_blank"

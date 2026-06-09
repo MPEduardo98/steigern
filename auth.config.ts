@@ -35,25 +35,9 @@ export const authConfig: NextAuthConfig = {
         }
       }
 
-      // â”€â”€ Rutas /portal-proveedores â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-      if (pathname.startsWith("/portal-proveedores")) {
-        if (!user) {
-          return Response.redirect(
-            new URL(`/login?callbackUrl=${encodeURIComponent(pathname)}`, nextUrl)
-          );
-        }
-        if (role !== "proveedor") {
-          return new Response("Acceso denegado", { status: 403 });
-        }
-      }
-
       // â”€â”€ Usuario ya autenticado intenta ir a /login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (pathname === "/login" && user) {
-        const dest: string =
-          role === "administrador" || role === "empleado"
-            ? "/admin"
-            : "/portal-proveedores";
-        return Response.redirect(new URL(dest, nextUrl));
+        return Response.redirect(new URL("/admin", nextUrl));
       }
 
       return true;

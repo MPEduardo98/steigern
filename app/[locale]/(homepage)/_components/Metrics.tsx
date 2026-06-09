@@ -36,7 +36,7 @@ export default function Metrics() {
     <section
       id="metrics"
       ref={ref}
-      className="w-full bg-[#E02020] py-20 overflow-hidden"
+      className="w-full bg-[#E02020] py-10 overflow-hidden"
     >
       <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-white/20">

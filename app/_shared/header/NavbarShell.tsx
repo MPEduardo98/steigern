@@ -20,16 +20,13 @@ export default function NavbarShell({ user }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <motion.header
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+    <header
       className="fixed top-0 left-0 w-full z-50 bg-white border-b border-zinc-200 shadow-sm"
     >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex flex-col items-start leading-none group">
           <span
             className="text-[#E02020] text-3xl leading-none"
             style={{
@@ -41,6 +38,17 @@ export default function NavbarShell({ user }: Props) {
           >
             STEIGERN
           </span>
+          <span
+            className="text-[14.2px] text-zinc-500 mt-1"
+            style={{
+              fontFamily:    "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
+              fontWeight:    700,
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+            }}
+          >
+            Design In Motion
+          </span>
         </Link>
 
         {/* Right side: CTA + UserDropdown */}
@@ -49,10 +57,10 @@ export default function NavbarShell({ user }: Props) {
             href="/contacto"
             className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
           >
-            Comenzar
+            Contacto
           </Link>
 
-          <UserDropdown user={user} />
+          <UserDropdown />
         </div>
 
         {/* Mobile hamburger */}
@@ -122,13 +130,13 @@ export default function NavbarShell({ user }: Props) {
                 className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white text-center mt-2"
                 onClick={() => setMenuOpen(false)}
               >
-                Comenzar
+                Contacto
               </Link>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }
 

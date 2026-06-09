@@ -42,7 +42,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email:    { label: "Email",      type: "email" },
         password: { label: "Contraseña", type: "password" },
-        role:     { label: "Rol",        type: "text" },
       },
       async authorize(credentials) {
         // ValidaciÃ³n server-side con zod â€” recomendado por authjs.dev
@@ -50,53 +49,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const schema = z.object({
           email:    z.string().email(),
           password: z.string().min(8).max(72),
-          role:     z.enum(["administrador", "empleado", "proveedor"]),
         });
 
         const parsed = schema.safeParse(credentials);
         if (!parsed.success) return null;
 
-        const { email, password, role } = parsed.data;
+        const { email, password } = parsed.data;
 
-        // â”€â”€ Proveedor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-        if (role === "proveedor") {
-          const [rows] = await pool.query<RowDataPacket[]>(
-            `SELECT upp.id, upp.email, upp.password_hash,
-                    p.razon_social AS name
-             FROM   usuarios_portal_proveedor upp
-             JOIN   proveedores p ON p.id = upp.proveedor_id
-             WHERE  upp.email = ? AND upp.activo = 1`,
-            [email]
-          );
-          const user = rows[0];
-          if (!user) return null;
-
-          const valid = await compare(password, user.password_hash as string);
-          if (!valid) return null;
-
-          await pool.query(
-            "UPDATE usuarios_portal_proveedor SET ultimo_acceso = NOW() WHERE id = ?",
-            [user.id]
-          );
-
-          return {
-            id:         String(user.id),
-            email:      user.email as string,
-            name:       user.name  as string,
-            role:       "proveedor" satisfies UserRole,
-            empleadoId: null,
-          };
-        }
-
-        // â”€â”€ Empleado / Administrador â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // â”€â”€ Empleado / Administrador â€” el rol se deduce de la cuenta â”€â”€
         const [rows] = await pool.query<RowDataPacket[]>(
           `SELECT up.id, up.email, up.password_hash, up.rol,
                   up.empleado_id,
                   CONCAT(e.nombre, ' ', e.apellidos) AS name
            FROM   usuarios_portal up
            LEFT   JOIN empleados e ON e.id = up.empleado_id
-           WHERE  up.email = ? AND up.activo = 1 AND up.rol = ?`,
-          [email, role]
+           WHERE  up.email = ? AND up.activo = 1`,
+          [email]
         );
         const user = rows[0];
         if (!user) return null;

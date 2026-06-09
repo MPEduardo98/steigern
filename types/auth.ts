@@ -2,7 +2,7 @@
 // Tipos compartidos entre auth.config.ts (Edge) y auth.ts (Node.js).
 // Este archivo NO puede importar nada con deps de Node.js.
 
-export type UserRole = "administrador" | "empleado" | "proveedor";
+export type UserRole = "administrador" | "empleado";
 
 export interface AuthUser {
   id?:         string;

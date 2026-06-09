@@ -1,6 +1,6 @@
 ﻿// proxy.ts  (raÃ­z del proyecto)
 // Encadena NextAuth (guard de rutas privadas) + next-intl (routing de locale).
-// Las rutas privadas (login, admin, portal-proveedores) viven FUERA del
+// Las rutas privadas (login, admin) viven FUERA del
 // segmento [locale]; las pÃºblicas dentro de [locale].
 import createMiddleware from "next-intl/middleware";
 import NextAuth from "next-auth";
@@ -16,7 +16,6 @@ const { auth: nextAuthMiddleware } = NextAuth(authConfig);
 // gestiona next-intl, por eso NO va aquí.
 const AUTH_ROUTES = [
   /^\/admin(\/.*)?$/,
-  /^\/portal-proveedores(\/.*)?$/,
 ];
 
 export default function middleware(request: NextRequest) {

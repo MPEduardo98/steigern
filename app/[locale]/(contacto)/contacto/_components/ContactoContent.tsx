@@ -141,8 +141,7 @@ export default function ContactoContent() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-zinc-900 font-black text-[clamp(2.4rem,5vw,5.5rem)] leading-[0.95] tracking-[-0.03em] uppercase mb-6"
-            style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+            className="heading heading-xl text-zinc-900 uppercase mb-6"
           >
             Inicia Tu
             <br />
@@ -183,10 +182,7 @@ export default function ContactoContent() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                   </motion.div>
-                  <h3
-                    className="text-zinc-900 font-black text-2xl uppercase tracking-[-0.02em] mb-3"
-                    style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
-                  >
+                  <h3 className="heading heading-md text-zinc-900 uppercase mb-3">
                     Mensaje Enviado
                   </h3>
                   <p className="text-zinc-500 text-sm max-w-sm leading-relaxed">

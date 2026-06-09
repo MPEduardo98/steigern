@@ -3,6 +3,7 @@ import Header from "@/_shared/header/Header";
 import Hero from "./_components/Hero";
 import SolutionsPreview from "./_components/Solutions";
 import AboutPreview from "./_components/About";
+import Slogan from "./_components/Slogan";
 import Metrics from "./_components/Metrics";
 import Brands from "./_components/Brands";
 import GlobalPresence from "./_components/Globalpresence";
@@ -39,6 +40,7 @@ export default function Home() {
       <Hero />
       <SolutionsPreview />
       <AboutPreview />
+      <Slogan />
       <GlobalPresence />
       <Brands />
       <Contact />

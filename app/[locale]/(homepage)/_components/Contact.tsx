@@ -37,8 +37,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-zinc-900 font-black text-[clamp(1.8rem,3.2vw,3.5rem)] leading-[1.0] tracking-[-0.03em] uppercase mb-6"
-              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+              className="heading heading-lg text-zinc-900 uppercase mb-6"
             >
               Inicia Tu
               <br />
@@ -90,7 +89,7 @@ export default function Contact() {
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-                <h3 className="text-zinc-900 font-black text-xl uppercase tracking-[-0.02em]" style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>
+                <h3 className="heading heading-sm text-zinc-900 uppercase">
                   Mensaje enviado
                 </h3>
                 <p className="text-zinc-500 text-sm leading-relaxed">

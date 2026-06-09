@@ -8,9 +8,6 @@ import { Link, usePathname, useRouter as useIntlRouter } from "@root/i18n/naviga
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBriefcase,
-  faUser,
-  faShield,
   faEye,
   faEyeSlash,
   faArrowRight,
@@ -21,13 +18,6 @@ import MX from "country-flag-icons/react/3x2/MX";
 import US from "country-flag-icons/react/3x2/US";
 import DE from "country-flag-icons/react/3x2/DE";
 import { loginAction } from "../_actions/auth";
-import type { UserRole } from "@root/auth";
-
-const ROLES = [
-  { id: "proveedor"     as UserRole, icon: faBriefcase },
-  { id: "empleado"      as UserRole, icon: faUser      },
-  { id: "administrador" as UserRole, icon: faShield    },
-];
 
 const LANGUAGES = [
   { code: "es", label: "Español", Flag: MX },
@@ -68,12 +58,6 @@ function LanguageSwitcher({ dark = false }: { dark?: boolean }) {
   );
 }
 
-const REDIRECT: Record<UserRole, string> = {
-  administrador: "/admin",
-  empleado:      "/admin",
-  proveedor:     "/portal-proveedores",
-};
-
 // â”€â”€ Inner component que usa useSearchParams â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function LoginForm() {
   const t            = useTranslations("Login");
@@ -81,14 +65,13 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl  = searchParams.get("callbackUrl");
 
-  const [role,         setRole]        = useState<UserRole>("proveedor");
   const [showPassword, setShowPassword] = useState(false);
   const [state, action, pending]       = useActionState(loginAction, {});
 
   useEffect(() => {
     if (!state.success) return;
-    router.push(callbackUrl || REDIRECT[role]);
-  }, [state.success, callbackUrl, role, router]);
+    router.push(callbackUrl || "/admin");
+  }, [state.success, callbackUrl, router]);
 
   return (
     <div className="min-h-screen flex bg-white">
@@ -176,42 +159,6 @@ function LoginForm() {
           </h2>
 
           <form action={action} className="flex flex-col gap-5">
-            {/* Selector de rol */}
-            <div>
-              <p className="text-[10px] text-zinc-400 font-bold tracking-[0.18em] uppercase mb-3">
-                {t("access_type")}
-              </p>
-              <div className="grid grid-cols-3 gap-2">
-                {ROLES.map((r) => {
-                  const active = role === r.id;
-                  return (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onClick={() => setRole(r.id)}
-                      className={`
-                        relative flex flex-col items-center gap-2 p-4 border
-                        text-center transition-all duration-200 cursor-pointer
-                        ${active
-                          ? "border-accent bg-red-50"
-                          : "border-zinc-200 hover:border-zinc-400"
-                        }
-                      `}
-                    >
-                      <FontAwesomeIcon
-                        icon={r.icon}
-                        className={`w-4 h-4 transition-colors duration-200 ${active ? "text-accent" : "text-zinc-400"}`}
-                      />
-                      <span className={`text-[10px] font-black tracking-[0.1em] uppercase leading-tight transition-colors ${active ? "text-accent" : "text-zinc-500"}`}>
-                        {t(`role_${r.id}`)}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-              <input type="hidden" name="role" value={role} />
-            </div>
-
             {/* Email */}
             <div>
               <label className="text-[10px] text-zinc-400 font-bold tracking-[0.15em] uppercase block mb-1.5">

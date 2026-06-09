@@ -74,8 +74,7 @@ export default function SolutionsPreview() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-zinc-900 font-black text-[clamp(1.8rem,3.5vw,3.5rem)] leading-[1.0] tracking-[-0.03em] uppercase"
-              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+              className="heading heading-lg text-zinc-900 uppercase"
             >
               {t("title_line1")}
               <br />
@@ -134,8 +133,7 @@ export default function SolutionsPreview() {
                     <span className="text-[#E02020] text-xs font-bold tracking-[0.2em]">{s.num}</span>
                     <div className="w-5 h-px bg-zinc-200 group-hover:bg-[#E02020] transition-colors duration-300 mt-2" />
                   </div>
-                  <h3 className="text-zinc-900 font-black text-base uppercase tracking-[-0.02em] mb-2"
-                    style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>{s.title}</h3>
+                  <h3 className="heading heading-sm text-zinc-900 uppercase mb-2">{s.title}</h3>
                   <p className="text-zinc-500 text-sm leading-relaxed mb-4 flex-1">{s.desc}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {s.tags.map((tag) => (

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { Open_Sans, Bebas_Neue } from "next/font/google";
 import localFont from "next/font/local";
 import { getLocale } from "next-intl/server";
 import JsonLd from "./_shared/seo/JsonLd";
@@ -15,6 +15,13 @@ const bankGothic = localFont({
   src: "../public/fonts/BankGothicBT-Light.woff2",
   variable: "--font-bankgothic",
   weight: "300",
+  display: "block",
+});
+
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-heading",
   display: "swap",
 });
 
@@ -92,7 +99,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} data-scroll-behavior="smooth">
       <body
-        className={`${openSans.variable} ${bankGothic.variable} font-body antialiased bg-white text-zinc-900`}
+        className={`${openSans.variable} ${bankGothic.variable} ${bebasNeue.variable} font-body antialiased bg-white text-zinc-900`}
       >
         <JsonLd />
         {children}

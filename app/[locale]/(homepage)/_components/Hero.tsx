@@ -8,9 +8,8 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 const headingStyle = {
-  fontFamily: "var(--font-body), 'Open Sans', sans-serif",
-  fontWeight: 900,
-  letterSpacing: "-0.03em",
+  fontFamily: "var(--font-heading), 'Bebas Neue', Impact, sans-serif",
+  letterSpacing: "0.01em",
   textTransform: "uppercase" as const,
 };
 

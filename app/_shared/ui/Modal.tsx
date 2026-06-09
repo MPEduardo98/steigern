@@ -47,8 +47,7 @@ export default function Modal({ open, onClose, title, subtitle, size = "md", chi
             <div className="absolute left-0 top-0 w-0.5 h-full bg-[#E02020]" />
             <div className="flex items-start justify-between px-7 pt-7 pb-5 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
               <div>
-                <h2 className="text-zinc-900 dark:text-zinc-100 font-black text-xl uppercase tracking-[-0.02em]"
-                  style={{ fontFamily: "var(--font-body), 'Open Sans', sans-serif" }}>
+                <h2 className="heading text-zinc-900 dark:text-zinc-100 text-2xl uppercase">
                   {title}
                 </h2>
                 {subtitle && <p className="text-zinc-400 text-xs mt-1 tracking-[0.04em]">{subtitle}</p>}

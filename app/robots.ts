@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/portal-proveedores/"],
+        disallow: ["/api/", "/admin/"],
       },
     ],
     sitemap: "https://steigern.com.mx/sitemap.xml",

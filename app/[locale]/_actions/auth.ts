@@ -4,7 +4,6 @@
 import { signIn, signOut } from "@root/auth";
 import { AuthError } from "next-auth";
 import { getTranslations } from "next-intl/server";
-import type { UserRole } from "@root/auth";
 
 export interface LoginState {
   error?: string;
@@ -19,9 +18,8 @@ export async function loginAction(
 
   const email    = formData.get("email")    as string;
   const password = formData.get("password") as string;
-  const role     = formData.get("role")     as UserRole;
 
-  if (!email || !password || !role) {
+  if (!email || !password) {
     return { error: t("error_required") };
   }
 
@@ -29,7 +27,6 @@ export async function loginAction(
     await signIn("credentials", {
       email,
       password,
-      role,
       redirect: false,
     });
 

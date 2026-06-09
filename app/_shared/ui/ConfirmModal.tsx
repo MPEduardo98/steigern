@@ -75,10 +75,7 @@ export default function ConfirmModal({
                   <FontAwesomeIcon icon={cfg.icon} className={`w-4 h-4 ${cfg.iconColor}`} />
                 </div>
                 <div>
-                  <h3
-                    className="text-zinc-900 dark:text-zinc-100 font-black text-base uppercase tracking-[-0.02em] leading-tight"
-                    style={{ fontFamily: "var(--font-body),'Open Sans',sans-serif" }}
-                  >
+                  <h3 className="heading text-zinc-900 dark:text-zinc-100 text-lg uppercase leading-tight">
                     {title}
                   </h3>
                   {description && (

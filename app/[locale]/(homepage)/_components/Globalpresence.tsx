@@ -58,8 +58,7 @@ export default function GlobalPresence() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-zinc-900 font-black text-[clamp(1.8rem,3.2vw,3.5rem)] leading-[1.0] tracking-[-0.03em] uppercase mb-6"
-              style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}
+              className="heading heading-lg text-zinc-900 uppercase mb-6"
             >
               {t("title_line1")}
               <br />
