@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { sendContactAction } from "../../../_actions/contact";
 
 const contactInfo = [
   {
@@ -81,14 +82,21 @@ const selectCls = "w-full bg-zinc-50 border border-zinc-200 text-zinc-700 text-s
 export default function ContactoContent() {
   const t = useTranslations("Contacto");
   const [submitted, setSubmitted] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
   const roles = t.raw("roles") as string[];
   const soluciones = t.raw("solutions") as string[];
   const motivoContacto = t.raw("reasons") as string[];
   const hoursValue = t("value_hours");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setPending(true);
+    setError("");
+    const res = await sendContactAction(new FormData(e.currentTarget));
+    setPending(false);
+    if (res.ok) setSubmitted(true);
+    else setError(res.error ?? "Error");
   }
 
   return (
@@ -180,19 +188,19 @@ export default function ContactoContent() {
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
                           {t("field_fullname")} <span className="text-[#E02020]">*</span>
                         </label>
-                        <input required className={inputCls} placeholder={t("ph_fullname")} />
+                        <input name="name" required className={inputCls} placeholder={t("ph_fullname")} />
                       </div>
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
                           {t("field_company")} <span className="text-[#E02020]">*</span>
                         </label>
-                        <input required className={inputCls} placeholder={t("ph_company")} />
+                        <input name="company" required className={inputCls} placeholder={t("ph_company")} />
                       </div>
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
                           {t("field_role")} <span className="text-[#E02020]">*</span>
                         </label>
-                        <select required className={selectCls}>
+                        <select name="role" required className={selectCls}>
                           <option value="">{t("select_placeholder")}</option>
                           {roles.map((f) => <option key={f}>{f}</option>)}
                         </select>
@@ -201,11 +209,11 @@ export default function ContactoContent() {
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">
                           {t("field_email")} <span className="text-[#E02020]">*</span>
                         </label>
-                        <input type="email" required className={inputCls} placeholder={t("ph_email")} />
+                        <input type="email" name="email" required className={inputCls} placeholder={t("ph_email")} />
                       </div>
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">{t("field_phone")}</label>
-                        <input type="tel" className={inputCls} placeholder={t("ph_phone")} />
+                        <input type="tel" name="phone" className={inputCls} placeholder={t("ph_phone")} />
                       </div>
                     </div>
                   </div>
@@ -223,7 +231,7 @@ export default function ContactoContent() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {soluciones.map((s) => (
                         <label key={s} className="flex items-center gap-3 cursor-pointer group">
-                          <input type="checkbox" className="accent-[#E02020] w-4 h-4 shrink-0" />
+                          <input type="checkbox" name="solutions" value={s} className="accent-[#E02020] w-4 h-4 shrink-0" />
                           <span className="text-zinc-600 text-sm group-hover:text-zinc-900 transition-colors">{s}</span>
                         </label>
                       ))}
@@ -240,7 +248,7 @@ export default function ContactoContent() {
                     <div className="flex flex-col gap-4">
                       <div>
                         <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1.5">{t("field_reason")}</label>
-                        <select className={selectCls}>
+                        <select name="reason" className={selectCls}>
                           {motivoContacto.map((m) => <option key={m}>{m}</option>)}
                         </select>
                       </div>
@@ -249,6 +257,7 @@ export default function ContactoContent() {
                           {t("field_message")} <span className="text-[#E02020]">*</span>
                         </label>
                         <textarea
+                          name="message"
                           required
                           rows={5}
                           className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-4 py-3 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400"
@@ -258,11 +267,16 @@ export default function ContactoContent() {
                     </div>
                   </div>
 
+                  <input type="hidden" name="source" value="Página de Contacto" />
+
+                  {error && <p className="text-[#E02020] text-sm">{error}</p>}
+
                   <button
                     type="submit"
-                    className="w-full bg-[#E02020] text-white text-xs font-black tracking-[0.2em] uppercase py-4 hover:bg-[#c41a1a] transition-colors duration-200 flex items-center justify-center gap-3 group"
+                    disabled={pending}
+                    className="w-full bg-[#E02020] text-white text-xs font-black tracking-[0.2em] uppercase py-4 hover:bg-[#c41a1a] transition-colors duration-200 flex items-center justify-center gap-3 group disabled:opacity-60"
                   >
-                    {t("submit")}
+                    {pending ? "..." : t("submit")}
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -319,8 +333,8 @@ export default function ContactoContent() {
               {/* Mapa */}
               <div className="relative border border-zinc-200 overflow-hidden aspect-[4/3] bg-zinc-100">
                 <iframe
-                  title="STEIGERN Querétaro"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3734.0!2d-100.4091!3d20.6295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d345b7b6a4b5b5%3A0x1234!2sCentral+Park+Quer%C3%A9taro!5e0!3m2!1ses!2smx!4v1680000000000!5m2!1ses!2smx"
+                  title="Central Park, Puebla, México"
+                  src="https://www.google.com/maps?q=Central+Park,+Puebla,+M%C3%A9xico&z=14&output=embed"
                   className="w-full h-full grayscale opacity-80"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"

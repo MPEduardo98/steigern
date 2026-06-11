@@ -1,5 +1,6 @@
 ﻿// app/_shared/footer/Footer.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 const contacto = [
@@ -67,29 +68,14 @@ export default async function Footer() {
           {/* Brand col â€” 4 cols */}
           <div className="lg:col-span-4 flex flex-col gap-8">
 
-            <Link href="/" className="flex flex-col items-start leading-none group">
-              <span
-                className="text-white text-3xl leading-none"
-                style={{
-                  fontFamily:    "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
-                  fontWeight:    300,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                }}
-              >
-                STEIGERN
-              </span>
-              <span
-                className="text-[14.2px] text-white mt-1"
-                style={{
-                  fontFamily:    "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
-                  fontWeight:    700,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Design In Motion
-              </span>
+            <Link href="/" className="inline-flex group">
+              <Image
+                src="/logos/Logo_White.png"
+                alt="STEIGERN Design In Motion"
+                width={1920}
+                height={368}
+                className="h-10 w-auto"
+              />
             </Link>
 
             {/* Social */}

@@ -4,6 +4,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import UserDropdown from "./UserDropdown";
 import type { UserRole } from "@root/auth";
 
@@ -26,29 +27,15 @@ export default function NavbarShell({ user }: Props) {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex flex-col items-start leading-none group">
-          <span
-            className="text-[#E02020] text-3xl leading-none"
-            style={{
-              fontFamily:    "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
-              fontWeight:    300,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-            }}
-          >
-            STEIGERN
-          </span>
-          <span
-            className="text-[14.2px] text-zinc-500 mt-1"
-            style={{
-              fontFamily:    "var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif",
-              fontWeight:    700,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-            }}
-          >
-            Design In Motion
-          </span>
+        <Link href="/" className="flex items-center group">
+          <Image
+            src="/logos/Logo.png"
+            alt="STEIGERN Design In Motion"
+            width={1920}
+            height={368}
+            priority
+            className="h-9 w-auto"
+          />
         </Link>
 
         {/* Right side: CTA + UserDropdown */}

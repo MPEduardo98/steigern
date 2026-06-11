@@ -3,6 +3,7 @@
 
 import { Suspense, useState, useActionState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter as useIntlRouter } from "@root/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -101,9 +102,14 @@ function LoginForm() {
 
         {/* Logo */}
         <div>
-          <span className="font-brand text-4xl text-white leading-none">
-            STEIGERN
-          </span>
+          <Image
+            src="/logos/Logo_White.png"
+            alt="STEIGERN Design In Motion"
+            width={1920}
+            height={368}
+            priority
+            className="h-10 w-auto"
+          />
           <div className="w-10 h-[3px] bg-accent mt-4" />
         </div>
 
@@ -142,9 +148,13 @@ function LoginForm() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden mb-10">
-            <span className="font-brand text-3xl text-zinc-950 leading-none">
-              STEIGERN
-            </span>
+            <Image
+              src="/logos/Logo.png"
+              alt="STEIGERN Design In Motion"
+              width={1920}
+              height={368}
+              className="h-8 w-auto"
+            />
             <div className="w-8 h-[3px] bg-accent mt-3" />
           </div>
 

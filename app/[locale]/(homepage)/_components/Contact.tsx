@@ -4,16 +4,24 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { sendContactAction } from "../../_actions/contact";
 
 export default function Contact() {
   const t = useTranslations("ContactForm");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [submitted, setSubmitted] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setPending(true);
+    setError("");
+    const res = await sendContactAction(new FormData(e.currentTarget));
+    setPending(false);
+    if (res.ok) setSubmitted(true);
+    else setError(res.error ?? "Error");
   }
 
   return (
@@ -103,11 +111,11 @@ export default function Contact() {
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
                       {t("field_name")} <span className="text-[#E02020]">*</span>
                     </label>
-                    <input type="text" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_name")} />
+                    <input type="text" name="name" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_name")} />
                   </div>
                   <div>
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_company")}</label>
-                    <input type="text" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_company")} />
+                    <input type="text" name="company" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_company")} />
                   </div>
                 </div>
 
@@ -116,17 +124,17 @@ export default function Contact() {
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
                       {t("field_email")} <span className="text-[#E02020]">*</span>
                     </label>
-                    <input type="email" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_email")} />
+                    <input type="email" name="email" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_email")} />
                   </div>
                   <div>
                     <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_phone")}</label>
-                    <input type="tel" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_phone")} />
+                    <input type="tel" name="phone" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_phone")} />
                   </div>
                 </div>
 
                 <div>
                   <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_reason")}</label>
-                  <select className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors">
+                  <select name="reason" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors">
                     <option>{t("reason1")}</option>
                     <option>{t("reason2")}</option>
                     <option>{t("reason3")}</option>
@@ -139,11 +147,15 @@ export default function Contact() {
                   <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
                     {t("field_message")} <span className="text-[#E02020]">*</span>
                   </label>
-                  <textarea required rows={4} className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400" placeholder={t("ph_message")} />
+                  <textarea name="message" required rows={4} className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400" placeholder={t("ph_message")} />
                 </div>
 
-                <button type="submit" className="w-full bg-[#E02020] text-white text-xs font-bold tracking-[0.15em] uppercase py-3.5 hover:bg-[#c41a1a] transition-colors duration-200 mt-1">
-                  {t("submit")}
+                <input type="hidden" name="source" value="Home — Formulario de contacto" />
+
+                {error && <p className="text-[#E02020] text-xs">{error}</p>}
+
+                <button type="submit" disabled={pending} className="w-full bg-[#E02020] text-white text-xs font-bold tracking-[0.15em] uppercase py-3.5 hover:bg-[#c41a1a] transition-colors duration-200 mt-1 disabled:opacity-60">
+                  {pending ? "..." : t("submit")}
                 </button>
               </form>
             )}

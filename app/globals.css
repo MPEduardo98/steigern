@@ -2,7 +2,6 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: var(--font-bankgothic);
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
 
@@ -55,21 +54,8 @@ body {
 }
 
 /* ─── Typography ─────────────────────────────────────────────── */
-.font-bankgothic,
-.font-brand {
-  font-family: var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
 .font-body {
   font-family: var(--font-body), 'Open Sans', system-ui, sans-serif;
-}
-
-.font-display {
-  font-family: var(--font-bankgothic), 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 300;
 }
 
 /* ─── Títulos ────────────────────────────────────────────────
