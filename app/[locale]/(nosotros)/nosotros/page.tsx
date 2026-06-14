@@ -58,7 +58,7 @@ export default async function NosotrosPage({ params }: Params) {
       </section>
 
       {/* Text + Image */}
-      <section className="w-full py-24 bg-white">
+      <section id="quienes-somos" className="w-full py-24 bg-white scroll-mt-16">
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-zinc-200">
             <div className="bg-white p-10 flex flex-col justify-center">
@@ -92,7 +92,7 @@ export default async function NosotrosPage({ params }: Params) {
       </section>
 
       {/* Misión + Visión */}
-      <section className="w-full py-24 bg-zinc-50">
+      <section id="mision-vision" className="w-full py-24 bg-zinc-50 scroll-mt-16">
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           <div className="mb-14">
             <div className="flex items-center gap-3 mb-5">
@@ -118,7 +118,7 @@ export default async function NosotrosPage({ params }: Params) {
       </section>
 
       {/* Valores */}
-      <section className="w-full py-24 bg-white">
+      <section id="valores" className="w-full py-24 bg-white scroll-mt-16">
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <div>

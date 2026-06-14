@@ -54,7 +54,7 @@ export default function Hero() {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.6 }}
-              className="text-zinc-900 text-[clamp(1.5rem,2.8vw,2.8rem)] leading-tight"
+              className="text-zinc-900 text-[clamp(1.75rem,3.2vw,3.25rem)] leading-tight"
               style={headingStyle}
             >
               {t("title_line1")}
@@ -65,7 +65,7 @@ export default function Hero() {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.75 }}
-              className="text-[#E02020] text-[clamp(1.5rem,2.8vw,2.8rem)] leading-tight"
+              className="text-[#E02020] text-[clamp(1.75rem,3.2vw,3.25rem)] leading-tight"
               style={headingStyle}
             >
               {t("title_line2")}
@@ -126,7 +126,7 @@ export default function Hero() {
             width={520}
             height={520}
             priority
-            className="w-full max-w-[420px] lg:max-w-[500px] h-auto object-contain drop-shadow-2xl mix-blend-multiply select-none pointer-events-none"
+            className="w-full max-w-150 lg:max-w-200 h-auto object-contain drop-shadow-2xl mix-blend-multiply select-none pointer-events-none"
             draggable={false}
           />
         </motion.div>

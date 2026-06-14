@@ -46,7 +46,7 @@ export default function Metrics() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: i * 0.1 }}
-              className="px-8 py-4 first:pl-0 last:pr-0"
+              className="px-4 lg:px-8 py-4 first:pl-0 last:pr-0"
             >
               <div className="text-white font-black text-4xl lg:text-5xl tracking-[-0.04em] mb-1" style={{ fontFamily: "var(--font-body), Open Sans, sans-serif" }}>
                 <Counter to={m.value} suffix={m.suffix} />
