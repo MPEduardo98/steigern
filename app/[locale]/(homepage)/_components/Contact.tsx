@@ -2,32 +2,19 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { sendContactAction } from "../../_actions/contact";
 
 export default function Contact() {
   const t = useTranslations("ContactForm");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [submitted, setSubmitted] = useState(false);
-  const [pending, setPending] = useState(false);
-  const [error, setError] = useState("");
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setPending(true);
-    setError("");
-    const res = await sendContactAction(new FormData(e.currentTarget));
-    setPending(false);
-    if (res.ok) setSubmitted(true);
-    else setError(res.error ?? "Error");
-  }
 
   return (
     <section id="contact" ref={ref} className="relative w-full py-20 bg-white overflow-hidden">
       <div className="relative max-w-[1440px] mx-auto px-8 lg:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
           {/* Left */}
           <div>
@@ -84,81 +71,25 @@ export default function Contact() {
             </motion.div>
           </div>
 
-          {/* Right: Form */}
+          {/* Right: CTA to contact page */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-col items-start justify-center gap-6 bg-zinc-50 border border-zinc-200 p-10"
           >
-            {submitted ? (
-              <div className="flex flex-col items-start justify-center h-full gap-5 py-12">
-                <div className="w-10 h-10 bg-[#E02020] flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </div>
-                <h3 className="heading heading-sm text-zinc-900 uppercase">
-                  {t("sent_title")}
-                </h3>
-                <p className="text-zinc-500 text-sm leading-relaxed">
-                  {t("sent_text")}
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
-                      {t("field_name")} <span className="text-[#E02020]">*</span>
-                    </label>
-                    <input type="text" name="name" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_name")} />
-                  </div>
-                  <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_company")}</label>
-                    <input type="text" name="company" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_company")} />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
-                      {t("field_email")} <span className="text-[#E02020]">*</span>
-                    </label>
-                    <input type="email" name="email" required className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_email")} />
-                  </div>
-                  <div>
-                    <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_phone")}</label>
-                    <input type="tel" name="phone" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors placeholder:text-zinc-400" placeholder={t("ph_phone")} />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">{t("field_reason")}</label>
-                  <select name="reason" className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors">
-                    <option>{t("reason1")}</option>
-                    <option>{t("reason2")}</option>
-                    <option>{t("reason3")}</option>
-                    <option>{t("reason4")}</option>
-                    <option>{t("reason5")}</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-[10px] text-zinc-400 tracking-[0.15em] uppercase block mb-1">
-                    {t("field_message")} <span className="text-[#E02020]">*</span>
-                  </label>
-                  <textarea name="message" required rows={4} className="w-full bg-zinc-50 border border-zinc-200 text-zinc-900 text-sm px-3 py-2.5 focus:outline-none focus:border-[#E02020] transition-colors resize-none placeholder:text-zinc-400" placeholder={t("ph_message")} />
-                </div>
-
-                <input type="hidden" name="source" value="Home — Formulario de contacto" />
-
-                {error && <p className="text-[#E02020] text-xs">{error}</p>}
-
-                <button type="submit" disabled={pending} className="w-full bg-[#E02020] text-white text-xs font-bold tracking-[0.15em] uppercase py-3.5 hover:bg-[#c41a1a] transition-colors duration-200 mt-1 disabled:opacity-60">
-                  {pending ? "..." : t("submit")}
-                </button>
-              </form>
-            )}
+            <h3 className="heading heading-sm text-zinc-900 uppercase">
+              {t("cta_title")}
+            </h3>
+            <p className="text-zinc-500 text-sm leading-relaxed">
+              {t("cta_text")}
+            </p>
+            <Link
+              href="/contacto"
+              className="inline-block text-xs font-bold tracking-[0.15em] uppercase px-7 py-3.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
+            >
+              {t("cta_button")}
+            </Link>
           </motion.div>
         </div>
       </div>
