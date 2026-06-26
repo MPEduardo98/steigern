@@ -8,10 +8,8 @@
     "cta_history": "Our Story",
     "stat1_value": "13+",
     "stat1_label": "Years of Experience",
-    "stat2_value": "60+",
-    "stat2_label": "Countries Served",
-    "stat3_value": "100%",
-    "stat3_label": "Made in Mexico",
+    "stat2_value": "100%",
+    "stat2_label": "Made in Mexico",
     "scroll": "Scroll"
   },
   "Solutions": {
@@ -50,12 +48,10 @@
     "title_line1": "From Mexico",
     "title_line2": "To The World",
     "description": "At STEIGERN we bring Mexican innovation to international markets, delivering world-class quality and industrial design. Our commitment transcends borders to connect with clients and projects across the globe.",
-    "stat1_value": "60+",
-    "stat1_label": "Countries Served",
-    "stat2_value": "3",
-    "stat2_label": "Continents",
-    "stat3_value": "100%",
-    "stat3_label": "Made in Mexico"
+    "stat1_value": "3",
+    "stat1_label": "Continents",
+    "stat2_value": "100%",
+    "stat2_label": "Made in Mexico"
   },
   "Brands": {
     "eyebrow": "World-Class Technology",
@@ -69,11 +65,9 @@
     "item1_sublabel": "in over 60 countries",
     "item2_label": "Uptime Guarantee",
     "item2_sublabel": "contractual SLA standard",
-    "item3_label": "Engineers on Staff",
-    "item3_sublabel": "mechanical, electrical & SW",
-    "item4_label": "Industry Experience",
-    "item4_sublabel": "founded 1984, Munich",
-    "item4_suffix": " years"
+    "item3_label": "Industry Experience",
+    "item3_sublabel": "founded 1984, Munich",
+    "item3_suffix": " years"
   },
   "Login": {
     "panel_eyebrow": "Corporate Portal",

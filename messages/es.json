@@ -8,10 +8,8 @@
     "cta_history": "Nuestra Historia",
     "stat1_value": "13+",
     "stat1_label": "Años de Experiencia",
-    "stat2_value": "60+",
-    "stat2_label": "Países Atendidos",
-    "stat3_value": "100%",
-    "stat3_label": "Hecho en México",
+    "stat2_value": "100%",
+    "stat2_label": "Hecho en México",
     "scroll": "Scroll"
   },
   "Solutions": {
@@ -50,12 +48,10 @@
     "title_line1": "From Mexico",
     "title_line2": "To The World",
     "description": "En STEIGERN llevamos la innovación mexicana a los mercados internacionales, entregando calidad y diseño industrial de clase mundial. Nuestro compromiso trasciende fronteras para conectar con clientes y proyectos en todo el planeta.",
-    "stat1_value": "60+",
-    "stat1_label": "Países Atendidos",
-    "stat2_value": "3",
-    "stat2_label": "Continentes",
-    "stat3_value": "100%",
-    "stat3_label": "Hecho en México"
+    "stat1_value": "3",
+    "stat1_label": "Continentes",
+    "stat2_value": "100%",
+    "stat2_label": "Hecho en México"
   },
   "Brands": {
     "eyebrow": "Tecnología de Clase Mundial",
@@ -69,11 +65,9 @@
     "item1_sublabel": "en más de 60 países",
     "item2_label": "Garantía de Disponibilidad",
     "item2_sublabel": "estándar SLA contractual",
-    "item3_label": "Ingenieros en Plantilla",
-    "item3_sublabel": "mecánica, eléctrica y SW",
-    "item4_label": "Experiencia en la Industria",
-    "item4_sublabel": "fundada en 1984, Múnich",
-    "item4_suffix": " años"
+    "item3_label": "Experiencia en la Industria",
+    "item3_sublabel": "fundada en 1984, Múnich",
+    "item3_suffix": " años"
   },
   "Login": {
     "panel_eyebrow": "Portal Corporativo",

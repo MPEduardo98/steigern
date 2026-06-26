@@ -23,7 +23,6 @@ export default function Hero() {
   const stats = [
     { value: t("stat1_value"), label: t("stat1_label") },
     { value: t("stat2_value"), label: t("stat2_label") },
-    { value: t("stat3_value"), label: t("stat3_label") },
   ];
 
   return (

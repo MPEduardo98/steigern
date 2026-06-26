@@ -8,10 +8,8 @@
     "cta_history": "Unsere Geschichte",
     "stat1_value": "13+",
     "stat1_label": "Jahre Erfahrung",
-    "stat2_value": "60+",
-    "stat2_label": "Belieferte Länder",
-    "stat3_value": "100%",
-    "stat3_label": "Made in Mexico",
+    "stat2_value": "100%",
+    "stat2_label": "Made in Mexico",
     "scroll": "Scrollen"
   },
   "Solutions": {
@@ -50,12 +48,10 @@
     "title_line1": "From Mexico",
     "title_line2": "To The World",
     "description": "Bei STEIGERN bringen wir mexikanische Innovation auf internationale Märkte und liefern Qualität und Industriedesign von Weltklasse. Unser Engagement überwindet Grenzen, um Kunden und Projekte auf der ganzen Welt zu verbinden.",
-    "stat1_value": "60+",
-    "stat1_label": "Belieferte Länder",
-    "stat2_value": "3",
-    "stat2_label": "Kontinente",
-    "stat3_value": "100%",
-    "stat3_label": "Made in Mexico"
+    "stat1_value": "3",
+    "stat1_label": "Kontinente",
+    "stat2_value": "100%",
+    "stat2_label": "Made in Mexico"
   },
   "Brands": {
     "eyebrow": "Weltklasse-Technologie",
@@ -69,11 +65,9 @@
     "item1_sublabel": "in über 60 Ländern",
     "item2_label": "Verfügbarkeitsgarantie",
     "item2_sublabel": "vertraglicher SLA-Standard",
-    "item3_label": "Ingenieure im Team",
-    "item3_sublabel": "Mechanik, Elektrik & SW",
-    "item4_label": "Branchenerfahrung",
-    "item4_sublabel": "gegründet 1984, München",
-    "item4_suffix": " Jahre"
+    "item3_label": "Branchenerfahrung",
+    "item3_sublabel": "gegründet 1984, München",
+    "item3_suffix": " Jahre"
   },
   "Login": {
     "panel_eyebrow": "Unternehmensportal",

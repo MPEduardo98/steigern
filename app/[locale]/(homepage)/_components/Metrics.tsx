@@ -28,8 +28,7 @@ export default function Metrics() {
   const metrics = [
     { value: 1200, suffix: "+", label: t("item1_label"), sublabel: t("item1_sublabel") },
     { value: 98, suffix: "%", label: t("item2_label"), sublabel: t("item2_sublabel") },
-    { value: 340, suffix: "+", label: t("item3_label"), sublabel: t("item3_sublabel") },
-    { value: 40, suffix: t("item4_suffix"), label: t("item4_label"), sublabel: t("item4_sublabel") },
+    { value: 40, suffix: t("item3_suffix"), label: t("item3_label"), sublabel: t("item3_sublabel") },
   ];
 
   return (
