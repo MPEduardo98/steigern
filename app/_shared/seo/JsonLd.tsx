@@ -1,21 +1,80 @@
-﻿export default function JsonLd() {
+import { localizedUrl, absoluteUrl, SITE } from "@root/lib/seo";
+import { FOUNDING_YEAR } from "@root/lib/company";
+
+// Datos estructurados globales (Organization + WebSite + ItemList de servicios).
+// Se inyecta en el layout raíz y se adapta al idioma activo para que el
+// `inLanguage` y las URLs de servicios apunten a la versión correcta.
+
+type Locale = "es" | "en" | "de";
+
+const ORG_DESC: Record<Locale, string> = {
+  es: "Empresa mexicana especializada en automatización industrial: diseño e integración de sistemas de transporte, perfiles de aluminio, estaciones de trabajo, co-bots y soluciones lean.",
+  en: "Mexican company specialized in industrial automation: design and integration of conveyor systems, aluminum profiles, workstations, cobots and lean solutions.",
+  de: "Mexikanisches Unternehmen für Industrieautomation: Entwicklung und Integration von Fördersystemen, Aluminiumprofilen, Arbeitsplätzen, Cobots und Lean-Lösungen.",
+};
+
+const WEBSITE_DESC: Record<Locale, string> = {
+  es: "Soluciones de automatización industrial y sistemas de ingeniería en México",
+  en: "Industrial automation solutions and engineering systems in Mexico",
+  de: "Industrieautomationslösungen und Engineering-Systeme in Mexiko",
+};
+
+const SERVICES: { slug: string; name: string; description: string }[] = [
+  {
+    slug: "perfil-de-aluminio",
+    name: "Perfil Estructural de Aluminio",
+    description:
+      "Diseño e integración de perfiles estructurales de aluminio adaptados individualmente para cada entorno de trabajo industrial.",
+  },
+  {
+    slug: "conveyors",
+    name: "Sistemas de Transporte (Conveyors)",
+    description:
+      "Sistemas conveyor industriales personalizados: de banda, rodillos, modulares y elevadores para líneas de manufactura.",
+  },
+  {
+    slug: "estaciones-de-trabajo",
+    name: "Estaciones de Trabajo",
+    description:
+      "Estaciones de trabajo ergonómicas con diseño óptimo de iluminación, entorno y seguridad para el operario.",
+  },
+  {
+    slug: "dispositivos-asistidos-por-cobots",
+    name: "Dispositivos Asistidos por Co-Bots",
+    description:
+      "Integración de robots colaborativos para asistir al operario en líneas de ensamble industrial.",
+  },
+  {
+    slug: "elevacion-y-guias-lineales",
+    name: "Elevación y Guías Lineales",
+    description:
+      "Sistemas de elevación y guías lineales de precisión para manufactura y ensamblaje industrial.",
+  },
+  {
+    slug: "soluciones-lean",
+    name: "Soluciones Lean",
+    description:
+      "Estructuras industriales y soluciones de manufactura esbelta para eliminar desperdicios y optimizar procesos.",
+  },
+];
+
+export default function JsonLd({ locale = "es" }: { locale?: string }) {
+  const lang = (["es", "en", "de"].includes(locale) ? locale : "es") as Locale;
+
   const organization = {
     "@context": "https://schema.org",
     "@type": ["Organization", "LocalBusiness"],
-    "@id": "https://steigern.com.mx/#organization",
+    "@id": `${SITE}/#organization`,
     name: "STEIGERN Design In Motion S.A de C.V",
     alternateName: "STEIGERN",
-    url: "https://steigern.com.mx",
+    url: SITE,
     logo: {
       "@type": "ImageObject",
-      url: "https://steigern.com.mx/assets/images/logos/steigern.webp",
-      width: 300,
-      height: 100,
+      url: absoluteUrl("/logos/Logo.png"),
     },
-    image: "https://steigern.com.mx/assets/images/og-image.jpg",
-    description:
-      "Empresa mexicana especializada en automatización industrial: diseño e integración de sistemas de transporte, perfiles de aluminio, estaciones de trabajo, co-bots y soluciones lean.",
-    foundingDate: "2011",
+    image: absoluteUrl("/opengraph-image"),
+    description: ORG_DESC[lang],
+    foundingDate: String(FOUNDING_YEAR),
     numberOfEmployees: {
       "@type": "QuantitativeValue",
       value: 50,
@@ -32,7 +91,7 @@
         telephone: "+52-222-582-9254",
         contactType: "customer service",
         email: "customerservice@steigern.com.mx",
-        availableLanguage: ["Spanish", "English"],
+        availableLanguage: ["Spanish", "English", "German"],
         hoursAvailable: [
           {
             "@type": "OpeningHoursSpecification",
@@ -72,94 +131,31 @@
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://steigern.com.mx/#website",
-    url: "https://steigern.com.mx",
+    "@id": `${SITE}/#website`,
+    url: SITE,
     name: "STEIGERN Design In Motion",
-    description: "Soluciones de automatización industrial y sistemas de ingeniería en México",
+    description: WEBSITE_DESC[lang],
     publisher: {
-      "@id": "https://steigern.com.mx/#organization",
+      "@id": `${SITE}/#organization`,
     },
-    inLanguage: "es-MX",
+    inLanguage: lang,
   };
 
   const services = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Soluciones de Ingeniería STEIGERN",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        item: {
-          "@type": "Service",
-          name: "Perfil Estructural de Aluminio",
-          url: "https://steigern.com.mx/soluciones/perfil-de-aluminio",
-          provider: { "@id": "https://steigern.com.mx/#organization" },
-          description:
-            "Diseño e integración de perfiles estructurales de aluminio adaptados individualmente para cada entorno de trabajo industrial.",
-        },
+    itemListElement: SERVICES.map((s, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Service",
+        name: s.name,
+        url: localizedUrl(lang, `/soluciones/${s.slug}`),
+        provider: { "@id": `${SITE}/#organization` },
+        description: s.description,
       },
-      {
-        "@type": "ListItem",
-        position: 2,
-        item: {
-          "@type": "Service",
-          name: "Sistemas de Transporte (Conveyors)",
-          url: "https://steigern.com.mx/soluciones/conveyors",
-          provider: { "@id": "https://steigern.com.mx/#organization" },
-          description:
-            "Sistemas conveyor industriales personalizados: de banda, rodillos, modulares y elevadores para líneas de manufactura.",
-        },
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        item: {
-          "@type": "Service",
-          name: "Estaciones de Trabajo",
-          url: "https://steigern.com.mx/soluciones/estaciones-de-trabajo",
-          provider: { "@id": "https://steigern.com.mx/#organization" },
-          description:
-            "Estaciones de trabajo ergonómicas con diseño óptimo de iluminación, entorno y seguridad para el operario.",
-        },
-      },
-      {
-        "@type": "ListItem",
-        position: 4,
-        item: {
-          "@type": "Service",
-          name: "Dispositivos Asistidos por Co-Bots",
-          url: "https://steigern.com.mx/soluciones/dispositivos-asistidos-por-cobots",
-          provider: { "@id": "https://steigern.com.mx/#organization" },
-          description:
-            "Integración de robots colaborativos para asistir al operario en líneas de ensamble industrial.",
-        },
-      },
-      {
-        "@type": "ListItem",
-        position: 5,
-        item: {
-          "@type": "Service",
-          name: "Elevación y Guías Lineales",
-          url: "https://steigern.com.mx/soluciones/elevacion-y-guias-lineales",
-          provider: { "@id": "https://steigern.com.mx/#organization" },
-          description:
-            "Sistemas de elevación y guías lineales de precisión para manufactura y ensamblaje industrial.",
-        },
-      },
-      {
-        "@type": "ListItem",
-        position: 6,
-        item: {
-          "@type": "Service",
-          name: "Soluciones Lean",
-          url: "https://steigern.com.mx/soluciones/soluciones-lean",
-          provider: { "@id": "https://steigern.com.mx/#organization" },
-          description:
-            "Estructuras industriales y soluciones de manufactura esbelta para eliminar desperdicios y optimizar procesos.",
-        },
-      },
-    ],
+    })),
   };
 
   return (
@@ -179,4 +175,3 @@
     </>
   );
 }
-

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
+import { yearsOfExperience } from "@root/lib/company";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
 import Contact from "../../(homepage)/_components/Contact";
@@ -9,14 +11,17 @@ type Params = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Nosotros" });
+  const path = "/nosotros";
   return {
     title: t("meta_title"),
-    description: t("meta_desc"),
-    alternates: { canonical: "https://steigern.com.mx/nosotros" },
+    description: t("meta_desc", { years: yearsOfExperience() }),
+    alternates: buildAlternates(locale, path),
     openGraph: {
       title: `${t("meta_title")} | STEIGERN`,
       description: t("meta_desc"),
-      url: "https://steigern.com.mx/nosotros",
+      url: localizedUrl(locale, path),
+      locale: ogLocale(locale),
+      alternateLocale: ogAlternateLocales(locale),
     },
   };
 }
@@ -25,6 +30,7 @@ export default async function NosotrosPage({ params }: Params) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "Nosotros" });
+  const years = yearsOfExperience();
 
   const values = t.raw("values") as string[];
   const milestones = t.raw("milestones") as string[];
@@ -52,7 +58,7 @@ export default async function NosotrosPage({ params }: Params) {
             <span className="text-[#E02020]">{t("title_line2")}</span>
           </h1>
           <p className="text-zinc-500 text-lg max-w-xl leading-relaxed">
-            {t("hero_desc")}
+            {t("hero_desc", { years })}
           </p>
         </div>
       </section>
@@ -75,7 +81,7 @@ export default async function NosotrosPage({ params }: Params) {
               </p>
               <p className="text-zinc-500 text-base leading-relaxed">
                 {t("intro3_pre")}
-                <span className="text-zinc-800 font-semibold">{t("intro3_hl")}</span>
+                <span className="text-zinc-800 font-semibold">{t("intro3_hl", { years })}</span>
                 {t("intro3_post")}
               </p>
             </div>

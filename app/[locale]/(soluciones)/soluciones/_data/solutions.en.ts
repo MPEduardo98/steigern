@@ -449,6 +449,6 @@ export const solutionsEN: Solution[] = [
       },
     ],
     closing:
-      "At STEIGERN we support your project from start to finish: concept, feasibility, detailed design, manufacturing, integration and commissioning. With 13 years of experience, we turn requirements into functional systems as a single engineering partner.",
+      "At STEIGERN we support your project from start to finish: concept, feasibility, detailed design, manufacturing, integration and commissioning. With {years} years of experience, we turn requirements into functional systems as a single engineering partner.",
   },
 ];

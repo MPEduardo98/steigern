@@ -6,6 +6,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { yearsOfExperience } from "@root/lib/company";
 
 const headingStyle = {
   fontFamily: "var(--font-heading), 'Bebas Neue', Impact, sans-serif",
@@ -20,8 +21,9 @@ export default function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
+  const years = yearsOfExperience();
   const stats = [
-    { value: t("stat1_value"), label: t("stat1_label") },
+    { value: t("stat1_value", { years }), label: t("stat1_label") },
     { value: t("stat2_value"), label: t("stat2_label") },
   ];
 

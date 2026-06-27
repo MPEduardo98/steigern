@@ -5,7 +5,14 @@ import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
-import { getSolutions, getSolutionLabels, localizedUrl, hreflangAlternates } from "./_data/solutions";
+import { getSolutions, getSolutionLabels } from "./_data/solutions";
+import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
+import { withYears } from "@root/lib/company";
+import { routing } from "@root/i18n/routing";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 type Params = { params: Promise<{ locale: string }> };
 
@@ -16,14 +23,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: l.metaTitle,
     description: l.metaDesc,
-    alternates: {
-      canonical: localizedUrl(locale, path),
-      languages: hreflangAlternates(path),
-    },
+    alternates: buildAlternates(locale, path),
     openGraph: {
       title: `${l.metaTitle} | STEIGERN`,
       description: l.metaDesc,
       url: localizedUrl(locale, path),
+      locale: ogLocale(locale),
+      alternateLocale: ogAlternateLocales(locale),
     },
   };
 }
@@ -66,7 +72,7 @@ export default async function SolucionesPage({ params }: Params) {
         <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <p className="text-zinc-500 text-base leading-relaxed">{l.intro1}</p>
-            <p className="text-zinc-500 text-base leading-relaxed">{l.intro2}</p>
+            <p className="text-zinc-500 text-base leading-relaxed">{withYears(l.intro2)}</p>
           </div>
         </div>
       </section>

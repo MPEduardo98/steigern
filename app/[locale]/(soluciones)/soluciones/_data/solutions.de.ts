@@ -449,6 +449,6 @@ export const solutionsDE: Solution[] = [
       },
     ],
     closing:
-      "Bei STEIGERN begleiten wir Ihr Projekt von Anfang bis Ende: Konzept, Machbarkeit, Detailkonstruktion, Fertigung, Integration und Inbetriebnahme. Mit 13 Jahren Erfahrung verwandeln wir Anforderungen in funktionsfähige Systeme – als einziger Engineering-Partner.",
+      "Bei STEIGERN begleiten wir Ihr Projekt von Anfang bis Ende: Konzept, Machbarkeit, Detailkonstruktion, Fertigung, Integration und Inbetriebnahme. Mit {years} Jahren Erfahrung verwandeln wir Anforderungen in funktionsfähige Systeme – als einziger Engineering-Partner.",
   },
 ];

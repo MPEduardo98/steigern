@@ -6,14 +6,16 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { yearsOfExperience } from "@root/lib/company";
 
 export default function AboutPreview() {
   const t = useTranslations("About");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
+  const years = yearsOfExperience();
   const stats = [
-    { value: t("stat1_value"), label: t("stat1_label") },
+    { value: t("stat1_value", { years }), label: t("stat1_label") },
     { value: t("stat2_value"), label: t("stat2_label") },
     { value: t("stat3_value"), label: t("stat3_label") },
   ];
@@ -87,7 +89,7 @@ export default function AboutPreview() {
               className="text-zinc-500 text-sm leading-relaxed mb-8"
             >
               {t("paragraph2_pre")}
-              <span className="text-zinc-800 font-semibold">{t("paragraph2_highlight")}</span>
+              <span className="text-zinc-800 font-semibold">{t("paragraph2_highlight", { years })}</span>
               {t("paragraph2_post")}
             </motion.p>
 

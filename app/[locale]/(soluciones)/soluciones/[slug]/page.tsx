@@ -7,7 +7,8 @@ import { setRequestLocale } from "next-intl/server";
 import { routing } from "@root/i18n/routing";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
-import { solutions, getSolution, getSolutions, getSolutionLabels, localizedUrl, hreflangAlternates } from "../_data/solutions";
+import { solutions, getSolution, getSolutions, getSolutionLabels } from "../_data/solutions";
+import { buildAlternates, localizedUrl, absoluteUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -27,16 +28,15 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: solution.title,
     description: solution.desc,
     keywords: solution.tags,
-    alternates: {
-      canonical: localizedUrl(locale, path),
-      languages: hreflangAlternates(path),
-    },
+    alternates: buildAlternates(locale, path),
     openGraph: {
       type: "article",
       title: `${solution.title} | STEIGERN`,
       description: solution.desc,
       url: localizedUrl(locale, path),
-      images: [{ url: solution.img }],
+      locale: ogLocale(locale),
+      alternateLocale: ogAlternateLocales(locale),
+      images: [{ url: absoluteUrl(solution.img), alt: solution.title }],
     },
   };
 }
@@ -49,19 +49,20 @@ export default async function SolucionDetallePage({ params }: Params) {
 
   const l = getSolutionLabels(locale);
   const others = getSolutions(locale).filter((s) => s.slug !== solution.slug).slice(0, 3);
-  const url = `https://steigern.com.mx/soluciones/${solution.slug}`;
+  const url = localizedUrl(locale, `/soluciones/${solution.slug}`);
 
-  // ── SEO: Article + FAQ structured data ──
+  // ── SEO: Article + FAQ + Breadcrumb structured data ──
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: solution.title,
     description: solution.desc,
-    image: `https://steigern.com.mx${solution.img}`,
+    image: absoluteUrl(solution.img),
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     author: { "@type": "Organization", name: "STEIGERN Design In Motion" },
     publisher: { "@id": "https://steigern.com.mx/#organization" },
     about: solution.tags,
+    inLanguage: locale,
   };
   const faqLd = {
     "@context": "https://schema.org",
@@ -72,11 +73,21 @@ export default async function SolucionDetallePage({ params }: Params) {
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: l.home, item: localizedUrl(locale, "") },
+      { "@type": "ListItem", position: 2, name: l.solutions, item: localizedUrl(locale, "/soluciones") },
+      { "@type": "ListItem", position: 3, name: solution.title, item: url },
+    ],
+  };
 
   return (
     <main className="min-h-screen bg-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       <Header />
 

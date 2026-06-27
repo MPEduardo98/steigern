@@ -491,7 +491,7 @@ export const solutions: Solution[] = [
       },
     ],
     closing:
-      "En STEIGERN acompañamos tu proyecto de principio a fin: concepto, factibilidad, diseño de detalle, fabricación, integración y puesta en marcha. Con 13 años de experiencia, transformamos requerimientos en sistemas funcionales como un único socio de ingeniería.",
+      "En STEIGERN acompañamos tu proyecto de principio a fin: concepto, factibilidad, diseño de detalle, fabricación, integración y puesta en marcha. Con {years} años de experiencia, transformamos requerimientos en sistemas funcionales como un único socio de ingeniería.",
   },
 ];
 
@@ -562,7 +562,7 @@ const labels: Record<string, SolutionLabels> = {
     heroLine1: "Soluciones de",
     heroLine2: "Ingeniería",
     intro1: "Diseñamos e integramos dispositivos para el ensamble de componentes industriales, automatizando procesos manuales y líneas de manufactura. Cada solución se adapta al proceso específico del cliente.",
-    intro2: "Con 13 años de experiencia y presencia en más de 60 países, somos el socio de ingeniería que transforma ideas en sistemas funcionales, desde el concepto hasta la puesta en marcha.",
+    intro2: "Con {years} años de experiencia y presencia en más de 60 países, somos el socio de ingeniería que transforma ideas en sistemas funcionales, desde el concepto hasta la puesta en marcha.",
     notFoundTitle: "¿No encuentras lo que buscas?",
     notFoundText: "Desarrollamos soluciones a medida para cualquier desafío industrial.",
   },
@@ -587,7 +587,7 @@ const labels: Record<string, SolutionLabels> = {
     heroLine1: "Engineering",
     heroLine2: "Solutions",
     intro1: "We design and integrate devices for the assembly of industrial components, automating manual processes and manufacturing lines. Each solution is tailored to the client's specific process.",
-    intro2: "With 13 years of experience and a presence in more than 60 countries, we are the engineering partner that turns ideas into functional systems, from concept to commissioning.",
+    intro2: "With {years} years of experience and a presence in more than 60 countries, we are the engineering partner that turns ideas into functional systems, from concept to commissioning.",
     notFoundTitle: "Can't find what you're looking for?",
     notFoundText: "We develop tailored solutions for any industrial challenge.",
   },
@@ -612,7 +612,7 @@ const labels: Record<string, SolutionLabels> = {
     heroLine1: "Engineering-",
     heroLine2: "Lösungen",
     intro1: "Wir entwerfen und integrieren Vorrichtungen für die Montage industrieller Komponenten und automatisieren manuelle Prozesse und Fertigungslinien. Jede Lösung ist auf den spezifischen Prozess des Kunden zugeschnitten.",
-    intro2: "Mit 13 Jahren Erfahrung und Präsenz in über 60 Ländern sind wir der Engineering-Partner, der Ideen in funktionsfähige Systeme verwandelt – vom Konzept bis zur Inbetriebnahme.",
+    intro2: "Mit {years} Jahren Erfahrung und Präsenz in über 60 Ländern sind wir der Engineering-Partner, der Ideen in funktionsfähige Systeme verwandelt – vom Konzept bis zur Inbetriebnahme.",
     notFoundTitle: "Nicht das Richtige gefunden?",
     notFoundText: "Wir entwickeln maßgeschneiderte Lösungen für jede industrielle Herausforderung.",
   },
@@ -623,27 +623,5 @@ export function getSolutionLabels(locale: string): SolutionLabels {
 }
 
 // ── SEO: URLs y hreflang por idioma ────────────────────────────
-// localePrefix "as-needed": español sin prefijo, en/de con prefijo.
-export const SITE = "https://steigern.com.mx";
-
-export function localePrefix(locale: string): string {
-  return locale === "es" ? "" : `/${locale}`;
-}
-
-/** URL absoluta de un path interno para un idioma concreto. */
-export function localizedUrl(locale: string, path: string): string {
-  return `${SITE}${localePrefix(locale)}${path}`;
-}
-
-/**
- * Mapa de alternates hreflang para un path (sin prefijo de locale),
- * ej. "/soluciones/perfil-de-aluminio".
- */
-export function hreflangAlternates(path: string): Record<string, string> {
-  return {
-    es: `${SITE}${path}`,
-    en: `${SITE}/en${path}`,
-    de: `${SITE}/de${path}`,
-    "x-default": `${SITE}${path}`,
-  };
-}
+// Fuente única de verdad en lib/seo.ts; se re-exporta para no romper imports.
+export { SITE, localePrefix, localizedUrl, hreflangAlternates, buildAlternates } from "@root/lib/seo";
