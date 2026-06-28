@@ -29,11 +29,9 @@ export default function Slogan() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="heading heading-hero text-zinc-900 uppercase"
+            className="heading heading-hero text-zinc-900 uppercase whitespace-nowrap"
           >
-            We Enjoy
-            <br />
-            <span className="text-[#E02020]">Making Machines</span>
+            We Enjoy <span className="text-[#E02020]">Making Machines</span>
           </motion.h2>
 
           <motion.p

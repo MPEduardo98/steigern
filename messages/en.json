@@ -67,12 +67,12 @@
     "disclaimer": "*All brands and logos shown are property of their respective owners. Used solely for informational purposes to demonstrate compatibility and technological expertise."
   },
   "Metrics": {
-    "item1_label": "Machines Installed",
+    "item1_label": "Devices Installed",
     "item1_sublabel": "in over 60 countries",
     "item2_label": "Uptime Guarantee",
     "item2_sublabel": "contractual SLA standard",
-    "item3_label": "Industry Experience",
-    "item3_sublabel": "founded 1984, Munich",
+    "item3_label": "of experience",
+    "item3_sublabel": "",
     "item3_suffix": " years"
   },
   "Login": {

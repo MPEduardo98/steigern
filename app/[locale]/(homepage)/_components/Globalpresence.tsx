@@ -22,7 +22,7 @@ export default function GlobalPresence() {
       <div className="absolute top-0 left-0 w-1 h-full bg-[#E02020]" />
 
       <div className="max-w-[1440px] mx-auto px-8 lg:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-10 lg:gap-20 items-center">
 
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -36,7 +36,7 @@ export default function GlobalPresence() {
               width={700}
               height={500}
               loading="lazy"
-              className="w-full h-auto object-contain"
+              className="w-full max-w-sm md:max-w-full h-auto object-contain"
             />
           </motion.div>
 

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
+import SolutionCta from "@/_shared/ui/SolutionCta";
 import { getSolutions, getSolutionLabels } from "./_data/solutions";
 import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
 import { withYears } from "@root/lib/company";
@@ -45,17 +46,17 @@ export default async function SolucionesPage({ params }: Params) {
       <Header />
 
       {/* Hero */}
-      <section className="relative w-full min-h-[55vh] flex items-end overflow-hidden bg-zinc-50">
+      <section className="relative w-full min-h-[30vh] lg:min-h-[55vh] flex items-end overflow-hidden bg-zinc-50">
         <div className="absolute inset-0">
           <Image src="/assets/images/soluciones/perfil.png" alt="Soluciones STEIGERN" fill className="object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/40" />
         </div>
         <div className="absolute top-0 left-0 w-1 h-full bg-[#E02020] z-10" />
-        <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-20 pb-16 pt-36">
-          <div className="flex items-center gap-2 mb-6">
-            <Link href="/" className="text-zinc-500 hover:text-zinc-800 text-xs tracking-[0.1em] uppercase transition-colors">{l.home}</Link>
-            <span className="text-zinc-400 text-xs">/</span>
-            <span className="text-[#E02020] text-xs tracking-[0.1em] uppercase">{l.solutions}</span>
+        <div className="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-20 pb-10 lg:pb-16 pt-20 lg:pt-36">
+          <div className="flex items-center gap-2 mb-4">
+            <Link href="/" className="text-zinc-500 hover:text-zinc-800 text-[9px] tracking-[0.08em] uppercase transition-colors">{l.home}</Link>
+            <span className="text-zinc-400 text-[9px]">/</span>
+            <span className="text-[#E02020] text-[9px] tracking-[0.08em] uppercase">{l.solutions}</span>
           </div>
           <div className="flex items-center gap-3 mb-4">
             <span className="w-6 h-px bg-[#E02020]" />
@@ -107,26 +108,13 @@ export default async function SolucionesPage({ params }: Params) {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="w-full py-20 bg-zinc-50 border-t border-zinc-200">
-        <div className="max-w-[1440px] mx-auto px-8 lg:px-20 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-          <div className="max-w-xl">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="w-6 h-px bg-[#E02020]" />
-              <span className="text-[#E02020] text-xs font-bold tracking-[0.25em] uppercase">{l.ctaEyebrow}</span>
-            </div>
-            <h2 className="heading heading-lg text-zinc-900 uppercase">{l.notFoundTitle}</h2>
-            <p className="text-zinc-500 text-base leading-relaxed mt-4">{l.notFoundText}</p>
-          </div>
-          <Link href="/contacto"
-            className="shrink-0 inline-flex items-center justify-center gap-2 text-xs font-bold tracking-[0.15em] uppercase px-8 py-4 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200">
-            {l.ctaButton}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
-      </section>
+      {/* CTA (componente global reutilizable) */}
+      <SolutionCta
+        eyebrow={l.ctaEyebrow}
+        title={l.notFoundTitle}
+        text={l.notFoundText}
+        buttonLabel={l.ctaButton}
+      />
 
       <Footer />
     </main>

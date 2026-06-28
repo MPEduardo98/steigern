@@ -67,12 +67,12 @@
     "disclaimer": "*Alle gezeigten Marken und Logos sind Eigentum ihrer jeweiligen Inhaber. Verwendung ausschließlich zu Informationszwecken zur Darstellung von Kompatibilität und technologischer Expertise."
   },
   "Metrics": {
-    "item1_label": "Installierte Maschinen",
+    "item1_label": "Installierte Vorrichtungen",
     "item1_sublabel": "in über 60 Ländern",
     "item2_label": "Verfügbarkeitsgarantie",
     "item2_sublabel": "vertraglicher SLA-Standard",
-    "item3_label": "Branchenerfahrung",
-    "item3_sublabel": "gegründet 1984, München",
+    "item3_label": "Erfahrung",
+    "item3_sublabel": "",
     "item3_suffix": " Jahre"
   },
   "Login": {

@@ -51,7 +51,6 @@ export default async function Footer() {
     { label: t("nav_home"), href: "/" },
     { label: t("nav_solutions"), href: "/soluciones" },
     { label: t("nav_about"), href: "/nosotros" },
-    { label: t("nav_blog"), href: "/blog" },
     { label: t("nav_contact"), href: "/contacto" },
   ];
 
@@ -188,7 +187,7 @@ export default async function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-zinc-800">
-        <div className="max-w-screen-xl mx-auto px-8 lg:px-20 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="max-w-screen-xl mx-auto px-8 lg:px-20 py-5 flex flex-col items-center text-center gap-2 sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <p className="text-zinc-500 text-xs">
             © {new Date().getFullYear()} STEIGERN Design In Motion S.A de C.V.
           </p>

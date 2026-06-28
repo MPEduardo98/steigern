@@ -67,12 +67,12 @@
     "disclaimer": "*Todas las marcas y logotipos mostrados son propiedad de sus respectivos titulares. Usados únicamente con fines informativos para mostrar compatibilidad y experiencia tecnológica."
   },
   "Metrics": {
-    "item1_label": "Máquinas Instaladas",
+    "item1_label": "Dispositivos Instalados",
     "item1_sublabel": "en más de 60 países",
     "item2_label": "Garantía de Disponibilidad",
     "item2_sublabel": "estándar SLA contractual",
-    "item3_label": "Experiencia en la Industria",
-    "item3_sublabel": "fundada en 1984, Múnich",
+    "item3_label": "de experiencia",
+    "item3_sublabel": "",
     "item3_suffix": " años"
   },
   "Login": {

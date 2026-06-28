@@ -521,6 +521,7 @@ export interface SolutionLabels {
   benefits: string;
   applications: string;
   faq: string;
+  tocTitle: string;
   ctaEyebrow: string;
   ctaTitle: string;
   ctaText: string;
@@ -549,6 +550,7 @@ const labels: Record<string, SolutionLabels> = {
     benefits: "Beneficios clave",
     applications: "Aplicaciones",
     faq: "Preguntas frecuentes",
+    tocTitle: "En esta página",
     ctaEyebrow: "Esto lo hace STEIGERN",
     ctaTitle: "¿Tienes un proyecto en mente?",
     ctaText: "Lo diseñamos, fabricamos e integramos a la medida de tu proceso.",
@@ -574,6 +576,7 @@ const labels: Record<string, SolutionLabels> = {
     benefits: "Key benefits",
     applications: "Applications",
     faq: "Frequently asked questions",
+    tocTitle: "On this page",
     ctaEyebrow: "This is what STEIGERN does",
     ctaTitle: "Have a project in mind?",
     ctaText: "We design, manufacture and integrate it to fit your process.",
@@ -599,6 +602,7 @@ const labels: Record<string, SolutionLabels> = {
     benefits: "Zentrale Vorteile",
     applications: "Anwendungen",
     faq: "Häufige Fragen",
+    tocTitle: "Auf dieser Seite",
     ctaEyebrow: "Das macht STEIGERN",
     ctaTitle: "Haben Sie ein Projekt im Kopf?",
     ctaText: "Wir entwerfen, fertigen und integrieren es passend zu Ihrem Prozess.",
