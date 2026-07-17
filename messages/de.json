@@ -180,6 +180,57 @@
       "Sonstiges"
     ]
   },
+  "Bolsa": {
+    "meta_title": "Karriere",
+    "meta_desc": "Werden Sie Teil des STEIGERN-Teams. Senden Sie uns Ihren Lebenslauf und werden Sie Teil eines führenden Unternehmens für industrielle Automatisierung und Design in Motion.",
+    "breadcrumb_home": "Startseite",
+    "breadcrumb_current": "Karriere",
+    "eyebrow": "Arbeiten Sie mit uns",
+    "title_line1": "Gestalten Sie Ihre",
+    "title_line2": "Karriere",
+    "description": "Möchten Sie Teil von STEIGERN werden? Auch wenn wir gerade keine offene Stelle ausgeschrieben haben: Senden Sie uns Ihren Lebenslauf, und wir bewahren ihn für zukünftige Möglichkeiten auf.",
+    "sent_title": "Bewerbung gesendet",
+    "sent_text": "Wir haben Ihren Lebenslauf erhalten. Unser Talent-Team prüft ihn und meldet sich, wenn Ihr Profil zu einer Möglichkeit passt.",
+    "section1": "Ihre Daten",
+    "section2": "Ihr Lebenslauf",
+    "section3": "Erzählen Sie von sich",
+    "field_fullname": "Vollständiger Name",
+    "ph_fullname": "Ihr vollständiger Name",
+    "field_email": "E-Mail",
+    "ph_email": "sie@email.com",
+    "field_phone": "Telefon",
+    "ph_phone": "+52 222 000 0000",
+    "field_position": "Gewünschte Position",
+    "ph_position": "z. B. Projektingenieur",
+    "field_linkedin": "LinkedIn-Profil",
+    "ph_linkedin": "https://linkedin.com/in/ihr-profil",
+    "field_cv": "Lebenslauf anhängen",
+    "cv_cta": "Datei auswählen",
+    "cv_hint": "PDF, DOC oder DOCX · max. 5 MB",
+    "field_message": "Nachricht (optional)",
+    "ph_message": "Erzählen Sie uns kurz, warum Sie mit uns arbeiten möchten.",
+    "submit": "Bewerbung senden",
+    "privacy": "Mit dem Absenden Ihrer Daten stimmen Sie zu, dass STEIGERN diese für Rekrutierungs- und Auswahlzwecke verwenden darf.",
+    "why_title": "Warum STEIGERN?",
+    "direct_label": "Oder schreiben Sie uns direkt",
+    "benefits": [
+      {
+        "key": "growth",
+        "title": "Berufliche Entwicklung",
+        "text": "Anspruchsvolle Automatisierungsprojekte, die Ihre Entwicklung fördern."
+      },
+      {
+        "key": "team",
+        "title": "Interdisziplinäres Team",
+        "text": "Arbeiten Sie mit Ingenieuren und Spezialisten, die Innovation lieben."
+      },
+      {
+        "key": "innovation",
+        "title": "Spitzentechnologie",
+        "text": "Arbeiten Sie mit den führenden Marken und Lösungen der Branche weltweit."
+      }
+    ]
+  },
   "Footer": {
     "col_solutions": "Lösungen",
     "col_company": "Unternehmen",
@@ -195,6 +246,7 @@
     "nav_home": "Startseite",
     "nav_solutions": "Lösungen",
     "nav_about": "Über uns",
+    "nav_careers": "Karriere",
     "nav_blog": "Blog",
     "nav_contact": "Kontakt"
   },
@@ -223,7 +275,13 @@
     "values_eyebrow": "Was uns ausmacht",
     "values_title": "Unsere Werte",
     "values_desc": "Loyalität gegenüber unseren Geschäftspartnern ist entscheidend für die Glaubwürdigkeit. Wir arbeiten täglich mit Engagement, verantwortungsvoller Führung und Mehrwert für unsere Produkte.",
-    "values": ["Transparenz", "Ehrlichkeit", "Leidenschaft", "Wettbewerbsfähigkeit", "Sorgfalt"],
+    "values": [
+      "Transparenz",
+      "Ehrlichkeit",
+      "Leidenschaft",
+      "Wettbewerbsfähigkeit",
+      "Sorgfalt"
+    ],
     "milestones": [
       "Wir treten als Komplettanbieter auf und stehen für einen einzigartigen Entwickler und Hersteller im Markt.",
       "2020 begannen wir mit dem Export von Montagevorrichtungen in die USA.",

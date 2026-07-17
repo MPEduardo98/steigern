@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const m=require\\('./messages/es.json'\\); console.log\\(JSON.stringify\\(m.Contacto,null,1\\)\\); console.log\\('KEYS:', Object.keys\\(m\\).join\\(', '\\)\\)\")",
+      "Bash(cd \"c:/Users/eduar/Desktop/Eduardo Martinez/steigern\" && ls addbolsa.mjs 2>/dev/null && echo found || echo \"not in cwd\"; ls \"/c/Program Files/Git/addbolsa.mjs\" 2>/dev/null && echo \"in gitdir\")",
+      "Read(//c/Program Files/Git/**)",
+      "Bash(node \"C:/Users/eduar/AppData/Local/Temp/claude/c--Users-eduar-Desktop-Eduardo-Martinez-steigern/6cf25198-044e-4eef-8081-be0b1d5300d6/scratchpad/addbolsa.mjs\")"
+    ]
+  }
+}

@@ -39,6 +39,7 @@ export default function NavbarShell() {
     { label: "Inicio",     href: "/" },
     { label: "Soluciones", href: "/soluciones", sub: solutionLinks },
     { label: "Nosotros",   href: "/nosotros",   sub: aboutLinks },
+    { label: "Bolsa de Trabajo", href: "/bolsa-de-trabajo" },
   ];
 
   return (

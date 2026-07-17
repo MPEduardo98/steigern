@@ -180,6 +180,57 @@
       "Other"
     ]
   },
+  "Bolsa": {
+    "meta_title": "Careers",
+    "meta_desc": "Join the STEIGERN team. Send us your resume and become part of a leader in industrial automation and design in motion.",
+    "breadcrumb_home": "Home",
+    "breadcrumb_current": "Careers",
+    "eyebrow": "Work With Us",
+    "title_line1": "Build Your",
+    "title_line2": "Career",
+    "description": "Would you like to be part of STEIGERN? Even if we don't have an open position right now, send us your resume and we'll keep it on file for future opportunities.",
+    "sent_title": "Application Sent",
+    "sent_text": "We've received your resume. Our Talent team will review it and reach out if your profile matches an opportunity.",
+    "section1": "Your Details",
+    "section2": "Your Resume",
+    "section3": "Tell Us About You",
+    "field_fullname": "Full Name",
+    "ph_fullname": "Your full name",
+    "field_email": "Email",
+    "ph_email": "you@email.com",
+    "field_phone": "Phone",
+    "ph_phone": "+52 222 000 0000",
+    "field_position": "Position of Interest",
+    "ph_position": "e.g. Project Engineer",
+    "field_linkedin": "LinkedIn Profile",
+    "ph_linkedin": "https://linkedin.com/in/your-profile",
+    "field_cv": "Attach your resume",
+    "cv_cta": "Choose your file",
+    "cv_hint": "PDF, DOC or DOCX · max. 5 MB",
+    "field_message": "Message (optional)",
+    "ph_message": "Tell us briefly why you'd like to work with us.",
+    "submit": "Send Application",
+    "privacy": "By submitting your information you agree that STEIGERN may use it for recruitment and selection purposes.",
+    "why_title": "Why STEIGERN?",
+    "direct_label": "Or write to us directly",
+    "benefits": [
+      {
+        "key": "growth",
+        "title": "Professional growth",
+        "text": "Challenging industrial automation projects that drive your development."
+      },
+      {
+        "key": "team",
+        "title": "Multidisciplinary team",
+        "text": "Collaborate with engineers and specialists passionate about innovation."
+      },
+      {
+        "key": "innovation",
+        "title": "Cutting-edge technology",
+        "text": "Work with the sector's leading brands and solutions worldwide."
+      }
+    ]
+  },
   "Footer": {
     "col_solutions": "Solutions",
     "col_company": "Company",
@@ -195,6 +246,7 @@
     "nav_home": "Home",
     "nav_solutions": "Solutions",
     "nav_about": "About Us",
+    "nav_careers": "Careers",
     "nav_blog": "Blog",
     "nav_contact": "Contact"
   },
@@ -223,7 +275,13 @@
     "values_eyebrow": "What defines us",
     "values_title": "Our Values",
     "values_desc": "Loyalty to our business partners is essential to maintaining credibility. We work every day with attitude, responsible leadership and added value for our products.",
-    "values": ["Transparency", "Honesty", "Passion", "Competitiveness", "Diligence"],
+    "values": [
+      "Transparency",
+      "Honesty",
+      "Passion",
+      "Competitiveness",
+      "Diligence"
+    ],
     "milestones": [
       "We stand as a comprehensive supplier and reflect a unique developer and manufacturer in the market.",
       "In 2020 we began exporting assembly devices to the United States.",

@@ -180,6 +180,57 @@
       "Otro"
     ]
   },
+  "Bolsa": {
+    "meta_title": "Bolsa de Trabajo",
+    "meta_desc": "Únete al equipo de STEIGERN. Envíanos tu CV y forma parte de una empresa líder en automatización industrial y diseño en movimiento.",
+    "breadcrumb_home": "Inicio",
+    "breadcrumb_current": "Bolsa de Trabajo",
+    "eyebrow": "Trabaja con Nosotros",
+    "title_line1": "Construye Tu",
+    "title_line2": "Carrera",
+    "description": "¿Quieres formar parte de STEIGERN? No importa si en este momento no tenemos una vacante publicada: envíanos tu CV y lo mantendremos en nuestra base para futuras oportunidades.",
+    "sent_title": "Postulación Enviada",
+    "sent_text": "Hemos recibido tu CV. Nuestro equipo de Talento Humano lo revisará y te contactará si tu perfil coincide con una oportunidad.",
+    "section1": "Tus Datos",
+    "section2": "Tu Currículum",
+    "section3": "Cuéntanos de Ti",
+    "field_fullname": "Nombre Completo",
+    "ph_fullname": "Tu nombre completo",
+    "field_email": "Correo Electrónico",
+    "ph_email": "tu@correo.com",
+    "field_phone": "Teléfono",
+    "ph_phone": "+52 222 000 0000",
+    "field_position": "Puesto de Interés",
+    "ph_position": "Ej. Ingeniero de Proyectos",
+    "field_linkedin": "Perfil de LinkedIn",
+    "ph_linkedin": "https://linkedin.com/in/tu-perfil",
+    "field_cv": "Adjunta tu CV",
+    "cv_cta": "Selecciona tu archivo",
+    "cv_hint": "PDF, DOC o DOCX · máx. 5 MB",
+    "field_message": "Mensaje (opcional)",
+    "ph_message": "Cuéntanos brevemente por qué te gustaría trabajar con nosotros.",
+    "submit": "Enviar Postulación",
+    "privacy": "Al enviar tu información aceptas que STEIGERN la utilice para procesos de reclutamiento y selección.",
+    "why_title": "¿Por qué STEIGERN?",
+    "direct_label": "O escríbenos directamente",
+    "benefits": [
+      {
+        "key": "growth",
+        "title": "Crecimiento profesional",
+        "text": "Proyectos retadores de automatización industrial que impulsan tu desarrollo."
+      },
+      {
+        "key": "team",
+        "title": "Equipo multidisciplinario",
+        "text": "Colabora con ingenieros y especialistas apasionados por la innovación."
+      },
+      {
+        "key": "innovation",
+        "title": "Tecnología de vanguardia",
+        "text": "Trabaja con las marcas y soluciones líderes del sector a nivel global."
+      }
+    ]
+  },
   "Footer": {
     "col_solutions": "Soluciones",
     "col_company": "Empresa",
@@ -195,6 +246,7 @@
     "nav_home": "Inicio",
     "nav_solutions": "Soluciones",
     "nav_about": "Nosotros",
+    "nav_careers": "Bolsa de Trabajo",
     "nav_blog": "Blog",
     "nav_contact": "Contacto"
   },
@@ -223,7 +275,13 @@
     "values_eyebrow": "Lo que nos define",
     "values_title": "Nuestros Valores",
     "values_desc": "La lealtad con nuestros socios comerciales es esencial para mantener la credibilidad. Trabajamos día a día con actitud, liderazgo responsable y valor añadido para nuestros productos.",
-    "values": ["Transparencia", "Honestidad", "Pasión", "Competitividad", "Diligencia"],
+    "values": [
+      "Transparencia",
+      "Honestidad",
+      "Pasión",
+      "Competitividad",
+      "Diligencia"
+    ],
     "milestones": [
       "Figuramos como proveedor integral y reflejamos a un desarrollador y fabricante único en el mercado.",
       "En 2020 comenzamos a exportar dispositivos de ensamble a Estados Unidos.",

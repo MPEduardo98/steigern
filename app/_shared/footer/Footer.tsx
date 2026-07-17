@@ -51,6 +51,7 @@ export default async function Footer() {
     { label: t("nav_home"), href: "/" },
     { label: t("nav_solutions"), href: "/soluciones" },
     { label: t("nav_about"), href: "/nosotros" },
+    { label: t("nav_careers"), href: "/bolsa-de-trabajo" },
     { label: t("nav_contact"), href: "/contacto" },
   ];
 
