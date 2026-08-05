@@ -11,13 +11,17 @@ export const alt =
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Foto del producto embebida como data URI: next/og no resuelve rutas
-// relativas del sitio y en build no hay un host al que pedirla.
-// public/og/estaciones-og.jpg es la versión reducida de
-// public/assets/images/soluciones/estaciones.png (4096x3072 pesaba demasiado).
-const photo = `data:image/jpeg;base64,${readFileSync(
-  join(process.cwd(), "public/og/estaciones-og.jpg"),
-).toString("base64")}`;
+// Los recursos se embeben como data URI: next/og no resuelve rutas relativas
+// del sitio y durante el build no hay un host al que pedirlas.
+const asset = (file: string, mime: string) =>
+  `data:${mime};base64,${readFileSync(
+    join(process.cwd(), "public/og", file),
+  ).toString("base64")}`;
+
+// Logotipo real de la marca (public/logos/Logo.png, reducido).
+const logo = asset("logo-og.png", "image/png");
+// Estación de ensamble (public/assets/images/soluciones/estaciones.png, reducida).
+const photo = asset("estaciones-og.jpg", "image/jpeg");
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -27,57 +31,47 @@ export default function OpenGraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#0a0a0a",
+          background: "#ffffff",
           fontFamily: "sans-serif",
         }}
       >
-        {/* Columna izquierda: marca y titular */}
+        {/* Filo rojo de marca */}
+        <div style={{ width: 16, height: "100%", background: "#E30613" }} />
+
+        {/* Columna izquierda: logotipo y titular */}
         <div
           style={{
-            width: 660,
+            width: 624,
             height: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            padding: "72px 56px",
+            padding: "68px 56px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
-            <div style={{ width: 12, height: 56, background: "#E02020" }} />
-            <span
-              style={{
-                fontSize: 54,
-                fontWeight: 800,
-                letterSpacing: 7,
-                color: "#ffffff",
-              }}
-            >
-              STEIGERN
-            </span>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logo} alt="" width={380} height={73} />
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <span
               style={{
-                fontSize: 20,
-                letterSpacing: 5,
-                textTransform: "uppercase",
-                color: "#E02020",
-                fontWeight: 700,
-              }}
-            >
-              Design In Motion
-            </span>
-            <span
-              style={{
-                fontSize: 50,
+                fontSize: 48,
                 fontWeight: 800,
-                lineHeight: 1.06,
-                color: "#ffffff",
+                lineHeight: 1.08,
+                color: "#18181b",
+                letterSpacing: -1,
               }}
             >
               Automatización Industrial y Soluciones de Ingeniería
             </span>
+            <div
+              style={{
+                width: 96,
+                height: 6,
+                background: "#E30613",
+                marginTop: 28,
+              }}
+            />
           </div>
 
           <div
@@ -85,33 +79,34 @@ export default function OpenGraphImage() {
               display: "flex",
               flexDirection: "column",
               gap: 6,
-              color: "#a1a1aa",
-              fontSize: 24,
+              fontSize: 23,
+              color: "#71717a",
             }}
           >
             <span>México · Presencia global</span>
-            <span style={{ color: "#ffffff" }}>steigern.com.mx</span>
+            <span style={{ color: "#18181b", fontWeight: 700 }}>
+              steigern.com.mx
+            </span>
           </div>
         </div>
 
         {/* Columna derecha: estación de ensamble, sin recortar */}
         <div
           style={{
-            width: 540,
-            height: "100%",
             display: "flex",
+            flex: 1,
+            height: "100%",
             alignItems: "center",
             justifyContent: "center",
             background: "#ffffff",
-            borderLeft: "10px solid #E02020",
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={photo}
             alt=""
-            width={530}
-            height={398}
+            width={540}
+            height={405}
             style={{ objectFit: "contain" }}
           />
         </div>
