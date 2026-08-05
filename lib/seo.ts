@@ -10,6 +10,50 @@ export const SITE = "https://steigern.com.mx";
 /** Imagen Open Graph generada dinámicamente en /opengraph-image. */
 export const OG_IMAGE = "/opengraph-image";
 
+/** Nombre de marca usado en og:site_name. */
+export const SITE_NAME = "STEIGERN Design In Motion";
+
+/**
+ * Cuenta de X/Twitter de la marca (con @). Déjala vacía si no existe:
+ * un handle equivocado atribuye el contenido a otra cuenta.
+ */
+export const TWITTER_HANDLE = "";
+
+/**
+ * Bloque `images` de Open Graph/Twitter.
+ * Se declara de forma explícita (URL absoluta) porque cada página sobreescribe
+ * el objeto `openGraph` completo y, sin esto, se perdería el og:image.
+ */
+export function ogImages(alt = SITE_NAME) {
+  return [
+    {
+      url: `${SITE}${OG_IMAGE}`,
+      width: 1200,
+      height: 630,
+      alt,
+      type: "image/png",
+    },
+  ];
+}
+
+/**
+ * Bloque `twitter` de una página. Se declara por página porque el del layout
+ * raíz no se traduce y dejaría títulos en español en /en y /de.
+ */
+export function twitterMeta(
+  title: string,
+  description: string,
+  image = `${SITE}${OG_IMAGE}`,
+): Metadata["twitter"] {
+  return {
+    card: "summary_large_image",
+    ...(TWITTER_HANDLE ? { site: TWITTER_HANDLE, creator: TWITTER_HANDLE } : {}),
+    title,
+    description,
+    images: [image],
+  };
+}
+
 /** Idiomas soportados, derivados del routing de next-intl. */
 export type AppLocale = (typeof routing.locales)[number];
 

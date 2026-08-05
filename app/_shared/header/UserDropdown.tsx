@@ -52,7 +52,9 @@ export default function UserDropdown() {
             : "border-zinc-200 text-zinc-500 hover:border-zinc-400"
         }`}
       >
-        <current.Flag title={current.label} className="w-4 h-auto rounded-[1px] shrink-0" />
+        {/* aria-label en vez de `title`: el prop title genera un <title> dentro
+            del SVG que los scrapers confunden con el <title> del documento. */}
+        <current.Flag aria-label={current.label} className="w-4 h-auto rounded-[1px] shrink-0" />
 
         <span className="text-xs font-bold tracking-[0.1em] uppercase">
           {current.code.toUpperCase()}
@@ -93,7 +95,7 @@ export default function UserDropdown() {
                         : "border-zinc-200 text-zinc-500 hover:border-zinc-400"
                     }`}
                   >
-                    <l.Flag title={l.label} className="w-4 h-auto rounded-[1px] shrink-0" />
+                    <l.Flag aria-label={l.label} className="w-4 h-auto rounded-[1px] shrink-0" />
                     {l.code.toUpperCase()}
                   </button>
                 ))}

@@ -1,7 +1,7 @@
 // app/[locale]/(contacto)/contacto/page.tsx
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
+import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales, SITE_NAME, ogImages, twitterMeta } from "@root/lib/seo";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
 import ContactoContent from "./_components/ContactoContent";
@@ -22,7 +22,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url: localizedUrl(locale, path),
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
+      siteName: SITE_NAME,
+      images: ogImages(t("meta_title")),
     },
+    twitter: twitterMeta(t("meta_title"), t("meta_desc")),
   };
 }
 

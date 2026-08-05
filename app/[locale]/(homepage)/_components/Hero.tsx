@@ -50,28 +50,32 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          <div className="overflow-hidden mb-1">
-            <motion.h1
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.6 }}
-              className="text-zinc-900 text-[clamp(1.75rem,3.2vw,3.25rem)] leading-tight"
-              style={headingStyle}
-            >
-              {t("title_line1")}
-            </motion.h1>
-          </div>
-          <div className="overflow-hidden mb-7">
-            <motion.h1
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.75 }}
-              className="text-[#E02020] text-[clamp(1.75rem,3.2vw,3.25rem)] leading-tight"
-              style={headingStyle}
-            >
-              {t("title_line2")}
-            </motion.h1>
-          </div>
+          {/* Un único H1 por página: las dos líneas son spans animados. */}
+          <h1
+            className="text-[clamp(1.75rem,3.2vw,3.25rem)] leading-tight mb-7"
+            style={headingStyle}
+          >
+            <span className="block overflow-hidden mb-1">
+              <motion.span
+                className="block text-zinc-900"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.6 }}
+              >
+                {t("title_line1")}
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden">
+              <motion.span
+                className="block text-[#E02020]"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.75 }}
+              >
+                {t("title_line2")}
+              </motion.span>
+            </span>
+          </h1>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}

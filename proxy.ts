@@ -31,6 +31,9 @@ export default function middleware(request: NextRequest) {
 
 export const config = {
   // Excluye API completa, _next, archivos estÃ¡ticos y rutas de auth de next-intl.
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // `opengraph-image` y `twitter-image` se excluyen a mano: no llevan extensión,
+  // así que el patrón de archivos no los cubre y el routing de locale los
+  // convertía en 404 (por eso el og:image no cargaba en redes sociales).
+  matcher: ["/((?!api|_next|_vercel|opengraph-image|twitter-image|.*\\..*).*)"],
 };
 

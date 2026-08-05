@@ -51,7 +51,7 @@ function LanguageSwitcher({ dark = false }: { dark?: boolean }) {
                   : "border-zinc-200 opacity-50 hover:opacity-100 hover:border-zinc-400"
             }`}
           >
-            <l.Flag title={l.label} className="w-5 h-auto rounded-[1px]" />
+            <l.Flag aria-label={l.label} className="w-5 h-auto rounded-[1px]" />
           </button>
         );
       })}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
+import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales, SITE_NAME, ogImages, twitterMeta } from "@root/lib/seo";
 import { yearsOfExperience } from "@root/lib/company";
 import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
@@ -18,11 +18,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     alternates: buildAlternates(locale, path),
     openGraph: {
       title: `${t("meta_title")} | STEIGERN`,
-      description: t("meta_desc"),
+      description: t("meta_desc", { years: yearsOfExperience() }),
       url: localizedUrl(locale, path),
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
+      siteName: SITE_NAME,
+      images: ogImages(t("meta_title")),
     },
+    twitter: twitterMeta(
+      t("meta_title"),
+      t("meta_desc", { years: yearsOfExperience() }),
+    ),
   };
 }
 

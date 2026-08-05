@@ -10,7 +10,7 @@ import Footer from "@/_shared/footer/Footer";
 import SolutionCta from "@/_shared/ui/SolutionCta";
 import SolutionToc from "@/_shared/ui/SolutionToc";
 import { solutions, getSolution, getSolutions, getSolutionLabels } from "../_data/solutions";
-import { buildAlternates, localizedUrl, absoluteUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
+import { buildAlternates, localizedUrl, absoluteUrl, ogLocale, ogAlternateLocales, SITE_NAME, twitterMeta } from "@root/lib/seo";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -38,8 +38,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url: localizedUrl(locale, path),
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
+      siteName: SITE_NAME,
       images: [{ url: absoluteUrl(solution.img), alt: solution.title }],
     },
+    twitter: twitterMeta(solution.title, solution.desc, absoluteUrl(solution.img)),
   };
 }
 

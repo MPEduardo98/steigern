@@ -7,7 +7,7 @@ import Header from "@/_shared/header/Header";
 import Footer from "@/_shared/footer/Footer";
 import SolutionCta from "@/_shared/ui/SolutionCta";
 import { getSolutions, getSolutionLabels } from "./_data/solutions";
-import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
+import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales, SITE_NAME, ogImages, twitterMeta } from "@root/lib/seo";
 import { withYears } from "@root/lib/company";
 import { routing } from "@root/i18n/routing";
 
@@ -31,7 +31,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url: localizedUrl(locale, path),
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
+      siteName: SITE_NAME,
+      images: ogImages(l.metaTitle),
     },
+    twitter: twitterMeta(l.metaTitle, l.metaDesc),
   };
 }
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales } from "@root/lib/seo";
+import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales, SITE_NAME, ogImages, twitterMeta } from "@root/lib/seo";
 import { yearsOfExperience } from "@root/lib/company";
 import Header from "@/_shared/header/Header";
 import Hero from "./_components/Hero";
@@ -28,7 +28,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url: localizedUrl(locale, ""),
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
+      siteName: SITE_NAME,
+      images: ogImages(t("og_title")),
     },
+    twitter: twitterMeta(t("og_title"), t("og_desc")),
   };
 }
 
