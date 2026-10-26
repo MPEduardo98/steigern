@@ -16,6 +16,7 @@ const routes: RouteDef[] = [
   { path: "/soluciones", changeFrequency: "weekly", priority: 0.9 },
   { path: "/nosotros", changeFrequency: "monthly", priority: 0.8 },
   { path: "/contacto", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/bolsa-de-trabajo", changeFrequency: "weekly", priority: 0.6 },
   ...solutions.map((s) => ({
     path: `/soluciones/${s.slug}`,
     changeFrequency: "monthly" as const,
