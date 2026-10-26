@@ -1,5 +1,5 @@
 ﻿// app/_shared/footer/Footer.tsx
-import Link from "next/link";
+import { Link } from "@root/i18n/navigation";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 

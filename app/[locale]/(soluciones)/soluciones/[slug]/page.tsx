@@ -1,6 +1,6 @@
 // app/[locale]/(soluciones)/soluciones/[slug]/page.tsx
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@root/i18n/navigation";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
@@ -61,7 +61,7 @@ export default async function SolucionDetallePage({ params }: Params) {
   ];
   const url = localizedUrl(locale, `/soluciones/${solution.slug}`);
 
-  // ── SEO: Article + FAQ + Breadcrumb structured data ──
+  // ── SEO: Article + Service + FAQ + Breadcrumb structured data ──
   const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -72,6 +72,21 @@ export default async function SolucionDetallePage({ params }: Params) {
     author: { "@type": "Organization", name: "STEIGERN Design In Motion" },
     publisher: { "@id": "https://steigern.com.mx/#organization" },
     about: solution.tags,
+    inLanguage: locale,
+  };
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: solution.title,
+    description: solution.desc,
+    url,
+    image: absoluteUrl(solution.img),
+    serviceType: solution.title,
+    provider: { "@id": "https://steigern.com.mx/#organization" },
+    areaServed: [
+      { "@type": "Country", name: "MX" },
+      { "@type": "Place", name: "Worldwide" },
+    ],
     inLanguage: locale,
   };
   const faqLd = {
@@ -96,6 +111,7 @@ export default async function SolucionDetallePage({ params }: Params) {
   return (
     <main className="min-h-screen bg-white">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 

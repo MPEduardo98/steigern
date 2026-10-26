@@ -4,7 +4,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { yearsOfExperience } from "@root/lib/company";
 
@@ -87,18 +86,18 @@ export default function Hero() {
               {t("description")}
             </p>
             <div className="flex gap-3">
-              <Link
+              <a
                 href="#solutions"
                 className="text-xs font-bold tracking-[0.12em] uppercase px-5 py-3 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
               >
                 {t("cta_solutions")}
-              </Link>
-              <Link
+              </a>
+              <a
                 href="#about"
                 className="text-xs font-bold tracking-[0.12em] uppercase px-5 py-3 border border-zinc-300 text-zinc-600 hover:border-zinc-900 hover:text-zinc-900 transition-colors duration-200"
               >
                 {t("cta_history")}
-              </Link>
+              </a>
             </div>
           </motion.div>
 
@@ -118,9 +117,10 @@ export default function Hero() {
         </div>
 
         {/* RIGHT */}
+        {/* Sin fade de opacidad: es la imagen LCP y debe pintarse de inmediato. */}
         <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ x: 60 }}
+          animate={{ x: 0 }}
           transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.4 }}
           className="flex items-center justify-center lg:justify-end"
           style={{ y: imageY }}

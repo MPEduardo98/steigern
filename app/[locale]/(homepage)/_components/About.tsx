@@ -4,7 +4,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@root/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { yearsOfExperience } from "@root/lib/company";
 

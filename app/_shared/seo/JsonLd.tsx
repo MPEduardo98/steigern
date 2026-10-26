@@ -1,5 +1,6 @@
 import { localizedUrl, absoluteUrl, SITE } from "@root/lib/seo";
 import { FOUNDING_YEAR } from "@root/lib/company";
+import { getSolutions } from "@/[locale]/(soluciones)/soluciones/_data/solutions";
 
 // Datos estructurados globales (Organization + WebSite + ItemList de servicios).
 // Se inyecta en el layout raíz y se adapta al idioma activo para que el
@@ -19,44 +20,17 @@ const WEBSITE_DESC: Record<Locale, string> = {
   de: "Industrieautomationslösungen und Engineering-Systeme in Mexiko",
 };
 
-const SERVICES: { slug: string; name: string; description: string }[] = [
-  {
-    slug: "perfil-de-aluminio",
-    name: "Perfil Estructural de Aluminio",
-    description:
-      "Diseño e integración de perfiles estructurales de aluminio adaptados individualmente para cada entorno de trabajo industrial.",
-  },
-  {
-    slug: "conveyors",
-    name: "Sistemas de Transporte (Conveyors)",
-    description:
-      "Sistemas conveyor industriales personalizados: de banda, rodillos, modulares y elevadores para líneas de manufactura.",
-  },
-  {
-    slug: "estaciones-de-trabajo",
-    name: "Estaciones de Trabajo",
-    description:
-      "Estaciones de trabajo ergonómicas con diseño óptimo de iluminación, entorno y seguridad para el operario.",
-  },
-  {
-    slug: "dispositivos-asistidos-por-cobots",
-    name: "Dispositivos Asistidos por Co-Bots",
-    description:
-      "Integración de robots colaborativos para asistir al operario en líneas de ensamble industrial.",
-  },
-  {
-    slug: "elevacion-y-guias-lineales",
-    name: "Elevación y Guías Lineales",
-    description:
-      "Sistemas de elevación y guías lineales de precisión para manufactura y ensamblaje industrial.",
-  },
-  {
-    slug: "soluciones-lean",
-    name: "Soluciones Lean",
-    description:
-      "Estructuras industriales y soluciones de manufactura esbelta para eliminar desperdicios y optimizar procesos.",
-  },
-];
+const SERVICES_NAME: Record<Locale, string> = {
+  es: "Soluciones de Ingeniería STEIGERN",
+  en: "STEIGERN Engineering Solutions",
+  de: "STEIGERN Engineering-Lösungen",
+};
+
+const KNOWS_ABOUT: Record<Locale, string[]> = {
+  es: ["Automatización Industrial", "Sistemas de Transporte", "Perfiles de Aluminio Estructural", "Estaciones de Trabajo Ergonómicas", "Robots Colaborativos", "Guías Lineales", "Lean Manufacturing"],
+  en: ["Industrial Automation", "Conveyor Systems", "Structural Aluminum Profiles", "Ergonomic Workstations", "Collaborative Robots", "Linear Guides", "Lean Manufacturing"],
+  de: ["Industrieautomation", "Fördersysteme", "Aluminium-Strukturprofile", "Ergonomische Arbeitsplätze", "Kollaborative Roboter", "Linearführungen", "Lean Manufacturing"],
+};
 
 export default function JsonLd({ locale = "es" }: { locale?: string }) {
   const lang = (["es", "en", "de"].includes(locale) ? locale : "es") as Locale;
@@ -117,15 +91,7 @@ export default function JsonLd({ locale = "es" }: { locale?: string }) {
       "@type": "Place",
       name: "México y Exportación Global",
     },
-    knowsAbout: [
-      "Automatización Industrial",
-      "Sistemas de Transporte",
-      "Perfiles de Aluminio Estructural",
-      "Estaciones de Trabajo Ergonómicas",
-      "Robots Colaborativos",
-      "Guías Lineales",
-      "Lean Manufacturing",
-    ],
+    knowsAbout: KNOWS_ABOUT[lang],
   };
 
   const website = {
@@ -144,16 +110,17 @@ export default function JsonLd({ locale = "es" }: { locale?: string }) {
   const services = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Soluciones de Ingeniería STEIGERN",
-    itemListElement: SERVICES.map((s, i) => ({
+    name: SERVICES_NAME[lang],
+    // Nombres y descripciones en el idioma activo, desde la misma fuente que las páginas.
+    itemListElement: getSolutions(lang).map((s, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
         "@type": "Service",
-        name: s.name,
+        name: s.title,
         url: localizedUrl(lang, `/soluciones/${s.slug}`),
         provider: { "@id": `${SITE}/#organization` },
-        description: s.description,
+        description: s.desc,
       },
     })),
   };

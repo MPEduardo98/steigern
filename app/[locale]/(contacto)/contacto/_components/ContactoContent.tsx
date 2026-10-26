@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@root/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { sendContactAction } from "../../../_actions/contact";
 

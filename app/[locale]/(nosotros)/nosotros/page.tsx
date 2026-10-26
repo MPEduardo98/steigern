@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates, localizedUrl, ogLocale, ogAlternateLocales, SITE_NAME, ogImages, twitterMeta } from "@root/lib/seo";
 import { yearsOfExperience } from "@root/lib/company";
@@ -91,12 +92,13 @@ export default async function NosotrosPage({ params }: Params) {
                 {t("intro3_post")}
               </p>
             </div>
-            <div className="bg-white overflow-hidden min-h-[400px]">
-              <img
+            <div className="relative bg-white overflow-hidden min-h-[400px]">
+              <Image
                 src="/assets/images/corporativo.webp"
                 alt="STEIGERN Corporativo Querétaro"
-                loading="lazy"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
               />
             </div>
           </div>

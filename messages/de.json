@@ -287,5 +287,24 @@
       "2020 begannen wir mit dem Export von Montagevorrichtungen in die USA.",
       "2021 gründeten wir unseren Hauptsitz in Querétaro, im Central Park."
     ]
+  },
+  "Nav": {
+    "home": "Startseite",
+    "solutions": "Lösungen",
+    "about": "Über uns",
+    "jobs": "Karriere",
+    "contact": "Kontakt",
+    "menu": "Menü",
+    "close_menu": "Menü schließen",
+    "sol1": "Aluminium-Strukturprofil",
+    "sol2": "Fördersysteme",
+    "sol3": "Arbeitsplätze",
+    "sol4": "Cobot-gestützte Vorrichtungen",
+    "sol5": "Hub- und Linearführungen",
+    "sol6": "Lean-Lösungen",
+    "sol7": "Projektentwicklung",
+    "about_who": "Wer wir sind",
+    "about_mission": "Mission und Vision",
+    "about_values": "Werte"
   }
 }

@@ -3,27 +3,24 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@root/i18n/navigation";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import UserDropdown from "./UserDropdown";
 
-const solutionLinks = [
-  { label: "Perfil Estructural de Aluminio", href: "/soluciones/perfil-de-aluminio" },
-  { label: "Sistemas de Transporte",          href: "/soluciones/conveyors" },
-  { label: "Estaciones de Trabajo",           href: "/soluciones/estaciones-de-trabajo" },
-  { label: "Dispositivos Asistidos por Co-Bots", href: "/soluciones/dispositivos-asistidos-por-cobots" },
-  { label: "Elevación y Guías Lineales",      href: "/soluciones/elevacion-y-guias-lineales" },
-  { label: "Soluciones Lean",                 href: "/soluciones/soluciones-lean" },
-  { label: "Desarrollo de Proyectos",         href: "/soluciones/desarrollo-de-proyectos" },
-];
-
-const aboutLinks = [
-  { label: "Quiénes Somos",     href: "/nosotros#quienes-somos" },
-  { label: "Misión y Visión",   href: "/nosotros#mision-vision" },
-  { label: "Valores",           href: "/nosotros#valores" },
-];
+// Slugs de las soluciones del menú; las etiquetas salen de messages/*.json (namespace "Nav").
+const solutionSlugs = [
+  "perfil-de-aluminio",
+  "conveyors",
+  "estaciones-de-trabajo",
+  "dispositivos-asistidos-por-cobots",
+  "elevacion-y-guias-lineales",
+  "soluciones-lean",
+  "desarrollo-de-proyectos",
+] as const;
 
 export default function NavbarShell() {
+  const t = useTranslations("Nav");
   const [menuOpen, setMenuOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
 
@@ -35,11 +32,22 @@ export default function NavbarShell() {
     };
   }, [menuOpen]);
 
+  const solutionLinks = solutionSlugs.map((slug, i) => ({
+    label: t(`sol${i + 1}`),
+    href: `/soluciones/${slug}`,
+  }));
+
+  const aboutLinks = [
+    { label: t("about_who"),     href: "/nosotros#quienes-somos" },
+    { label: t("about_mission"), href: "/nosotros#mision-vision" },
+    { label: t("about_values"),  href: "/nosotros#valores" },
+  ];
+
   const links: { label: string; href: string; sub?: { label: string; href: string }[] }[] = [
-    { label: "Inicio",     href: "/" },
-    { label: "Soluciones", href: "/soluciones", sub: solutionLinks },
-    { label: "Nosotros",   href: "/nosotros",   sub: aboutLinks },
-    { label: "Bolsa de Trabajo", href: "/bolsa-de-trabajo" },
+    { label: t("home"),      href: "/" },
+    { label: t("solutions"), href: "/soluciones", sub: solutionLinks },
+    { label: t("about"),     href: "/nosotros",   sub: aboutLinks },
+    { label: t("jobs"),      href: "/bolsa-de-trabajo" },
   ];
 
   return (
@@ -66,7 +74,7 @@ export default function NavbarShell() {
             href="/contacto"
             className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white hover:bg-[#c41a1a] transition-colors duration-200"
           >
-            Contacto
+            {t("contact")}
           </Link>
 
           <UserDropdown />
@@ -75,7 +83,7 @@ export default function NavbarShell() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Menú"
+          aria-label={t("menu")}
           className="md:hidden flex flex-col gap-1.5 p-2"
         >
           <span className={`w-5 h-px bg-zinc-900 transition-all duration-200 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
@@ -117,7 +125,7 @@ export default function NavbarShell() {
                 />
                 <button
                   onClick={() => setMenuOpen(false)}
-                  aria-label="Cerrar menú"
+                  aria-label={t("close_menu")}
                   className="p-2 text-zinc-900"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -187,7 +195,7 @@ export default function NavbarShell() {
                   className="text-xs font-bold tracking-[0.1em] uppercase px-5 py-2.5 bg-[#E02020] text-white text-center mt-auto"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Contacto
+                  {t("contact")}
                 </Link>
               </nav>
             </motion.aside>

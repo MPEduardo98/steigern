@@ -1,6 +1,6 @@
 // app/[locale]/(soluciones)/soluciones/page.tsx
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@root/i18n/navigation";
 import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import Header from "@/_shared/header/Header";

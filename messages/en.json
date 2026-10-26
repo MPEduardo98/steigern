@@ -287,5 +287,24 @@
       "In 2020 we began exporting assembly devices to the United States.",
       "By 2021 we established our headquarters in Querétaro, at Central Park."
     ]
+  },
+  "Nav": {
+    "home": "Home",
+    "solutions": "Solutions",
+    "about": "About Us",
+    "jobs": "Careers",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close_menu": "Close menu",
+    "sol1": "Structural Aluminum Profile",
+    "sol2": "Conveyor Systems",
+    "sol3": "Workstations",
+    "sol4": "Cobot-Assisted Devices",
+    "sol5": "Lifting and Linear Guides",
+    "sol6": "Lean Solutions",
+    "sol7": "Project Development",
+    "about_who": "Who We Are",
+    "about_mission": "Mission and Vision",
+    "about_values": "Values"
   }
 }

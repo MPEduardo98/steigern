@@ -287,5 +287,24 @@
       "En 2020 comenzamos a exportar dispositivos de ensamble a Estados Unidos.",
       "Para 2021 establecimos nuestro corporativo en Querétaro, en Central Park."
     ]
+  },
+  "Nav": {
+    "home": "Inicio",
+    "solutions": "Soluciones",
+    "about": "Nosotros",
+    "jobs": "Bolsa de Trabajo",
+    "contact": "Contacto",
+    "menu": "Menú",
+    "close_menu": "Cerrar menú",
+    "sol1": "Perfil Estructural de Aluminio",
+    "sol2": "Sistemas de Transporte",
+    "sol3": "Estaciones de Trabajo",
+    "sol4": "Dispositivos Asistidos por Co-Bots",
+    "sol5": "Elevación y Guías Lineales",
+    "sol6": "Soluciones Lean",
+    "sol7": "Desarrollo de Proyectos",
+    "about_who": "Quiénes Somos",
+    "about_mission": "Misión y Visión",
+    "about_values": "Valores"
   }
 }

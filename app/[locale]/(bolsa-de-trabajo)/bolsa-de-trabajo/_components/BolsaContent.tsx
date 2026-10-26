@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@root/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { sendCareerAction } from "../../../_actions/careers";
 
