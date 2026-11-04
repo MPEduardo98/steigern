@@ -256,13 +256,6 @@ export default function BolsaContent() {
                   ))}
                 </div>
               </div>
-
-              <div className="p-6 bg-zinc-50 border border-zinc-200">
-                <p className="text-[10px] text-zinc-400 tracking-[0.2em] uppercase mb-2">{t("direct_label")}</p>
-                <a href="mailto:eduars.martinez@steigern.com.mx" className="text-zinc-900 text-sm font-medium hover:text-[#E02020] transition-colors break-all">
-                  eduars.martinez@steigern.com.mx
-                </a>
-              </div>
             </motion.aside>
           </div>
         </div>
