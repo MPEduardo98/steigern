@@ -13,6 +13,23 @@ export const authConfig: NextAuthConfig = {
   session: { strategy: "jwt", maxAge: 8 * 60 * 60 },
 
   callbacks: {
+    // jwt y session se definen aquí (no en auth.ts) porque el proxy crea su
+    // propia instancia de NextAuth solo con este archivo: si faltaran, la
+    // sesión del proxy no tendría `role` y authorized() negaría /admin a todos.
+    jwt({ token, user }) {
+      if (user) {
+        token.role       = (user as { role: UserRole }).role;
+        token.empleadoId = (user as { empleadoId: number | null }).empleadoId;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id         = token.sub!;
+      session.user.role       = token.role;
+      session.user.empleadoId = token.empleadoId;
+      return session;
+    },
+
     // authorized() corre en Edge â€” verifica el JWT, no toca la BD.
     authorized({ auth, request: { nextUrl } }: {
       auth:    Session | null;

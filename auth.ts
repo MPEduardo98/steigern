@@ -88,21 +88,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
 
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        token.role       = (user as { role: UserRole }).role;
-        token.empleadoId = (user as { empleadoId: number | null }).empleadoId;
-      }
-      return token;
-    },
-    session({ session, token }) {
-      session.user.id         = token.sub!;
-      session.user.role       = token.role;
-      session.user.empleadoId = token.empleadoId;
-      return session;
-    },
-  },
+  // Los callbacks jwt/session/authorized viven en auth.config.ts para que
+  // el proxy (Edge) y el servidor lean la misma sesión, con rol incluido.
 
   pages: {
     signIn: "/login",
