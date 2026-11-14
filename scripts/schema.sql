@@ -115,3 +115,10 @@ CREATE TABLE IF NOT EXISTS usuarios_portal (
     FOREIGN KEY (empleado_id) REFERENCES empleados (id)
     ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Expediente del empleado (datos legales, documentos, contratos, bitácora):
+-- ver scripts/migrations/001-expediente-empleado.sql
+-- Gestión de usuarios (contraseña temporal, revocación de sesiones, bitácora):
+-- ver scripts/migrations/002-gestion-usuarios.sql
+-- Clientes y sus contactos; datos fiscales y de crédito de proveedores:
+-- ver scripts/migrations/003-clientes-proveedores.sql

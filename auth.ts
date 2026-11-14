@@ -16,11 +16,14 @@ declare module "next-auth" {
   interface User {
     role: UserRole;
     empleadoId: number | null;
+    /** usuarios_portal.sesion_version al iniciar sesión (ver lib/session.ts). */
+    sesionVersion: number;
   }
   interface Session {
     user: {
       role: UserRole;
       empleadoId: number | null;
+      sesionVersion: number;
     } & DefaultSession["user"]; // conserva id, name, email, image base
   }
 }
@@ -31,6 +34,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     role: UserRole;
     empleadoId: number | null;
+    sesionVersion: number;
   }
 }
 
@@ -59,8 +63,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // â”€â”€ Empleado / Administrador â€” el rol se deduce de la cuenta â”€â”€
         const [rows] = await pool.query<RowDataPacket[]>(
           `SELECT up.id, up.email, up.password_hash, up.rol,
-                  up.empleado_id,
-                  CONCAT(e.nombre, ' ', e.apellidos) AS name
+                  up.empleado_id, up.sesion_version,
+                  COALESCE(CONCAT(e.nombre, ' ', e.apellidos), up.nombre) AS name
            FROM   usuarios_portal up
            LEFT   JOIN empleados e ON e.id = up.empleado_id
            WHERE  up.email = ? AND up.activo = 1`,
@@ -83,6 +87,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name:       (user.name as string) || (user.email as string),
           role:       user.rol   as UserRole,
           empleadoId: user.empleado_id as number | null,
+          sesionVersion: Number(user.sesion_version),
         };
       },
     }),

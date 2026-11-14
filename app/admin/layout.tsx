@@ -3,21 +3,17 @@
 // <html> y <body> (segundo root layout; ver app/[locale]/layout.tsx).
 // El panel es interno y solo está en español.
 import type { Metadata, Viewport } from "next";
-import { Open_Sans, Bebas_Neue } from "next/font/google";
+import { Geist } from "next/font/google";
 import { requireSession } from "@root/lib/session";
 import AdminShell from "./_components/AdminShell";
+import Toaster from "@/_shared/ui/toast/Toaster";
 import "../globals.css";
+import "./admin.css";
 
-const openSans = Open_Sans({
+// Misma tipografía que el panel de commerce-core.
+const geist = Geist({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-body",
-});
-
-const bebasNeue = Bebas_Neue({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-heading",
+  variable: "--font-panel",
   display: "swap",
 });
 
@@ -29,7 +25,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#09090b",
+  themeColor: "#0a0a0a",
   colorScheme: "light",
 };
 
@@ -37,22 +33,25 @@ export default async function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   // proxy.ts ya protege /admin; esta verificación es la segunda barrera.
-  const session = await requireSession(["administrador", "empleado"]);
+  // Con contraseña temporal el layout sí se muestra (la página de Mi cuenta
+  // vive dentro); cada página decide si deja pasar o manda a cambiarla.
+  const session = await requireSession(["administrador", "empleado"], { allowPendingPassword: true });
 
   return (
     <html lang="es">
       <body
-        className={`${openSans.variable} ${bebasNeue.variable} font-body antialiased text-zinc-900`}
+        className={`${geist.variable} antialiased`}
       >
         <AdminShell
           user={{
-            name: session.user.name ?? session.user.email ?? "Usuario",
-            email: session.user.email ?? "",
+            name: session.user.name,
+            email: session.user.email,
             role: session.user.role,
           }}
         >
           {children}
         </AdminShell>
+        <Toaster />
       </body>
     </html>
   );

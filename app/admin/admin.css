@@ -1,0 +1,275 @@
+/* app/admin/admin.css
+   Estilos del shell del panel ERP (menú lateral, barra superior y búsqueda).
+   Estructura tomada del panel de commerce-core, marco negro con acentos rojos de STEIGERN.
+   Solo aplican mientras el panel está en pantalla (.erp-admin). */
+
+/* Fuera de capas: deben ganarle a html/body de globals.css (también sin capa). */
+:root:has(.erp-admin) {
+  /* Tonos de marca para el marco del panel */
+  --erp-shell:        #0a0a0a; /* fondo de menú y barra superior */
+  --erp-shell-text:   #ffffff;
+  --erp-brand:        #e02020;
+  --erp-brand-dark:   #a51515;
+  --erp-brand-soft:   #fdecec;
+
+  /* Contenido */
+  --erp-bg:       #fafafa;
+  --erp-surface:  #ffffff;
+  --erp-border:   #ebebeb;
+  --erp-border-2: #d4d4d4;
+  --erp-text:     #0a0a0a;
+  --erp-muted:    #737373;
+  --erp-muted-2:  #a3a3a3;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+  font-size: 16px;
+}
+
+/* El panel ocupa el viewport; el scroll vive dentro de <main>. */
+html:has(.erp-admin),
+body:has(.erp-admin) {
+  height: 100%;
+  overflow: hidden;
+}
+/* También para lo que se monta fuera del shell (avisos, modales en portal). */
+body:has(.erp-admin) { font-family: var(--font-panel), system-ui, sans-serif; }
+
+/* En la capa "components" de Tailwind: así las utilidades (w-auto, h-[38px]…)
+   pueden ajustar estas clases en cada caso. */
+@layer components {
+
+.erp-admin {
+  height: 100dvh;
+  background: var(--erp-bg);
+  color: var(--erp-text);
+  font-family: var(--font-panel), system-ui, sans-serif;
+  line-height: 1.55;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+}
+.erp-admin ::selection { background: var(--erp-brand); color: #fff; }
+.erp-admin * { scrollbar-width: thin; scrollbar-color: var(--erp-border-2) transparent; }
+
+:root:has(.erp-admin) :is(a, button, input) {
+  transition-property: color, background-color, border-color, box-shadow, opacity;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-suave);
+}
+
+/* ── Menú lateral ─────────────────────────────────────────── */
+.erp-sidebar {
+  width: 232px;
+  background: var(--erp-shell);
+  color: var(--erp-shell-text);
+}
+.erp-sidebar-line { border-color: color-mix(in srgb, currentColor 15%, transparent); }
+.erp-nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+}
+.erp-nav-link:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+.erp-nav-link[aria-current="page"] { font-weight: 500; }
+.erp-nav-link[aria-current="page"] > svg { color: var(--erp-brand); }
+.erp-nav-link[aria-disabled="true"] { cursor: not-allowed; opacity: .55; }
+.erp-nav-link[aria-disabled="true"]:hover { background: transparent; }
+.erp-nav-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 16%, transparent);
+}
+.erp-nav-badge {
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* ── Barra superior ───────────────────────────────────────── */
+/* Título a la izquierda; columnas iguales mantienen la búsqueda centrada. */
+.erp-topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 448px) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  min-height: 64px;
+  padding: 12px 28px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 40;
+  background: var(--erp-shell);
+  color: var(--erp-shell-text);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+.erp-topbar-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 600; letter-spacing: -.025em; }
+.erp-topbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; }
+
+.erp-chip {
+  display: inline-flex; align-items: center; gap: 8px; height: 36px;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  font-size: 13px; font-weight: 500; letter-spacing: -.01em; white-space: nowrap;
+  cursor: pointer;
+}
+.erp-chip:hover, .erp-chip[aria-expanded="true"] { background: color-mix(in srgb, currentColor 24%, transparent); }
+.erp-chip:active { transform: scale(.97); }
+.erp-chip:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.erp-chip-site { padding: 0 14px 0 12px; }
+.erp-chip-arrow { opacity: .6; transition: transform 220ms var(--ease-suave), opacity 220ms var(--ease-suave); }
+.erp-chip-site:hover .erp-chip-arrow { opacity: 1; transform: translate(2px, -2px); }
+.erp-chip-user { padding: 0 10px 0 4px; }
+.erp-avatar {
+  display: grid; place-items: center; width: 28px; height: 28px; flex-shrink: 0;
+  border-radius: 999px; background: #fff; color: var(--erp-shell);
+  font-size: 12px; font-weight: 600;
+}
+.erp-user-name { max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+.erp-user-chevron { opacity: .6; transition: transform 220ms var(--ease-suave); }
+.erp-chip-user[aria-expanded="true"] .erp-user-chevron { transform: rotate(180deg); }
+
+/* ── Búsqueda ─────────────────────────────────────────────── */
+.erp-search { position: relative; min-width: 0; }
+.erp-search-field { display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 12px; border: 1px solid transparent; border-radius: 10px; background: #fff; color: var(--erp-muted); }
+.erp-search-field:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, #fff 35%, transparent); }
+.erp-search-field input { width: 100%; min-width: 0; height: 100%; background: transparent; color: var(--erp-text); font-size: 13px; outline: none; }
+.erp-search-field kbd { display: grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; border: 1px solid var(--erp-border); border-radius: 4px; font-family: inherit; font-size: 11px; }
+.erp-search-popover { position: absolute; top: calc(100% + 8px); left: 0; right: 0; overflow: hidden; border: 1px solid var(--erp-border); border-radius: 12px; background: #fff; color: var(--erp-text); box-shadow: 0 12px 36px #0000001a; }
+.erp-search-caption { padding: 12px 14px 8px; font-size: 11px; font-weight: 500; color: var(--erp-muted); }
+.erp-search-popover ul { max-height: min(460px, calc(100dvh - 160px)); overflow-y: auto; padding: 0 6px 6px; }
+.erp-search-result { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 10px; border-radius: 7px; text-align: left; }
+.erp-search-result[aria-selected="true"]:not([aria-disabled="true"]) { background: var(--erp-brand-soft); }
+.erp-search-result[aria-disabled="true"] { cursor: default; opacity: .55; }
+.erp-search-result strong, .erp-search-result small { display: block; }
+.erp-search-result strong { font-size: 13px; font-weight: 500; }
+.erp-search-result small { margin-top: 2px; font-size: 11px; color: var(--erp-muted); }
+.erp-search-result > span:last-child { flex-shrink: 0; font-size: 11px; color: var(--erp-muted-2); }
+.erp-search-empty { padding: 8px 16px 18px; font-size: 13px; color: var(--erp-muted); }
+
+/* ── Tarjetas de contenido ────────────────────────────────── */
+.erp-card {
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .03);
+}
+
+/* ── Encabezado de página ─────────────────────────────────── */
+.erp-page { padding: 32px 32px 40px; }
+.erp-page-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.erp-page-desc { font-size: 14px; color: var(--erp-muted); }
+
+/* ── Botones ──────────────────────────────────────────────── */
+.erp-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 36px; padding: 0 14px; border-radius: 8px; border: 1px solid transparent;
+  font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer;
+}
+.erp-btn:active:not(:disabled) { transform: scale(.97); }
+.erp-btn:disabled { opacity: .55; cursor: not-allowed; }
+.erp-btn-primary { background: var(--erp-text); color: #fff; }
+.erp-btn-primary:hover:not(:disabled) { background: #262626; }
+.erp-btn-secondary { background: #fff; color: var(--erp-text); border-color: var(--erp-border); }
+.erp-btn-secondary:hover:not(:disabled) { background: #fafafa; border-color: var(--erp-border-2); }
+.erp-btn-danger { background: #fff; color: #c41a1a; border-color: #f5c2c2; }
+.erp-btn-danger:hover:not(:disabled) { background: var(--erp-brand-soft); }
+.erp-btn-solid-danger { background: #c41a1a; color: #fff; }
+.erp-btn-solid-danger:hover:not(:disabled) { background: var(--erp-brand-dark); }
+
+/* ── Formularios ──────────────────────────────────────────── */
+.erp-label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; color: #262626; }
+.erp-label small { font-weight: 400; color: var(--erp-muted-2); }
+.erp-input {
+  width: 100%; height: 38px; padding: 0 12px; border: 1px solid var(--erp-border); border-radius: 8px;
+  background: #fff; color: var(--erp-text); font-size: 13.5px; outline: none;
+}
+/* Select propio (PanelSelect) */
+.erp-select { display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; cursor: pointer; }
+.erp-select:disabled { cursor: not-allowed; opacity: .55; }
+.erp-select[aria-expanded="true"] { border-color: var(--erp-text); box-shadow: 0 0 0 3px rgba(10, 10, 10, .08); }
+.erp-select-chevron { flex-shrink: 0; color: var(--erp-muted); transition: transform 180ms var(--ease-suave); }
+.erp-select[aria-expanded="true"] .erp-select-chevron { transform: rotate(180deg); }
+.erp-select-list {
+  position: fixed; z-index: 120; overflow-y: auto; padding: 4px;
+  border: 1px solid var(--erp-border); border-radius: 10px; background: #fff; color: var(--erp-text);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, .18), 0 2px 6px rgba(0, 0, 0, .04);
+  font-family: var(--font-panel), system-ui, sans-serif;
+}
+.erp-select-option { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 34px; padding: 6px 10px; border-radius: 6px; font-size: 13.5px; cursor: pointer; user-select: none; }
+.erp-select-option[data-active] { background: #f5f5f5; }
+.erp-select-option[aria-selected="true"] { font-weight: 500; }
+.erp-select-option > svg { flex-shrink: 0; color: var(--erp-brand); }
+.erp-input::placeholder { color: var(--erp-muted-2); }
+.erp-input:hover { border-color: var(--erp-border-2); }
+.erp-input:focus { border-color: var(--erp-text); box-shadow: 0 0 0 3px rgba(10, 10, 10, .08); }
+.erp-input[aria-invalid="true"] { border-color: #e02020; }
+/* Solo <input>: un <select> siempre cuenta como :read-only y se veía deshabilitado. */
+input.erp-input:read-only { background: #fafafa; color: var(--erp-muted); }
+input.erp-input:read-only:focus { border-color: var(--erp-border); box-shadow: none; }
+.erp-field-error { margin-top: 5px; font-size: 12px; color: #c41a1a; }
+
+/* ── Tablas ───────────────────────────────────────────────── */
+.erp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.erp-table th { padding: 10px 16px; text-align: left; font-size: 12px; font-weight: 500; color: var(--erp-muted); border-bottom: 1px solid var(--erp-border); white-space: nowrap; }
+.erp-table td { padding: 12px 16px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+.erp-table tbody tr:last-child td { border-bottom: 0; }
+.erp-table tbody tr { position: relative; }
+.erp-table tbody tr:hover { background: #fafafa; }
+/* El enlace de la primera celda cubre toda la fila. */
+.erp-row-link::after { content: ""; position: absolute; inset: 0; }
+
+/* ── Etiquetas de estado ──────────────────────────────────── */
+.erp-badge { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 500; white-space: nowrap; }
+.erp-badge::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+.erp-badge-ok { background: #ecfdf3; color: #15803d; }
+.erp-badge-off { background: #f5f5f5; color: #737373; }
+.erp-badge-warn { background: #fff7e6; color: #b45309; }
+.erp-badge-danger { background: #fdecec; color: #c41a1a; }
+
+/* ── Pestañas de filtro ───────────────────────────────────── */
+.erp-tabs { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: #f0f0f0; }
+.erp-tab { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 7px; font-size: 13px; color: var(--erp-muted); }
+.erp-tab:hover { color: var(--erp-text); }
+.erp-tab[aria-current="page"] { background: #fff; color: var(--erp-text); font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.erp-tab small { font-size: 11px; color: var(--erp-muted-2); }
+
+@keyframes erp-entrar { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.erp-entrar { animation: erp-entrar 420ms var(--ease-suave) both; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .erp-topbar { grid-template-columns: minmax(0, 1fr) minmax(180px, 360px) minmax(0, 1fr); gap: 16px; padding-inline: 20px; }
+  .erp-chip-site { width: 36px; padding: 0; justify-content: center; }
+  .erp-chip-site > span, .erp-chip-arrow, .erp-user-name { display: none; }
+  .erp-chip-user { padding-right: 8px; gap: 6px; }
+}
+@media (max-width: 900px) {
+  .erp-topbar { grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
+  .erp-search { grid-column: 1 / -1; grid-row: 2; }
+  .erp-topbar-actions { grid-column: 2; grid-row: 1; }
+}
+/* Móvil: el menú se queda en una columna de íconos. */
+@media (max-width: 640px) {
+  .erp-sidebar { width: 64px; }
+  .erp-sidebar-brand { padding-inline: 12px; justify-content: center; }
+  .erp-sidebar-brand img { display: none; }
+  .erp-sidebar-brand .erp-sidebar-mark { display: block; }
+  .erp-sidebar nav { padding-inline: 8px; }
+  .erp-sidebar .erp-hide-compact { display: none; }
+  .erp-nav-link { justify-content: center; padding-inline: 0; }
+  .erp-topbar { padding-inline: 16px; }
+  .erp-page { padding: 20px 16px 32px; }
+  .erp-topbar-title { font-size: 16px; }
+}
+.erp-sidebar-mark { display: none; }
+
+} /* @layer components */

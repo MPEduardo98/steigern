@@ -20,6 +20,7 @@ import {
   ogAlternateLocales,
 } from "@root/lib/seo";
 import JsonLd from "@/_shared/seo/JsonLd";
+import Toaster from "@/_shared/ui/toast/Toaster";
 import "../globals.css";
 
 const openSans = Open_Sans({
@@ -158,6 +159,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       >
         <JsonLd locale={locale} />
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <Toaster />
       </body>
     </html>
   );

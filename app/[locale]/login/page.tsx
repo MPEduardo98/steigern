@@ -6,13 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter as useIntlRouter } from "@root/i18n/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { toast } from "@/_shared/ui/toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
   faEyeSlash,
   faArrowRight,
-  faCircleExclamation,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import MX from "country-flag-icons/react/3x2/MX";
@@ -69,8 +69,15 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [state, action, pending]       = useActionState(loginAction, {});
 
+  // Cada envío fallido devuelve un objeto nuevo, así que el efecto se dispara
+  // en cada intento; el id fijo reemplaza el toast anterior en vez de apilarlos.
+  useEffect(() => {
+    if (state.error) toast.error(state.error, { id: "login-error" });
+  }, [state]);
+
   useEffect(() => {
     if (!state.success) return;
+    toast.dismiss("login-error");
     router.push(callbackUrl || "/admin");
   }, [state.success, callbackUrl, router]);
 
@@ -207,21 +214,6 @@ function LoginForm() {
                 </button>
               </div>
             </div>
-
-            {/* Error */}
-            <AnimatePresence>
-              {state.error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="flex items-center gap-3 bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700"
-                >
-                  <FontAwesomeIcon icon={faCircleExclamation} className="w-4 h-4 shrink-0" />
-                  {state.error}
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             {/* Submit */}
             <button

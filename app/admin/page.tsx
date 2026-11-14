@@ -2,6 +2,7 @@
 // Inicio del panel: indicadores de los datos maestros y mapa de módulos.
 import type { RowDataPacket } from "mysql2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers, faHandshake, faHourglassHalf } from "@fortawesome/free-solid-svg-icons";
 import pool from "@root/lib/db";
 import { requireSession } from "@root/lib/session";
 import { navForRole } from "./_components/nav";
@@ -45,9 +46,16 @@ export default async function AdminHome() {
   const fmt = (n: number | undefined) => (n === undefined ? "—" : n.toLocaleString("es-MX"));
 
   const stats = [
-    ...(isAdmin ? [{ label: "Empleados activos", value: fmt(counts?.empleados) }] : []),
-    { label: "Proveedores activos", value: fmt(counts?.proveedores) },
-    { label: "Proveedores en revisión", value: fmt(counts?.proveedoresEnRevision) },
+    ...(isAdmin
+      ? [{ label: "Empleados activos", value: fmt(counts?.empleados), note: "Personal dado de alta", icon: faUsers }]
+      : []),
+    { label: "Proveedores activos", value: fmt(counts?.proveedores), note: "Listos para comprarles", icon: faHandshake },
+    {
+      label: "Proveedores en revisión",
+      value: fmt(counts?.proveedoresEnRevision),
+      note: "Pendientes de aprobar",
+      icon: faHourglassHalf,
+    },
   ];
 
   const modules = navForRole(session.user.role)
@@ -55,60 +63,63 @@ export default async function AdminHome() {
     .filter((m) => m.href !== "/admin");
 
   const firstName = (session.user.name ?? "").split(" ")[0];
+  const today = new Date().toLocaleDateString("es-MX", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    timeZone: "America/Mexico_City",
+  });
 
   return (
-    <div className="mx-auto max-w-6xl space-y-10">
-      <div>
-        <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-zinc-400">
-          Panel de control
-        </p>
-        <h1 className="heading heading-lg mt-2">
-          {firstName ? `Hola, ${firstName}` : "Bienvenido"}
-        </h1>
-        <div className="mt-3 h-[3px] w-10 bg-accent" />
-      </div>
+    <div className="space-y-6 px-8 pb-10 pt-8 max-sm:px-4">
+      <p className="text-[14px] text-[#737373]">
+        {firstName ? `Hola, ${firstName}` : "Bienvenido"} · <span className="text-[#0a0a0a]">{today}</span>
+      </p>
 
       {!counts && (
-        <p className="border-l-[3px] border-accent bg-white px-4 py-3 text-sm text-zinc-600">
+        <p className="erp-card border-l-[3px] !border-l-[#e02020] px-4 py-3 text-[13px] text-[#525252]">
           No se pudo conectar con la base de datos, por eso los indicadores aparecen vacíos.
         </p>
       )}
 
-      <section aria-label="Indicadores" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {stats.map((s) => (
-          <div key={s.label} className="border border-zinc-200 bg-white p-6">
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-400">
-              {s.label}
-            </p>
-            <p className="mt-3 text-4xl font-extrabold tabular-nums text-zinc-900">{s.value}</p>
+      <section aria-label="Indicadores" className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {stats.map((s, i) => (
+          <div key={s.label} className="erp-card erp-entrar p-5" style={{ animationDelay: `${50 + i * 60}ms` }}>
+            <div className="flex items-center justify-between">
+              <p className="text-[13px] text-[#737373]">{s.label}</p>
+              <FontAwesomeIcon icon={s.icon} className="h-3.5 w-3.5 text-[#e02020]" />
+            </div>
+            <p className="mt-3 text-[30px] font-semibold leading-none tracking-tight tabular-nums">{s.value}</p>
+            <p className="mt-3 text-[12px] text-[#a3a3a3]">{s.note}</p>
           </div>
         ))}
       </section>
 
-      <section aria-labelledby="modulos">
-        <h2 id="modulos" className="text-[11px] font-bold uppercase tracking-[0.22em] text-zinc-400">
-          Módulos
-        </h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section aria-labelledby="modulos" className="erp-card erp-entrar" style={{ animationDelay: "240ms" }}>
+        <div className="px-5 pb-3 pt-4">
+          <h2 id="modulos" className="text-[14px] font-semibold">Módulos</h2>
+          <p className="text-[12px] text-[#a3a3a3]">Lo que ya puedes usar y lo que viene</p>
+        </div>
+        <ul className="grid gap-px border-t border-[#ebebeb] bg-[#ebebeb] sm:grid-cols-2 lg:grid-cols-3">
           {modules.map((m) => (
-            <div key={m.label} className="flex gap-4 border border-zinc-200 bg-white p-5">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-zinc-950 text-white">
+            <li key={m.label} className="flex gap-3.5 bg-white p-5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#fdecec] text-[#c41a1a]">
                 <FontAwesomeIcon icon={m.icon} className="h-4 w-4" />
-              </div>
+              </span>
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <p className="text-sm font-bold text-zinc-900">{m.label}</p>
+                  <p className="text-[13.5px] font-medium">{m.label}</p>
                   {!m.href && (
-                    <span className="border border-zinc-200 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-zinc-400">
+                    <span className="rounded-full bg-[#f5f5f5] px-2 py-px text-[10.5px] font-medium text-[#737373]">
                       Pronto
                     </span>
                   )}
                 </div>
-                <p className="mt-1 text-xs leading-relaxed text-zinc-500">{m.description}</p>
+                <p className="mt-0.5 text-[12px] leading-relaxed text-[#737373]">{m.description}</p>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     </div>
   );

@@ -20,6 +20,7 @@ export const authConfig: NextAuthConfig = {
       if (user) {
         token.role       = (user as { role: UserRole }).role;
         token.empleadoId = (user as { empleadoId: number | null }).empleadoId;
+        token.sesionVersion = (user as { sesionVersion: number }).sesionVersion;
       }
       return token;
     },
@@ -27,6 +28,7 @@ export const authConfig: NextAuthConfig = {
       session.user.id         = token.sub!;
       session.user.role       = token.role;
       session.user.empleadoId = token.empleadoId;
+      session.user.sesionVersion = token.sesionVersion;
       return session;
     },
 
