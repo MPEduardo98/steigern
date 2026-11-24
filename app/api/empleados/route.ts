@@ -2,11 +2,15 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@root/lib/db";
+import { requireApiSession } from "@root/lib/api-auth";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 // â”€â”€â”€ GET /api/empleados â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Query params: ?search=&activo=1|0&departamento_id=
 export async function GET(req: NextRequest) {
+  const { denied } = await requireApiSession(["administrador"]);
+  if (denied) return denied;
+
   try {
     const { searchParams } = req.nextUrl;
     const search          = searchParams.get("search")          ?? "";
@@ -53,6 +57,9 @@ export async function GET(req: NextRequest) {
 
 // â”€â”€â”€ POST /api/empleados â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function POST(req: NextRequest) {
+  const { denied } = await requireApiSession(["administrador"]);
+  if (denied) return denied;
+
   try {
     const body = await req.json();
     const {

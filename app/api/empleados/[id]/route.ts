@@ -2,12 +2,16 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@root/lib/db";
+import { requireApiSession } from "@root/lib/api-auth";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 type Params = { params: Promise<{ id: string }> };
 
 // ─── GET /api/empleados/[id] ────────────────────────────────────────────────
 export async function GET(_req: NextRequest, { params }: Params) {
+  const { denied } = await requireApiSession(["administrador"]);
+  if (denied) return denied;
+
   try {
     const { id } = await params;
     const [rows] = await pool.query<RowDataPacket[]>(
@@ -27,6 +31,9 @@ export async function GET(_req: NextRequest, { params }: Params) {
 
 // ─── PATCH /api/empleados/[id] ──────────────────────────────────────────────
 export async function PATCH(req: NextRequest, { params }: Params) {
+  const { denied } = await requireApiSession(["administrador"]);
+  if (denied) return denied;
+
   try {
     const { id } = await params;
     const body   = await req.json();
@@ -70,6 +77,9 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 // ─── DELETE /api/empleados/[id] ─────────────────────────────────────────────
 // Hard delete — elimina el registro permanentemente
 export async function DELETE(_req: NextRequest, { params }: Params) {
+  const { denied } = await requireApiSession(["administrador"]);
+  if (denied) return denied;
+
   try {
     const { id } = await params;
     const [result] = await pool.query<ResultSetHeader>(

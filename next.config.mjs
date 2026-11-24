@@ -23,6 +23,12 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  experimental: {
+    serverActions: {
+      // Documentos del expediente: hasta 10 MB por archivo + margen del multipart.
+      bodySizeLimit: "11mb",
+    },
+  },
   async headers() {
     return [
       {
