@@ -84,7 +84,7 @@ export default function JsonLd({ locale = "es" }: { locale?: string }) {
     ],
     sameAs: [
       "https://www.instagram.com/steigern_design_in_motion/",
-      "https://www.tiktok.com/@customerservice5934",
+      "https://www.tiktok.com/@steigern.mx",
       "https://mx.linkedin.com/in/steigern-design-in-motion-6a006a21a",
       "https://www.facebook.com/STEIGERNDesignInMotion/?locale=es_LA",
       "https://www.youtube.com/@steigern",
