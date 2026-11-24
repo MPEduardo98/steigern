@@ -79,6 +79,7 @@ export async function generateMetadata({
       "guías lineales industriales",
       "soluciones lean manufacturing",
       "ingeniería industrial Querétaro",
+      "automatización industrial Puebla",
       "integración industrial",
       "STEIGERN",
     ],

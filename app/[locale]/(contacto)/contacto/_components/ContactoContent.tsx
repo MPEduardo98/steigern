@@ -360,8 +360,8 @@ export default function ContactoContent() {
               {/* Mapa */}
               <div className="relative border border-zinc-200 overflow-hidden aspect-[4/3] bg-zinc-100">
                 <iframe
-                  title="Central Park, Puebla, México"
-                  src="https://www.google.com/maps?q=Central+Park,+Puebla,+M%C3%A9xico&z=14&output=embed"
+                  title="Central Park, Querétaro, México"
+                  src="https://www.google.com/maps?q=Central+Park,+Quer%C3%A9taro,+M%C3%A9xico&z=14&output=embed"
                   className="w-full h-full grayscale opacity-80"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"

@@ -53,8 +53,10 @@ export default function JsonLd({ locale = "es" }: { locale?: string }) {
       "@type": "QuantitativeValue",
       value: 50,
     },
+    // Corporativo y oficinas: Central Park, Querétaro.
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Central Park",
       addressLocality: "Querétaro",
       addressRegion: "Querétaro",
       addressCountry: "MX",
@@ -89,10 +91,14 @@ export default function JsonLd({ locale = "es" }: { locale?: string }) {
       "https://www.facebook.com/STEIGERNDesignInMotion/?locale=es_LA",
       "https://www.youtube.com/@steigern",
     ],
-    areaServed: {
-      "@type": "Place",
-      name: "México y Exportación Global",
-    },
+    telephone: "+52-222-582-9254",
+    email: "customerservice@steigern.com.mx",
+    areaServed: [
+      { "@type": "State", name: "Querétaro" },
+      { "@type": "State", name: "Puebla" },
+      { "@type": "Country", name: "México" },
+      { "@type": "Country", name: "United States" },
+    ],
     knowsAbout: KNOWS_ABOUT[lang],
   };
 
