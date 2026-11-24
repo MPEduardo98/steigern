@@ -21,7 +21,7 @@
     "dotenv": "^17.4.2",
     "framer-motion": "^12.34.3",
     "mysql2": "^3.22.0",
-    "next": "^16.4.3",
+    "next": "^16.4.6",
     "next-auth": "^5.0.0-beta.30",
     "next-intl": "^4.13.0",
     "react": "^19.2.8",
@@ -37,7 +37,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "^16.4.3",
+    "eslint-config-next": "^16.4.6",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5"
