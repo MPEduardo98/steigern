@@ -4,6 +4,7 @@
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import {
   faHouse,
+  faChartLine,
   faUsers,
   faHandshake,
   faTruckField,
@@ -40,6 +41,13 @@ export const NAV: NavGroup[] = [
         description: "Resumen del sistema",
         icon: faHouse,
         href: "/admin",
+      },
+      {
+        label: "Analítica",
+        description: "Visitas del sitio web: de dónde llegan (Google, IA, redes) y qué botones usan",
+        icon: faChartLine,
+        href: "/admin/analitica",
+        roles: ["administrador"],
       },
     ],
   },
