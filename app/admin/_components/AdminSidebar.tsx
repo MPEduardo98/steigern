@@ -40,7 +40,7 @@ export default function AdminSidebar({ role }: { role: UserRole }) {
             width={1920}
             height={368}
             priority
-            className="h-[22px] w-auto"
+            className="h-[32px] w-auto"
           />
           <span className="erp-sidebar-mark text-[18px] font-bold leading-none">S</span>
         </Link>

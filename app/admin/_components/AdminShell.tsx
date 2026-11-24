@@ -15,7 +15,10 @@ export default function AdminShell({ user, children }: Props) {
       <AdminSidebar role={user.role} />
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <AdminTopbar user={user} />
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto">
+          {/* En pantallas grandes el contenido usa el 90 % del ancho, centrado. */}
+          <div className="mx-auto w-full lg:w-[90%]">{children}</div>
+        </main>
       </div>
     </div>
   );

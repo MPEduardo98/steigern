@@ -58,7 +58,7 @@ body:has(.erp-admin) { font-family: var(--font-panel), system-ui, sans-serif; }
 
 /* ── Menú lateral ─────────────────────────────────────────── */
 .erp-sidebar {
-  width: 232px;
+  width: 272px;
   background: var(--erp-shell);
   color: var(--erp-shell-text);
 }
