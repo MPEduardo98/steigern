@@ -81,22 +81,20 @@ const resolver = cache(async (): Promise<Estado> => {
 
 /** Ruta que borra la cookie de una sesión revocada (ver app/admin/salir/route.ts). */
 export const RUTA_SESION_REVOCADA = "/admin/salir";
-export const RUTA_MI_CUENTA = "/admin/cuenta";
+/** Con contraseña temporal se manda al login: ahí se pide la nueva. */
+export const RUTA_CAMBIO_OBLIGATORIO = "/login";
 
 /**
  * Para páginas y layouts del panel. Sin sesión manda al login; con la sesión
- * revocada la cierra; con contraseña temporal manda a cambiarla.
+ * revocada la cierra; con contraseña temporal manda al login a cambiarla.
  */
-export async function requireSession(
-  allowedRoles?: UserRole[],
-  opts: { allowPendingPassword?: boolean } = {}
-): Promise<{ user: CurrentUser }> {
+export async function requireSession(allowedRoles?: UserRole[]): Promise<{ user: CurrentUser }> {
   const estado = await resolver();
   if (estado.status === "sin_sesion") redirect("/login");
   if (estado.status === "revocada") redirect(RUTA_SESION_REVOCADA);
 
   const { user } = estado;
-  if (user.mustChangePassword && !opts.allowPendingPassword) redirect(RUTA_MI_CUENTA);
+  if (user.mustChangePassword) redirect(RUTA_CAMBIO_OBLIGATORIO);
   if (allowedRoles && !allowedRoles.includes(user.role)) redirect("/login");
   return { user };
 }

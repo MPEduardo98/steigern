@@ -33,9 +33,9 @@ export default async function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   // proxy.ts ya protege /admin; esta verificación es la segunda barrera.
-  // Con contraseña temporal el layout sí se muestra (la página de Mi cuenta
-  // vive dentro); cada página decide si deja pasar o manda a cambiarla.
-  const session = await requireSession(["administrador", "empleado"], { allowPendingPassword: true });
+  // Con contraseña temporal pendiente manda al login, donde se cambia antes
+  // de ver nada del panel.
+  const session = await requireSession(["administrador", "empleado"]);
 
   return (
     <html lang="es">

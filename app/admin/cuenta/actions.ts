@@ -1,13 +1,13 @@
 // app/admin/cuenta/actions.ts
-// Cambio de la contraseña propia (también el obligatorio tras una temporal).
+// Cambio de la contraseña propia desde Mi cuenta. El cambio obligatorio tras
+// una contraseña temporal no pasa por aquí: se hace en el login, antes de
+// entrar al panel (ver app/[locale]/_actions/auth.ts).
 "use server";
 
-import type { RowDataPacket } from "mysql2";
-import { compare, hash } from "bcryptjs";
-import pool from "@root/lib/db";
 import { signIn, signOut } from "@root/auth";
-import { getSessionState } from "@root/lib/session";
-import { PASSWORD_MAX, PASSWORD_MIN, registrarBitacoraUsuario } from "@root/lib/usuarios";
+import { getActionUser } from "@root/lib/session";
+import { cambiarPasswordPropia, type ErrorCampoPassword } from "@root/lib/password-propia";
+import { PASSWORD_MIN } from "@root/lib/usuarios";
 
 export interface PasswordFormState {
   ok?: boolean;
@@ -15,72 +15,39 @@ export interface PasswordFormState {
   fieldErrors?: Record<string, string>;
 }
 
+const TEXTOS: Record<ErrorCampoPassword, string> = {
+  actual_requerida: "Escribe tu contraseña actual",
+  actual_incorrecta: "La contraseña actual no es correcta",
+  nueva_corta: `Mínimo ${PASSWORD_MIN} caracteres`,
+  nueva_larga: "Es demasiado larga",
+  nueva_igual: "Debe ser distinta de la actual",
+  nueva_correo: "No uses tu correo como contraseña",
+  no_coincide: "No coincide con la nueva contraseña",
+};
+
 function str(formData: FormData, key: string) {
   const v = formData.get(key);
   return typeof v === "string" ? v : "";
 }
 
 export async function cambiarMiPassword(_prev: PasswordFormState, formData: FormData): Promise<PasswordFormState> {
-  // Aquí sí se admite la contraseña temporal pendiente: es justo para cambiarla.
-  const estado = await getSessionState();
-  if (estado.status !== "ok") return { error: "Tu sesión terminó. Vuelve a iniciar sesión." };
-  const { user } = estado;
+  const user = await getActionUser();
+  if (!user) return { error: "Tu sesión terminó. Vuelve a iniciar sesión." };
 
-  const actual = str(formData, "actual");
   const nueva = str(formData, "nueva");
-  const confirmar = str(formData, "confirmar");
-
-  const fieldErrors: Record<string, string> = {};
-  if (!actual) fieldErrors.actual = "Escribe tu contraseña actual";
-  // Los límites cuentan bytes: bcrypt ignora lo que pase de 72 bytes.
-  const bytes = Buffer.byteLength(nueva, "utf8");
-  if (nueva.length < PASSWORD_MIN) fieldErrors.nueva = `Mínimo ${PASSWORD_MIN} caracteres`;
-  else if (bytes > PASSWORD_MAX) fieldErrors.nueva = "Es demasiado larga";
-  else if (nueva === actual) fieldErrors.nueva = "Debe ser distinta de la actual";
-  else if (nueva.toLowerCase() === user.email.toLowerCase()) fieldErrors.nueva = "No uses tu correo como contraseña";
-  if (!fieldErrors.nueva && confirmar !== nueva) fieldErrors.confirmar = "No coincide con la nueva contraseña";
-  if (Object.keys(fieldErrors).length) return { error: "Revisa los campos marcados.", fieldErrors };
-
-  const conn = await pool.getConnection();
-  try {
-    await conn.beginTransaction();
-    const [rows] = await conn.query<RowDataPacket[]>(
-      "SELECT password_hash FROM usuarios_portal WHERE id = ? AND activo = 1 FOR UPDATE",
-      [user.id]
-    );
-    if (!rows[0]) {
-      await conn.rollback();
-      return { error: "Tu cuenta ya no está activa." };
+  const r = await cambiarPasswordPropia(user, str(formData, "actual"), nueva, str(formData, "confirmar"));
+  if (!r.ok) {
+    if ("general" in r) {
+      return { error: r.general === "cuenta_inactiva" ? "Tu cuenta ya no está activa." : "No se pudo cambiar la contraseña. Intenta de nuevo." };
     }
-    if (!(await compare(actual, String(rows[0].password_hash)))) {
-      await conn.rollback();
-      return { error: "Revisa los campos marcados.", fieldErrors: { actual: "La contraseña actual no es correcta" } };
-    }
-
-    // Subir la versión cierra las sesiones abiertas en otros dispositivos.
-    await conn.query(
-      `UPDATE usuarios_portal
-          SET password_hash = ?, debe_cambiar_password = 0,
-              sesion_version = sesion_version + 1, password_cambiada_at = NOW()
-        WHERE id = ?`,
-      [await hash(nueva, 12), user.id]
-    );
-    await registrarBitacoraUsuario(conn, user.id, user.id, "cambiar_password");
-    await conn.commit();
-  } catch (err) {
-    await conn.rollback();
-    console.error("[cambiarMiPassword]", err);
-    return { error: "No se pudo cambiar la contraseña. Intenta de nuevo." };
-  } finally {
-    conn.release();
+    const fieldErrors = Object.fromEntries(Object.entries(r.campos).map(([k, v]) => [k, TEXTOS[v]]));
+    return { error: "Revisa los campos marcados.", fieldErrors };
   }
 
   // Esta sesión también quedó con la versión vieja: se emite un token nuevo.
   try {
     await signIn("credentials", { email: user.email, password: nueva, redirect: false });
   } catch (err) {
-    // La contraseña ya cambió; la sesión vieja quedó revocada: se cierra y se
-    // entra de nuevo con la nueva.
     console.error("[cambiarMiPassword] no se pudo renovar la sesión", err);
     await signOut({ redirectTo: "/login" });
   }

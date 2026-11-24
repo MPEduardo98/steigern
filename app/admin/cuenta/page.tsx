@@ -1,6 +1,5 @@
 // app/admin/cuenta/page.tsx
-// Mi cuenta: datos propios y cambio de contraseña. Es la única página del
-// panel abierta con contraseña temporal pendiente (las demás mandan aquí).
+// Mi cuenta: datos propios y cambio de contraseña.
 import { requireSession } from "@root/lib/session";
 import { rolLabel } from "@root/lib/usuarios";
 import CambiarPasswordForm from "./CambiarPasswordForm";
@@ -8,19 +7,10 @@ import CambiarPasswordForm from "./CambiarPasswordForm";
 export const metadata = { title: "Mi cuenta" };
 
 export default async function CuentaPage() {
-  const { user } = await requireSession(["administrador", "empleado"], { allowPendingPassword: true });
+  const { user } = await requireSession(["administrador", "empleado"]);
 
   return (
     <div className="erp-page mx-auto max-w-2xl space-y-4">
-      {user.mustChangePassword && (
-        <div role="alert" className="erp-card erp-entrar border-l-[3px] !border-l-[#e02020] px-5 py-4">
-          <p className="text-[14px] font-semibold">Crea tu contraseña para continuar</p>
-          <p className="mt-1 text-[13px] leading-relaxed text-[#525252]">
-            Entraste con una contraseña temporal. Cámbiala por una que solo tú conozcas; después podrás usar el panel.
-          </p>
-        </div>
-      )}
-
       <section className="erp-card erp-entrar">
         <div className="border-b border-[#ebebeb] px-5 py-4">
           <h2 className="text-[14px] font-semibold">Tu cuenta</h2>
@@ -42,7 +32,7 @@ export default async function CuentaPage() {
         </dl>
       </section>
 
-      <CambiarPasswordForm email={user.email} obligatorio={user.mustChangePassword} />
+      <CambiarPasswordForm email={user.email} />
     </div>
   );
 }

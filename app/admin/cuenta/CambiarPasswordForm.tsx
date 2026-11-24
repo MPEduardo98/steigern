@@ -9,11 +9,9 @@ import { cambiarMiPassword, type PasswordFormState } from "./actions";
 
 interface Props {
   email: string;
-  /** Viene de una contraseña temporal: al terminar se entra al panel. */
-  obligatorio: boolean;
 }
 
-export default function CambiarPasswordForm({ email, obligatorio }: Props) {
+export default function CambiarPasswordForm({ email }: Props) {
   const router = useRouter();
   const form = useRef<HTMLFormElement>(null);
   const [state, action, pending] = useActionState<PasswordFormState, FormData>(cambiarMiPassword, {});
@@ -23,12 +21,11 @@ export default function CambiarPasswordForm({ email, obligatorio }: Props) {
     if (state.ok) {
       toast.success("Contraseña cambiada", { description: "Se cerraron tus sesiones en otros dispositivos." });
       form.current?.reset();
-      if (obligatorio) router.replace("/admin");
-      else router.refresh();
+      router.refresh();
     } else if (state.error && !state.fieldErrors) {
       toast.error(state.error);
     }
-  }, [state, obligatorio, router]);
+  }, [state, router]);
 
   const field = (name: string, autoComplete: string) => ({
     id: name,
@@ -59,9 +56,9 @@ export default function CambiarPasswordForm({ email, obligatorio }: Props) {
       <div className="grid gap-4 px-5 py-5">
         <div>
           <label htmlFor="actual" className="erp-label">
-            {obligatorio ? "Contraseña temporal" : "Contraseña actual"}
+            Contraseña actual
           </label>
-          <input {...field("actual", "current-password")} autoFocus={obligatorio} />
+          <input {...field("actual", "current-password")} />
           {error("actual")}
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -79,7 +76,7 @@ export default function CambiarPasswordForm({ email, obligatorio }: Props) {
       </div>
       <div className="flex justify-end border-t border-[#ebebeb] px-5 py-4">
         <button type="submit" disabled={pending} className="erp-btn erp-btn-primary">
-          {pending ? "Guardando…" : obligatorio ? "Guardar y continuar" : "Cambiar contraseña"}
+          {pending ? "Guardando…" : "Cambiar contraseña"}
         </button>
       </div>
     </form>
