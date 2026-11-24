@@ -83,6 +83,8 @@ export const NAV: NavGroup[] = [
         label: "Proyectos",
         description: "Trabajos a pedido del cliente: cotización, monto, fechas y costo real",
         icon: faDiagramProject,
+        href: "/admin/proyectos",
+        roles: ["administrador"],
       },
       {
         label: "Compras",
